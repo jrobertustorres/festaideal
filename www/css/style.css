@@ -1,0 +1,30 @@
+.botao01 {
+  color:#7D8286;font-size:12px;text-align:center;
+  text-align: center;
+}
+
+.button-positive-900 {
+  background-color: #1A237E;
+  color: #fff;
+
+}
+
+.my-font-form {
+  font-size: 13px;
+}
+
+.cor-campo-novalid {
+  color: red;
+}
+
+.barra-superior {
+  background-color: #36648B!important
+}
+
+/* fix ionic border input issue */
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+  border: 1px solid rgba(0, 0, 0, 0.117647);
+  border-right-width: 0;
+  border-top-width: 0;
+  border-left-width: 0;
+}
