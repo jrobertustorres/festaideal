@@ -9,6 +9,21 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
+
+    // Check for network connection
+    if(window.Connection) {
+      if(navigator.connection.type == Connection.NONE) {
+        $ionicPopup.confirm({
+            title: 'Não conectado à internet',
+            content: 'Nenhuma conexão à internet detectada.\n Favor conectar e tentar novamente.'
+          })
+          .then(function(result) {
+            if(!result) {
+              ionic.Platform.exitApp();
+            }
+          });
+      }
+    }
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {

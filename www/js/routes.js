@@ -53,6 +53,18 @@ angular.module('app.routes', [])
     controller: 'loginCtrl'
   })
 
+  .state('recuperar-senha', {
+    url: '/recuperar-senha',
+    templateUrl: 'templates/recuperarSenha.html',
+    controller: 'RecuperarSenhaCtrl'
+  })
+
+  .state('cotacoes-abertas-list', {
+    url: '/cotacoes-abertas-list',
+    templateUrl: 'templates/cotacoesAbertasList.html',
+    controller: 'CotacoesAbertasListCtrl'
+  })
+
 $urlRouterProvider.otherwise('/login')
 
 

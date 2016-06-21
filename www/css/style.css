@@ -1,5 +1,7 @@
 .botao01 {
-  color:#7D8286;font-size:12px;text-align:center;
+  color: #7D8286;
+  font-size: 12px;
+  text-align: center;
   text-align: center;
 }
 
@@ -18,7 +20,13 @@
 }
 
 .barra-superior {
-  background-color: #36648B!important
+  background-color: #36648B !important
+}
+
+.bar.bar-positive {
+  background-color: rgb(0, 150, 136);
+  border-color: #00796B;
+  background-image: linear-gradient(0deg, #00796B, #00796B 50%, transparent 50%);
 }
 
 /* fix ionic border input issue */
@@ -28,3 +36,62 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   border-top-width: 0;
   border-left-width: 0;
 }
+
+.my-button-save {
+  min-height: 44px;
+  min-width: 44px;
+  padding-right: 0px;
+  text-transform: capitalize !important;
+  font-size: 14px !important;
+  margin-right: 10px;
+}
+
+.font-barra-superior {
+  color: white;
+  font-size: 13px;
+}
+
+.bar .button.button-clear {
+  color: #fff;
+}
+
+.bar .button {
+  min-height: 30px;
+  min-width: 44px;
+  max-width: 48px;
+  margin-bottom: 0;
+  max-height: 4px;
+  width: 48px;
+}
+
+.my-custom-icon {
+  font-size: 64px!important;
+  top: -20%!important;
+}
+
+.my-font-card {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.my-links {
+  text-decoration: none;
+  color: #5CB85C!important;
+}
+
+.my-list-card-abertas {
+  background-color: #5CB85C;
+}
+
+.my-list-card-pendentes {
+  background-color: #337AB7;
+}
+
+.my-list-card-escolhidas {
+  background-color: #F0AD4E;
+}
+
+.my-list-card-concluidas {
+  background-color: #D9534F;
+}
+

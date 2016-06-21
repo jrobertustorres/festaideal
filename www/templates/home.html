@@ -1,23 +1,82 @@
 <ion-nav-view animation="slide-left-right"></ion-nav-view>
 <ion-view animation="slide-left-right">
-  <ion-content padding="true" class="has-header">
-    <div class="list card">
-      <div class="item item-divider">Cotações abertas</div>
-      <div class="item item-body">
+  <ion-content ng-controller="homeCtrl" padding="true" class="has-header">
 
+    <div class="list card my-list-card-abertas">
+
+      <div class="item-icon-left">
+        <i class="icon ion-document light my-custom-icon"></i>
+        <h2 class="light my-font-card">{{cotacao_aberta}}</h2>
+        <p class="light my-font-card">Cotações abertas</p>
       </div>
+
+      <div class="item">
+        <a class="my-links" ng-href="/side-menu21/cotacoes-abertas-list/">
+          <div class="item-icon-right">
+            <i class="icon ion-arrow-right-a" style="color: #5CB85C;"></i>
+            <p class="my-links">Detalhes</p>
+          </div>
+        </a>
+      </div>
+
     </div>
-    <div class="list card">
-      <div class="item item-divider">Cotações pendentes</div>
-      <div class="item item-body"></div>
+
+    <div class="list card my-list-card-pendentes">
+
+      <div class="item-icon-left">
+        <i class="icon ion-document light my-custom-icon"></i>
+        <h2 class="light my-font-card">{{cotacao_pendente}}</h2>
+        <p class="light my-font-card">Cotações pendentes</p>
+      </div>
+
+      <div class="item">
+        <a class="my-links" ng-href="/side-menu21/cotacoes-pendentes-list/">
+          <div class="item-icon-right">
+            <i class="icon ion-arrow-right-a" style="color: #337AB7;"></i>
+            <p style="color: #337AB7;">Detalhes</p>
+          </div>
+        </a>
+      </div>
+
     </div>
-    <div class="list card">
-      <div class="item item-divider">Cotações escolhidas</div>
-      <div class="item item-body"></div>
+
+    <div class="list card my-list-card-escolhidas">
+
+      <div class="item-icon-left">
+        <i class="icon ion-document light my-custom-icon"></i>
+        <h2 class="light my-font-card">{{cotacao_escolhida}}</h2>
+        <p class="light my-font-card">Cotações escolhidas</p>
+      </div>
+
+      <div class="item">
+        <a class="my-links" ng-href="/side-menu21/cotacoes-escolhidas-list/">
+          <div class="item-icon-right">
+            <i class="icon ion-arrow-right-a" style="color: #F0AD4E;"></i>
+            <p style="color: #F0AD4E;">Detalhes</p>
+          </div>
+        </a>
+      </div>
+
     </div>
-    <div class="list card">
-      <div class="item item-divider">Cotações concluidas</div>
-      <div class="item item-body"></div>
+
+    <div class="list card my-list-card-concluidas">
+
+      <div class="item-icon-left">
+        <i class="icon ion-document-text light my-custom-icon"></i>
+        <h2 class="light my-font-card">{{cotacao_concluida}}</h2>
+        <p class="light my-font-card">Cotações concluidas</p>
+      </div>
+
+      <div class="item">
+        <a class="my-links" ng-href="/side-menu21/cotacoes-concluidas-list/">
+          <div class="item-icon-right">
+            <i class="icon ion-arrow-right-a" style="color: #D9534F;"></i>
+            <p style="color: #D9534F;">Detalhes</p>
+          </div>
+        </a>
+      </div>
+
     </div>
+
   </ion-content>
 </ion-view>
