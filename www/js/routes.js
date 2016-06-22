@@ -24,7 +24,7 @@ angular.module('app.routes', [])
     url: '/page2',
     views: {
       'side-menu21': {
-        templateUrl: 'templates/cart.html',
+        templateUrl: 'templates/cotacoesAbertasList.html',
         controller: 'cartCtrl'
       }
     }
