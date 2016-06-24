@@ -19,8 +19,7 @@
           <div class="list">
             <label class="item item-input item-stacked-label">
               <span class="input-label my-font-form">E-mail*</span>
-              <input ng-model="recuperarSenha.email" type="email" name="email" required ng-maxlength="40"
-                     ng-blur="verificaEmail()">
+              <input ng-model="recuperarSenha.email" type="email" name="email" required ng-maxlength="40">
               <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.required" class="cor-campo-novalid my-font-form">campo obrigatório</span>
               <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.email" class="cor-campo-novalid my-font-form">e-mail inválido</span>
 

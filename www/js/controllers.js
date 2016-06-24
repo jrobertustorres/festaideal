@@ -4,6 +4,7 @@ var idFornecedor = 0;
 angular.module('app.controllers', [])
 
   .controller('homeCtrl', function ($scope, $http) {
+
     $scope.$on('$ionicView.enter', function () {
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
         .success(function (data) {
@@ -14,6 +15,25 @@ angular.module('app.controllers', [])
           $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
         });
     });
+
+    $scope.hideNavBar = function () {
+      document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
+    };
+
+    $scope.hideHeader = function () {
+      $scope.hideNavBar();
+      $scope.noHeader();
+    };
+
+    $scope.noHeader = function () {
+      var content = document.getElementsByTagName('ion-content');
+      for (var i = 0; i < content.length; i++) {
+        if (content[i].classList.contains('has-header')) {
+          content[i].classList.toggle('has-header');
+        }
+      }
+    };
+    
   })
 
   .controller('menuCtrl', function ($scope, $ionicPopup, $ionicHistory, $location) {
@@ -64,15 +84,6 @@ angular.module('app.controllers', [])
   .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http) {
 
     $scope.recuperarSenha = {};
-    $scope.verificaEmail = function () {
-      $http.get(servidor + '/v1/api.php?req=verificaEmail&email=' + $scope.recuperarSenha).success(function (data) {
-        if (data) {
-          $scope.mensagem = "e-mail já cadastrado";
-        } else {
-          $scope.mensagem = "";
-        }
-      });
-    }
     recuperarSenha = {};
     $scope.submeter = function () {
       if ($scope.recuperarSenhaForm.$valid) {
@@ -100,9 +111,24 @@ angular.module('app.controllers', [])
 
   })
 
-  .controller('CotacoesAbertasListCtrl', function ($scope, $state, $location, $http, $ionicHistory) {
+  .controller('CotacoesAbertasListCtrl', function ($scope, $state, $location, $http) {
     $http.get(servidor + '/v1/api.php?req=getCotacoesAbertasList&idFornecedor='+idFornecedor).success(function (data) {
       $scope.dados = data;
+    });
+
+  })
+
+  .controller('CotacoesPendentesListCtrl', function ($scope, $state, $location, $http) {
+    $http.get(servidor + '/v1/api.php?req=getCotacoesPendentesList&idFornecedor='+idFornecedor).success(function (data) {
+      $scope.dados = data;
+    });
+
+  })
+
+  .controller('CotacaoPendenteCtrl', function ($scope, $state, $location, $http, $stateParams) {
+    $http.get(servidor + '/v1/api.php?req=getCotacaoPendenteById&id='+$stateParams.id).success(function (data) {
+      $scope.dados = data;
+      console.log('dados '+$scope.dados);
     });
 
   })

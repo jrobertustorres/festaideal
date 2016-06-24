@@ -1,0 +1,21 @@
+<ion-view>
+  <ion-nav-title>
+    <span class="font-barra-superior">Cotações Pendentes</span>
+  </ion-nav-title>
+
+  <ion-content ng-controller="CotacoesPendentesListCtrl" scroll="true" padding="true" class="has-header">
+
+    <ion-list show-delete="true">
+
+      <ion-item class="my-item-list" collection-repeat="dado in dados" ui-sref="menu.cotacao-pendente/{{dado.id_cotacao}}">
+        <p>{{ dado.nome_eveto }}</p>
+        <p>{{ dado.nome_tipo_servico }}</p>
+        <!--<ion-delete-button class="ion-minus-circled my-delete-button" ng-click="remover(dado)">-->
+        <!--</ion-delete-button>-->
+
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+
+</ion-view>
