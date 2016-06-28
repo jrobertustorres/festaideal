@@ -39,8 +39,8 @@ angular.module('app.routes', [])
         }
       })
 
-      .state('menu.cotacao-pendente/:id', {
-        url: '/cotacao-pendente/:id',
+      .state('menu.cotacao-pendente/:id_cotacao', {
+        url: '/cotacao-pendente/:id_cotacao',
         views: {
           'side-menu21': {
             templateUrl: 'templates/cotacaoPendente.html',
@@ -48,12 +48,6 @@ angular.module('app.routes', [])
           }
         }
       })
-
-      // .state('cotacoes-pendentes-list', {
-      //   url: '/cotacoes-pendentes-list',
-      //   templateUrl: 'templates/cotacoesPendentesList.html',
-      //   controller: 'CotacoesPendentesListCtrl'
-      // })
 
       .state('menu', {
         url: '/side-menu21',

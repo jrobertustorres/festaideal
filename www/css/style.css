@@ -95,3 +95,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   background-color: #D9534F;
 }
 
+.my-align-spam {
+  margin-left: 15px;
+}
+
