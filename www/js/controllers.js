@@ -1,5 +1,6 @@
 var servidor = "http://localhost";
 var idFornecedor = 1;
+// var idFornecedor = 0;
 
 angular.module('app.controllers', [])
 
@@ -8,7 +9,6 @@ angular.module('app.controllers', [])
     $scope.$on('$ionicView.enter', function () {
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
         .success(function (data) {
-          console.log('teste '+$scope.cotacao_pendente);
           $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
           $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
           $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
@@ -78,17 +78,25 @@ angular.module('app.controllers', [])
     }
   })
 
-  .controller('CotacoesAbertasListCtrl', function ($scope, $state, $location, $http) {
-    $http.get(servidor + '/v1/api.php?req=getCotacoesAbertasList&idFornecedor='+idFornecedor)
+  .controller('CotacoesAbertasListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
+    $ionicConfig.backButton.text("");
+    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=ABERTA&idFornecedor='+idFornecedor)
       .success(function (data) {
       $scope.dados = data;
     });
 
   })
+//FAZER UM CONTROLLER SÓ E TAMBÉM UM HTML SÓ PRA TODOS OS STATUS
+  .controller('CotacaoAbertaCtrl', function ($scope, $state, $location, $http, $stateParams) {
+    $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao='+$stateParams.id_cotacao)
+      .success(function (data) {
+        $scope.dados = data;
+      });
+  })
 
   .controller('CotacoesPendentesListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
-    $ionicConfig.backButton.text("")
-    $http.get(servidor + '/v1/api.php?req=getCotacoesPendentesList&idFornecedor='+idFornecedor)
+    $ionicConfig.backButton.text("");
+    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=PENDENTE&idFornecedor='+idFornecedor)
       .success(function (data) {
       $scope.dados = data;
     });
@@ -101,7 +109,6 @@ angular.module('app.controllers', [])
       .success(function (data) {
       $scope.dados = data;
     });
-
   })
 
   .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http) {

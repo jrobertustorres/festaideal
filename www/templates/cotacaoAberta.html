@@ -1,0 +1,53 @@
+<ion-view>
+  <ion-nav-title>
+    <span class="font-barra-superior">Dados Cotação</span>
+  </ion-nav-title>
+  <ion-content ng-controller="CotacaoAbertaCtrl" scroll="true" padding="true" class="has-header">
+    <div class="list">
+      <div class="list card">
+
+        <div class="item">
+          <h3>Cliente</h3>
+          <p>{{dados.nome_cliente}}</p>
+
+        </div>
+      </div>
+      <div class="list card">
+        <div class="item">
+          <h3>Data entrega</h3>
+          <p>{{dados.data_entrega}}</p>
+          <h3>Tipo pagamento</h3>
+          <p>{{dados.tipo_pagamento}}</p>
+          <h3>Serviço</h3>
+          <p>{{dados.nome_tipo_servico}}</p>
+          <h3>Quantidade cotação</h3>
+          <p>{{dados.qtd_cotacao}}</p>
+          <h3>Validade cotação</h3>
+          <p>{{dados.validade}}</p>
+          <h3>Valor</h3>
+          <p>{{dados.valor | currency:'R$ '}}</p>
+          <h3>Prazo pagamento</h3>
+          <p>{{dados.prazo_pagamento}}</p>
+          <h3>Evento</h3>
+          <p>{{dados.nome_evento}}</p>
+          <h3>Quantidade pessoas</h3>
+          <p>{{dados.qtd_pessoa}}</p>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <nav mfb-menu position="br"
+       effect="zoomin"
+       bgcolor='#3F51B5'
+       active-icon="fa fa-bars"
+       resting-icon="fa fa-bars"
+       toggling-method="click">
+    <button mfb-button bgcolor='#009688' label="Enviar" icon="fa fa-edit"></button>
+    <button mfb-button bgcolor='#F44336' label="Rejeitar" icon="fa fa-close"></button>
+  </nav>
+  <!--<nav mfb-menu position="br" effect="zoomin" label="hover here"-->
+  <!--active-icon="ion-edit" resting-icon="ion-plus-round"-->
+  <!--toggling-method="click">-->
+  <!--<button mfb-button icon="paper-airplane" label="menu item"></button>-->
+  <!--</nav>-->
+</ion-view>

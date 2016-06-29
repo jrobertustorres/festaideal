@@ -49,6 +49,26 @@ angular.module('app.routes', [])
         }
       })
 
+      .state('menu.cotacoes-abertas-list', {
+        url: '/cotacoes-abertas-list',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/cotacoesAbertasList.html',
+            controller: 'CotacoesAbertasListCtrl'
+          }
+        }
+      })
+
+      .state('menu.cotacao-aberta/:id_cotacao', {
+        url: '/cotacao-aberta/:id_cotacao',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/cotacaoAberta.html',
+            controller: 'CotacaoAbertaCtrl'
+          }
+        }
+      })
+
       .state('menu', {
         url: '/side-menu21',
         templateUrl: 'templates/menu.html',
