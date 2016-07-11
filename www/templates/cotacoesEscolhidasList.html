@@ -1,6 +1,6 @@
 <ion-view>
   <ion-nav-title>
-    <span class="font-barra-superior">Cotações Abertas</span>
+    <span class="font-barra-superior">Cotações Escolhidas</span>
   </ion-nav-title>
 
   <ion-header-bar class="bar-subheader item-input-inset">
@@ -10,14 +10,14 @@
     </label>
   </ion-header-bar>
 
-  <ion-content ng-controller="CotacoesListCtrl" scroll="true" padding="true" class="has-header">
+  <ion-content ng-controller="CotacoesEscolhidasListCtrl" scroll="true" padding="true" class="has-header">
 
     <ion-list>
 
-      <ion-item class="my-item-list" collection-repeat="dado in dados  | filter:filter" href="#/side-menu21/cotacao-aberta/{{dado.id_cotacao}}">
+      <ion-item class="my-item-list" collection-repeat="dado in dados  | filter:filter" href="#/side-menu21/cotacao-escolhida/{{dado.id_cotacao}}">
         <p>Evento: {{ dado.nome_eveto }}</p>
         <p>Serviço: {{ dado.nome_tipo_servico }}</p>
-        <p>Data Evento: {{ dado.data_evento}}</p>
+        <p>Entrega: {{ dado.data_entrega}}</p>
       </ion-item>
 
     </ion-list>

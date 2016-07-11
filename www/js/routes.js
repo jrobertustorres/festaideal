@@ -1,6 +1,6 @@
 angular.module('app.routes', [])
 
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -19,12 +19,33 @@ angular.module('app.routes', [])
         }
       })
 
-      .state('menu.cart', {
-        url: '/page2',
+      .state('menu.cotacoes-list/:status_cotacao', {
+        url: '/cotacoes-list/:status_cotacao',
         views: {
           'side-menu21': {
-            templateUrl: 'templates/cotacoesAbertasList.html',
-            controller: 'cartCtrl'
+            templateUrl: 'templates/cotacoesList.html',
+            controller: 'CotacoesListCtrl'
+          }
+        }
+      })
+/*
+      .state('menu.cotacoes-abertas-list/:status_cotacao', {
+        url: '/cotacoes-abertas-list/:status_cotacao',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/cotacoesList.html',
+            controller: 'CotacoesAbertasListCtrl'
+          }
+        }
+      })
+*/
+
+      .state('menu.cotacao-aberta/:id_cotacao', {
+        url: '/cotacao-aberta/:id_cotacao',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/cotacaoAberta.html',
+            controller: 'CotacaoCtrl'
           }
         }
       })
@@ -49,22 +70,22 @@ angular.module('app.routes', [])
         }
       })
 
-      .state('menu.cotacoes-abertas-list', {
-        url: '/cotacoes-abertas-list',
+      .state('menu.cotacoes-escolhidas-list', {
+        url: '/cotacoes-escolhidas-list',
         views: {
           'side-menu21': {
-            templateUrl: 'templates/cotacoesAbertasList.html',
-            controller: 'CotacoesAbertasListCtrl'
+            templateUrl: 'templates/cotacoesEscolhidasList.html',
+            controller: 'CotacoesEscolhidasListCtrl'
           }
         }
       })
 
-      .state('menu.cotacao-aberta/:id_cotacao', {
-        url: '/cotacao-aberta/:id_cotacao',
+      .state('menu.cotacao-escolhida/:id_cotacao', {
+        url: '/cotacao-escolhida/:id_cotacao',
         views: {
           'side-menu21': {
-            templateUrl: 'templates/cotacaoAberta.html',
-            controller: 'CotacaoAbertaCtrl'
+            templateUrl: 'templates/cotacaoEscolhida.html',
+            controller: 'CotacaoEscolhidaCtrl'
           }
         }
       })
@@ -87,14 +108,36 @@ angular.module('app.routes', [])
         templateUrl: 'templates/recuperarSenha.html',
         controller: 'RecuperarSenhaCtrl'
       })
-
+/*
       .state('cotacoes-abertas-list', {
         url: '/cotacoes-abertas-list',
-        templateUrl: 'templates/cotacoesAbertasList.html',
+        templateUrl: 'templates/cotacoesList.html',
         controller: 'CotacoesAbertasListCtrl'
-      })
+      })*/
 
     $urlRouterProvider.otherwise('/login')
 
+    $httpProvider.defaults.transformRequest = function (data) {
+      if (data === undefined) {
+        return data;
+      }
 
+      return serialize(data);
+    };
+
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+
+    function serialize(obj, prefix) {
+      var str = [];
+
+      for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+
+          str.push(typeof v == "object" ? serialize(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        }
+      }
+
+      return str.join("&");
+    }
   });

@@ -18,22 +18,22 @@ angular.module('app.controllers', [])
     });
 
     /*$scope.hideNavBar = function () {
-      document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
-    };
+     document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
+     };
 
-    $scope.hideHeader = function () {
-      $scope.hideNavBar();
-      $scope.noHeader();
-    };
+     $scope.hideHeader = function () {
+     $scope.hideNavBar();
+     $scope.noHeader();
+     };
 
-    $scope.noHeader = function () {
-      var content = document.getElementsByTagName('ion-content');
-      for (var i = 0; i < content.length; i++) {
-        if (content[i].classList.contains('has-header')) {
-          content[i].classList.toggle('has-header');
-        }
-      }
-    };*/
+     $scope.noHeader = function () {
+     var content = document.getElementsByTagName('ion-content');
+     for (var i = 0; i < content.length; i++) {
+     if (content[i].classList.contains('has-header')) {
+     content[i].classList.toggle('has-header');
+     }
+     }
+     };*/
 
   })
 
@@ -78,38 +78,93 @@ angular.module('app.controllers', [])
     }
   })
 
-  .controller('CotacoesAbertasListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
+  // .controller('CotacoesAbertasListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams) {
+  //   $ionicConfig.backButton.text("");
+  //   console.log('dados 1111 ==> '+$stateParams.status_cotacao)
+  //   $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=ABERTA&idFornecedor=' + idFornecedor)
+  //     .success(function (data) {
+  //       $scope.dados = data;
+  //     });
+  //
+  // })
+
+  .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope) {
     $ionicConfig.backButton.text("");
-    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=ABERTA&idFornecedor='+idFornecedor)
+    console.log('dados 1111 ==> ' + $stateParams.status_cotacao);
+    $rootScope.status_cotacao = $stateParams.status_cotacao;
+    console.log('status da cotacao ' + $scope.status_cotacao);
+    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + idFornecedor)
       .success(function (data) {
-      $scope.dados = data;
-    });
+        $scope.dados = data;
+      });
 
   })
-//FAZER UM CONTROLLER SÓ E TAMBÉM UM HTML SÓ PRA TODOS OS STATUS
-  .controller('CotacaoAbertaCtrl', function ($scope, $state, $location, $http, $stateParams) {
-    $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao='+$stateParams.id_cotacao)
+  //FAZER UM CONTROLLER SÓ E TAMBÉM UM HTML SÓ PRA TODOS OS STATUS
+  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory) {
+    console.log('dados ==> ' + $stateParams.status_cotacao);
+    console.log('status da cotacao 22 ' + $rootScope.status_cotacao);
+    // $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao +'&status_cotacao=' + $rootScope.status_cotacao)
+    $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
+      .success(function (data) {
+        $scope.dados = data;
+      });
+
+    $scope.cotacaoAberta = {};
+    $scope.submeter = function () {
+      console.log('status da cotacao 33333 ' + $rootScope.status_cotacao);
+      // if ($scope.cotacaoAbertaForm.$valid) {
+      console.log('testesssssss ');
+      var msg = '';
+      if ($rootScope.status_cotacao == 'aberta') {
+        $scope.cotacaoAberta.status_cotacao = 'PENDENTE';
+        msg = 'enviada';
+      } else if ($rootScope.status_cotacao == 'escolhida') {
+        $scope.cotacaoAberta.status_cotacao = 'CONCLUIDA';
+        msg = 'concluida';
+      }
+
+      $scope.cotacaoAberta.id_cotacao = $stateParams.id_cotacao;
+      console.log('dddddddddd ' + $scope.cotacaoAberta);
+      $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacaoAberta)
+        .success(function (data) {
+          toastr.success('Cotação ' + msg + ' com sucesso!');
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+          $location.path('side-menu21/home');
+        })
+        .error(function (erro) {
+          console.log(erro);
+        });
+      // }
+    };
+
+  })
+
+  /*.controller('CotacoesPendentesListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
+    $ionicConfig.backButton.text("");
+    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=PENDENTE&idFornecedor=' + idFornecedor)
+      .success(function (data) {
+        $scope.dados = data;
+      });
+
+  })
+
+  .controller('CotacaoPendenteCtrl', function ($scope, $state, $location, $http, $stateParams) {
+    $http.get(servidor + '/v1/api.php?req=getCotacaoPendenteById&id_cotacao=' + $stateParams.id_cotacao)
       .success(function (data) {
         $scope.dados = data;
       });
   })
 
-  .controller('CotacoesPendentesListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
+  .controller('CotacoesEscolhidasListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
     $ionicConfig.backButton.text("");
-    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=PENDENTE&idFornecedor='+idFornecedor)
+    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=ABERTA&idFornecedor=' + idFornecedor)
       .success(function (data) {
-      $scope.dados = data;
-    });
+        $scope.dados = data;
+      });
 
-  })
-
-  .controller('CotacaoPendenteCtrl', function ($scope, $state, $location, $http, $stateParams) {
-    console.log('cotação pendente ** '+$stateParams.id_cotacao);
-    $http.get(servidor + '/v1/api.php?req=getCotacaoPendenteById&id_cotacao='+$stateParams.id_cotacao)
-      .success(function (data) {
-      $scope.dados = data;
-    });
-  })
+  })*/
 
   .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http) {
 

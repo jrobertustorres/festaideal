@@ -7,7 +7,7 @@
       Salvar
     </button>
   </ion-nav-buttons>
-  <ion-content ng-controller="CotacaoCtrl" scroll="true" padding="true" class="has-header">
+  <ion-content ng-controller="CotacaoAbertaCtrl" scroll="true" padding="true" class="has-header">
 
     <!--<div class="list " id="cotacao-card23">
       <div class=" item item-image">
@@ -51,27 +51,24 @@
           <div class="list">
             <label class="item item-input item-stacked-label">
               <span class="input-label my-font-form">Data entrega*</span>
-              <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.data_entrega}}</p></div>
-              <input ng-show="dados.status_cotacao == 'ABERTA'" type="date">
-            <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA'"
+              <input type="date">
+            <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.data_entrega.$error.required"
                   class="cor-campo-novalid">campo obrigatório</span>
             </label>
             <label class="item item-input item-stacked-label">
               <div class="input-label my-font-form">Tipo pagamento*</div>
-              <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.tipo_pagamento}}</p></div>
-              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.tipo_pagamento" type="text" name="tipo_pagamento" required
+              <input ng-model="cotacaoAberta.tipo_pagamento" type="text" name="tipo_pagamento" required
                      ng-maxlength="20">
-              <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.tipo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
+              <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.tipo_pagamento.$error.required"
                     class="cor-campo-novalid">campo obrigatório</span>
               <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.tipo_pagamento.$error.maxlength"
                     class="cor-campo-novalid">máximo 20 caracteres</span>
             </label>
             <label class="item item-input item-stacked-label">
               <div class="input-label my-font-form">Prazo pagamento*</div>
-              <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.prazo_pagamento}}</p></div>
-              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.prazo_pagamento" type="text" name="prazo_pagamento" required
+              <input ng-model="cotacaoAberta.prazo_pagamento" type="text" name="prazo_pagamento" required
                      ng-maxlength="20">
-              <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.prazo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
+              <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.prazo_pagamento.$error.required"
                     class="cor-campo-novalid">campo obrigatório</span>
               <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.prazo_pagamento.$error.maxlength"
                     class="cor-campo-novalid">máximo 20 caracteres</span>
@@ -79,9 +76,8 @@
 
             <label class="item item-input item-stacked-label">
               <span class="input-label my-font-form">Valor*</span>
-              <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.valor}}</p></div>
-              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.valor" type="text" name="valor" mask="9.999,99" required>
-            <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.valor.$error.required && dados.status_cotacao == 'ABERTA'"
+              <input ng-model="cotacaoAberta.valor" type="text" name="valor" mask="9.999,99" required>
+            <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.valor.$error.required"
                   class="cor-campo-novalid">campo obrigatório</span>
             </label>
           </div>
