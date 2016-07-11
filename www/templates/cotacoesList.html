@@ -14,10 +14,10 @@
 
     <ion-list>
 
-      <ion-item class="my-item-list" collection-repeat="dado in dados  | filter:filter" href="#/side-menu21/cotacao-aberta/{{dado.id_cotacao}}">
+      <ion-item class="my-item-list" collection-repeat="dado in dados  | filter:filter" href="#/side-menu21/cotacao-aberta/{{dado.id_cotacao}}/{{dado.status_cotacao}}">
         <p>Evento: {{ dado.nome_eveto }}</p>
         <p>Serviço: {{ dado.nome_tipo_servico }}</p>
-        <p>Entrega: {{ dado.data_entrega}}</p>
+        <p>Data Evento: {{ dado.data_evento}}</p>
       </ion-item>
 
     </ion-list>
