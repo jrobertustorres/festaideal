@@ -40,17 +40,17 @@ angular.module('app.routes', [])
       })
 */
 
-      .state('menu.cotacao-aberta/:id_cotacao', {
-        url: '/cotacao-aberta/:id_cotacao',
+      .state('menu.cotacao/:id_cotacao', {
+        url: '/cotacao/:id_cotacao',
         views: {
           'side-menu21': {
-            templateUrl: 'templates/cotacaoAberta.html',
+            templateUrl: 'templates/cotacao.html',
             controller: 'CotacaoCtrl'
           }
         }
       })
 
-      .state('menu.cotacoes-pendentes-list', {
+      /*.state('menu.cotacoes-pendentes-list', {
         url: '/cotacoes-pendentes-list',
         views: {
           'side-menu21': {
@@ -88,7 +88,7 @@ angular.module('app.routes', [])
             controller: 'CotacaoEscolhidaCtrl'
           }
         }
-      })
+      })*/
 
       .state('menu', {
         url: '/side-menu21',

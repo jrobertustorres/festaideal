@@ -3332,7 +3332,7 @@ body,
   overflow: hidden;
   margin: 0;
   padding: 0;
-  color: #000;
+  color: #FFFFFF;
   word-wrap: break-word;
   font-size: 14px;
   font-family: -apple-system;
@@ -4010,7 +4010,7 @@ a.subdued {
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 17px;
+    font-size: 13px;
     font-weight: 500;
     line-height: 44px; }
     .bar .title.title-left {

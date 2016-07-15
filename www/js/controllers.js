@@ -1,6 +1,7 @@
 var servidor = "http://localhost";
 var idFornecedor = 1;
 // var idFornecedor = 0;
+var status_header = "";
 
 angular.module('app.controllers', [])
 
@@ -93,6 +94,8 @@ angular.module('app.controllers', [])
     console.log('dados 1111 ==> ' + $stateParams.status_cotacao);
     $rootScope.status_cotacao = $stateParams.status_cotacao;
     console.log('status da cotacao ' + $scope.status_cotacao);
+    // status_header = $scope.status_cotacao;
+    $scope.pagetitle = 'Cotação '+$scope.status_cotacao;
     $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + idFornecedor)
       .success(function (data) {
         $scope.dados = data;
@@ -103,6 +106,8 @@ angular.module('app.controllers', [])
   .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory) {
     console.log('dados ==> ' + $stateParams.status_cotacao);
     console.log('status da cotacao 22 ' + $rootScope.status_cotacao);
+    status_header = $scope.status_cotacao;
+    console.log("STATUS "+status_header);
     // $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao +'&status_cotacao=' + $rootScope.status_cotacao)
     $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
       .success(function (data) {
@@ -110,11 +115,12 @@ angular.module('app.controllers', [])
       });
 
     $scope.cotacaoAberta = {};
+    var msg = '';
     $scope.submeter = function () {
       console.log('status da cotacao 33333 ' + $rootScope.status_cotacao);
       // if ($scope.cotacaoAbertaForm.$valid) {
       console.log('testesssssss ');
-      var msg = '';
+
       if ($rootScope.status_cotacao == 'aberta') {
         $scope.cotacaoAberta.status_cotacao = 'PENDENTE';
         msg = 'enviada';
@@ -124,7 +130,11 @@ angular.module('app.controllers', [])
       }
 
       $scope.cotacaoAberta.id_cotacao = $stateParams.id_cotacao;
-      console.log('dddddddddd ' + $scope.cotacaoAberta);
+      editaCotacao();
+      // }
+    };
+
+    function editaCotacao() {
       $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacaoAberta)
         .success(function (data) {
           toastr.success('Cotação ' + msg + ' com sucesso!');
@@ -136,35 +146,97 @@ angular.module('app.controllers', [])
         .error(function (erro) {
           console.log(erro);
         });
-      // }
-    };
+    }
+
+    $scope.rejeitarCotacao = function (id_cotacao) {
+      $scope.cotacaoAberta.id_cotacao = id_cotacao;
+      $scope.cotacaoAberta.status_cotacao = 'CANCELADA';
+      msg = 'regeitada';
+      editaCotacao();
+    }
 
   })
+
+  .directive('searchBar', [function () {
+    return {
+      scope: {
+        ngModel: '='
+      },
+      require: ['^ionNavBar', '?ngModel'],
+      restrict: 'E',
+      replace: true,
+      template: '<ion-nav-buttons side="right">' +
+      '<div class="searchBar">' +
+      '<div class="searchTxt" ng-show="ngModel.show">' +
+      '<div class="bgdiv"></div>' +
+      '<div class="bgtxt">' +
+      '<input type="text" placeholder="Procurar..." ng-model="ngModel.txt">' +
+      '</div>' +
+      '</div>' +
+      '<i class="icon placeholder-icon" ng-click="ngModel.txt=\'\';ngModel.show=!ngModel.show"></i>' +
+      '</div>' +
+      '</ion-nav-buttons>',
+
+      compile: function (element, attrs) {
+        var icon = attrs.icon
+          || (ionic.Platform.isAndroid() && 'ion-android-search')
+          || (ionic.Platform.isIOS() && 'ion-ios7-search')
+          || 'ion-search';
+        angular.element(element[0].querySelector('.icon')).addClass(icon);
+
+        return function ($scope, $element, $attrs, ctrls) {
+          var navBarCtrl = ctrls[0];
+          $scope.navElement = $attrs.side === 'right' ? navBarCtrl.rightButtonsElement : navBarCtrl.leftButtonsElement;
+
+        };
+      },
+      controller: ['$scope', '$ionicNavBarDelegate', function ($scope, $ionicNavBarDelegate) {
+        var title, definedClass;
+        $scope.$watch('ngModel.show', function (showing, oldVal, scope) {
+          if (showing !== oldVal) {
+            if (showing) {
+              if (!definedClass) {
+                var numicons = $scope.navElement.children().length;
+                angular.element($scope.navElement[0].querySelector('.searchBar')).addClass('numicons' + numicons);
+              }
+
+              title = $ionicNavBarDelegate.getTitle();
+              $ionicNavBarDelegate.setTitle('');
+            } else {
+              $ionicNavBarDelegate.setTitle(title);
+            }
+          } else if (!title) {
+            title = $ionicNavBarDelegate.getTitle();
+          }
+        });
+      }]
+    };
+  }])
 
   /*.controller('CotacoesPendentesListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
-    $ionicConfig.backButton.text("");
-    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=PENDENTE&idFornecedor=' + idFornecedor)
-      .success(function (data) {
-        $scope.dados = data;
-      });
+   $ionicConfig.backButton.text("");
+   $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=PENDENTE&idFornecedor=' + idFornecedor)
+   .success(function (data) {
+   $scope.dados = data;
+   });
 
-  })
+   })
 
-  .controller('CotacaoPendenteCtrl', function ($scope, $state, $location, $http, $stateParams) {
-    $http.get(servidor + '/v1/api.php?req=getCotacaoPendenteById&id_cotacao=' + $stateParams.id_cotacao)
-      .success(function (data) {
-        $scope.dados = data;
-      });
-  })
+   .controller('CotacaoPendenteCtrl', function ($scope, $state, $location, $http, $stateParams) {
+   $http.get(servidor + '/v1/api.php?req=getCotacaoPendenteById&id_cotacao=' + $stateParams.id_cotacao)
+   .success(function (data) {
+   $scope.dados = data;
+   });
+   })
 
-  .controller('CotacoesEscolhidasListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
-    $ionicConfig.backButton.text("");
-    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=ABERTA&idFornecedor=' + idFornecedor)
-      .success(function (data) {
-        $scope.dados = data;
-      });
+   .controller('CotacoesEscolhidasListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
+   $ionicConfig.backButton.text("");
+   $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=ABERTA&idFornecedor=' + idFornecedor)
+   .success(function (data) {
+   $scope.dados = data;
+   });
 
-  })*/
+   })*/
 
   .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http) {
 
