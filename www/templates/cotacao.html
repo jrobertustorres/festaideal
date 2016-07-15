@@ -84,6 +84,14 @@
             <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.valor.$error.required && dados.status_cotacao == 'ABERTA'"
                   class="cor-campo-novalid">campo obrigatório</span>
             </label>
+            <label class="item item-input item-stacked-label">
+              <span class="input-label my-font-form">Validade cotação*</span>
+              <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.validade}}</p></div>
+              <input ng-show="dados.status_cotacao == 'ABERTA'" type="date">
+            <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.validade.$error.required && dados.status_cotacao == 'ABERTA'"
+                  class="cor-campo-novalid">campo obrigatório</span>
+            </label>
+
           </div>
         </form>
       </div>
@@ -95,14 +103,17 @@
        active-icon="fa fa-bars"
        resting-icon="fa fa-bars"
        toggling-method="click">
-    <button class="button button-clear bar my-button-save" type="submit" form="cotacaoAbertaForm">
+    <button ng-show="dados.status_cotacao == 'ABERTA'" class="button button-clear bar my-button-save" type="submit" form="cotacaoAbertaForm">
       Salvar
     </button>
+    <!--<button class="button button-assertive bar my-button-save" ng-click="regeitar()">
+      Regeitar
+    </button>-->
     <!--<button mfb-button bgcolor='#009688' label="Enviar" icon="fa fa-edit" type="submit" form="cotacaoAbertaForm"></button>-->
     <button mfb-button bgcolor='#009688' label="Enviar" icon="fa fa-edit" type="submit"
             form="cotacaoAbertaForm"></button>
     <button mfb-button bgcolor='#F44336' label="Rejeitar" icon="fa fa-close"
-            ng-click="rejeitarCotacao(dados.id_cotacao, 'CANCELADA')"></button>
+            ng-click="rejeitarCotacao(dados.id_cotacao)"></button>
   </nav>
   <!--<nav mfb-menu position="br" effect="zoomin" label="hover here"-->
   <!--active-icon="ion-edit" resting-icon="ion-plus-round"-->
