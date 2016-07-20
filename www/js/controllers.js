@@ -1,4 +1,5 @@
 var servidor = "http://localhost";
+// var servidor = "http://festaideal.com.br/ws_mobile";
 var idFornecedor = 1;
 // var idFornecedor = 0;
 var status_header = "";
@@ -62,7 +63,7 @@ angular.module('app.controllers', [])
 
     $scope.submeter = function () {
       if ($scope.loginForm.$valid) {
-        $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.email + '&senha=' + $scope.senha)
+        $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha)
           .success(function (data) {
             idFornecedor = data.id_fornecedor;
             console.log('id fornecedor ' + data.id_fornecedor);
@@ -91,33 +92,74 @@ angular.module('app.controllers', [])
 
   .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope) {
     $ionicConfig.backButton.text("");
-    console.log('dados 1111 ==> ' + $stateParams.status_cotacao);
     $rootScope.status_cotacao = $stateParams.status_cotacao;
-    console.log('status da cotacao ' + $scope.status_cotacao);
-    // status_header = $scope.status_cotacao;
     $scope.pagetitle = 'Cotação '+$scope.status_cotacao;
     $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + idFornecedor)
       .success(function (data) {
         $scope.dados = data;
       });
 
+    $scope.IsVisible = false;
+    $scope.ShowHide = function () {
+      //If DIV is visible it will be hidden and vice versa.
+      $scope.IsVisible = $scope.IsVisible ? false : true;
+    }
+
   })
   //FAZER UM CONTROLLER SÓ E TAMBÉM UM HTML SÓ PRA TODOS OS STATUS
-  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory) {
-    console.log('dados ==> ' + $stateParams.status_cotacao);
-    console.log('status da cotacao 22 ' + $rootScope.status_cotacao);
-    status_header = $scope.status_cotacao;
-    console.log("STATUS "+status_header);
-    // $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao +'&status_cotacao=' + $rootScope.status_cotacao)
+  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal) {
+
+    $ionicModal.fromTemplateUrl('templates/modal-1.html', {
+      id: '1', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal1 = modal;
+    });
+
+    // Modal 2
+    $ionicModal.fromTemplateUrl('templates/modal-2.html', {
+      id: '2', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal2 = modal;
+    });
+
+    $scope.openModal = function(index) {
+      if (index == 1) $scope.oModal1.show();
+      else $scope.oModal2.show();
+    };
+
+    $scope.closeModal = function(index) {
+      if (index == 1) $scope.oModal1.hide();
+      else $scope.oModal2.hide();
+    };
+
+    /* Listen for broadcasted messages */
+
+    $scope.$on('modal.shown', function(event, modal) {
+    });
+
+    $scope.$on('modal.hidden', function(event, modal) {
+    });
+
+    $scope.$on('$destroy', function() {
+      $scope.oModal1.remove();
+      $scope.oModal2.remove();
+    });
+
     $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
       .success(function (data) {
         $scope.dados = data;
+        $scope.pagetitle = 'Dados cotação '+$rootScope.status_cotacao;
       });
 
     $scope.cotacaoAberta = {};
     var msg = '';
     $scope.submeter = function () {
-      console.log('status da cotacao 33333 ' + $rootScope.status_cotacao);
       // if ($scope.cotacaoAbertaForm.$valid) {
       console.log('testesssssss ');
 
@@ -149,15 +191,22 @@ angular.module('app.controllers', [])
     }
 
     $scope.rejeitarCotacao = function (id_cotacao) {
+      console.log('id cotacaosss  '+$scope.cotacaoAberta.id_cotacao);
+      console.log('motivo ==> '+$scope.cotacaoAberta.motivo);
       $scope.cotacaoAberta.id_cotacao = id_cotacao;
-      $scope.cotacaoAberta.status_cotacao = 'CANCELADA';
-      msg = 'regeitada';
+      if ($rootScope.status_cotacao == 'escolhida' || $rootScope.status_cotacao == 'concluida') {
+        $scope.cotacaoAberta.status_cotacao = 'CANCELADA';
+        msg = 'cancelada';
+      } else {
+        $scope.cotacaoAberta.status_cotacao = 'REJEITADA';
+        msg = 'rejeitada';
+      }
       editaCotacao();
     }
 
   })
 
-  .directive('searchBar', [function () {
+  /*.directive('searchBar', [function () {
     return {
       scope: {
         ngModel: '='
@@ -211,7 +260,7 @@ angular.module('app.controllers', [])
         });
       }]
     };
-  }])
+  }])*/
 
   /*.controller('CotacoesPendentesListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
    $ionicConfig.backButton.text("");

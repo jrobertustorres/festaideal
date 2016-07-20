@@ -1,42 +1,40 @@
-<ion-nav-view animation="slide-left-right" hide-nav-bar="true"></ion-nav-view>
-<ion-view hide-back-button="true" hide-nav-bar="true">
+<ion-nav-view animation="slide-left-right"></ion-nav-view>
+<ion-view hide-back-button="true" hide-nav-bar="true" class="barra-superior">
   <ion-content ng-controller="loginCtrl" padding="true" class="has-header">
     <div style="margin: 0px; line-height: 250px; text-align: center; background-color: rgb(232, 235, 239);">
       <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
     </div>
     <!--<div class="padding" align="center">-->
-      <!--<button class="button button-full button-border icon-left-->
-            <!--ion-social-facebook button-positive-900 initial" ng-click="facebookSignIn()">Login com Facebook-->
-      <!--</button>-->
+    <!--<button class="button button-full button-border icon-left-->
+    <!--ion-social-facebook button-positive-900 initial" ng-click="facebookSignIn()">Login com Facebook-->
+    <!--</button>-->
     <!--</div>-->
     <form name="loginForm" novalidate ng-submit="submeter()">
-      <div>
+      <div style="margin-left: -15px;">
         <span class="cor-campo-novalid my-align-spam"> {{mensagem}}</span>
         <label class="item-input item-stacked-label">
-          <span class="input-label my-font-form">E-mail*</span>
-          <input ng-model="email" type="email" name="email" required ng-maxlength="40">
-              <span ng-show="loginForm.$submitted && loginForm.email.$error.required"
+          <!--<span class="input-label my-font-form">Login*</span>-->
+          <input ng-model="login" type="text" name="login" required ng-maxlength="40" placeholder="Login">
+              <span ng-show="loginForm.$submitted && loginForm.login.$error.required"
                     class="cor-campo-novalid my-font-form">campo obrigatório</span>
+          </label>
 
-        <span ng-show="loginForm.$submitted && loginForm.email.$error.email" class="cor-campo-novalid">
-            e-mail inválido</span>
-        </label>
-        <label class="item-input item-stacked-label">
-          <span class="input-label my-font-form">Senha*</span>
-          <input ng-model="senha" type="password" name="senha" required ng-maxlength="20">
+          <label class="item-input item-stacked-label">
+            <!--<span class="input-label my-font-form">Senha*</span>-->
+            <input ng-model="senha" type="password" name="senha" required ng-maxlength="20" placeholder="Senha">
               <span ng-show="loginForm.$submitted && loginForm.senha.$error.required"
                     class="cor-campo-novalid my-font-form">campo obrigatório</span>
-        </label>
+          </label>
 
       </div>
       <div class="my-item-padding">
-        <button type="submit" class="button button-positive button-block button-outline">Entrar</button>
+        <button type="submit" class="button button-light button-block button-outline">Entrar</button>
       </div>
       <div class="padding botao01" id="esqueci-senha">
         <a href="#/recuperar-senha" class="botao01">Esqueci a senha</a>
       </div>
       <!--<a href="#" onclick="window.open('/recuperar-senha', '_system', 'location=yes'); return false;" id="login-button2"-->
-         <!--class=" button button-positive  button-block button-clear my-font-form">Esqueci a senha</a>-->
+      <!--class=" button button-positive  button-block button-clear my-font-form">Esqueci a senha</a>-->
     </form>
   </ion-content>
 </ion-view>

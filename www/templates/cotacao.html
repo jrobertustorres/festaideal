@@ -1,13 +1,13 @@
-<ion-view>
-  <ion-nav-title>
+<ion-view view-title="{{pagetitle}}">
+  <!--<ion-nav-title>
     <span class="font-barra-superior">Dados Cotação</span>
-  </ion-nav-title>
+  </ion-nav-title>-->
   <ion-nav-buttons side="right">
-    <button class="button button-clear bar my-button-save" type="submit" form="cotacaoAbertaForm">
+    <!--<button class="button button-clear bar my-button-save" type="submit" form="cotacaoAbertaForm">
       Salvar
-    </button>
+    </button>-->
   </ion-nav-buttons>
-  <ion-content ng-controller="CotacaoCtrl" scroll="true" padding="true" class="has-header">
+  <ion-content ng-controller="CotacaoCtrl" scroll="true" padding="true" class="has-header content-stable">
 
     <!--<div class="list " id="cotacao-card23">
       <div class=" item item-image">
@@ -24,9 +24,28 @@
           <strong>markdown</strong>fdfdff</p>
       </div>
     </div>-->
+    <div class="list card" style="margin-top: 5px;">
+
+      <div class="item">
+        <h3>Cliente</h3>
+        <p>{{dados.nome_cliente}}</p>
+        <h3>Evento</h3>
+        <p>{{dados.nome_evento}}</p>
+      </div>
+
+      <div class="item">
+        <h3>Serviço</h3>
+        <p>{{dados.nome_tipo_servico}}</p>
+        <h3>Quantidade cotação</h3>
+        <p>{{dados.qtd_cotacao}}</p>
+        <h3>Quantidade pessoas</h3>
+        <p>{{dados.qtd_pessoa}}</p>
+      </div>
+
+    </div>
 
 
-    <div class="list">
+    <!--<div class="list">
 
       <div class="list card">
 
@@ -45,34 +64,195 @@
           <p>{{dados.qtd_cotacao}}</p>
           <h3>Quantidade pessoas</h3>
           <p>{{dados.qtd_pessoa}}</p>
-        </div>
+        </div>-->
 
+    <!--<form id="cotacaoAbertaForm" name="cotacaoAbertaForm" novalidate ng-submit="submeter()">
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label my-font-form">Data entrega*</span>
+          <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.data_entrega}}</p></div>
+          <input ng-show="dados.status_cotacao == 'ABERTA'" type="date">
+        <span
+          ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA'"
+          class="cor-campo-novalid">campo obrigatório</span>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <div class="input-label my-font-form">Tipo pagamento*</div>
+          <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.tipo_pagamento}}</p></div>
+          <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.tipo_pagamento" type="text"
+                 name="tipo_pagamento" required
+                 ng-maxlength="20">
+          <span
+            ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.tipo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
+            class="cor-campo-novalid">campo obrigatório</span>
+          <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.tipo_pagamento.$error.maxlength"
+                class="cor-campo-novalid">máximo 20 caracteres</span>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <div class="input-label my-font-form">Prazo pagamento*</div>
+          <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.prazo_pagamento}}</p></div>
+          <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.prazo_pagamento" type="text"
+                 name="prazo_pagamento" required
+                 ng-maxlength="20">
+          <span
+            ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.prazo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
+            class="cor-campo-novalid">campo obrigatório</span>
+          <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.prazo_pagamento.$error.maxlength"
+                class="cor-campo-novalid">máximo 20 caracteres</span>
+        </label>
+
+        <label class="item item-input item-stacked-label">
+          <span class="input-label my-font-form">Valor*</span>
+          <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.valor}}</p></div>
+          <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.valor" type="text" name="valor"
+                 mask="9.999,99" required>
+        <span
+          ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.valor.$error.required && dados.status_cotacao == 'ABERTA'"
+          class="cor-campo-novalid">campo obrigatório</span>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label my-font-form">Validade cotação*</span>
+          <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.validade}}</p></div>
+          <input ng-show="dados.status_cotacao == 'ABERTA'" type="date">
+        <span
+          ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.validade.$error.required && dados.status_cotacao == 'ABERTA'"
+          class="cor-campo-novalid">campo obrigatório</span>
+        </label>
+
+      </div>
+    </form>-->
+    <!--</div>
+  </div>-->
+    <!--<button ng-show="dados.status_cotacao != 'ABERTA'" class="button button-assertive bar my-button-save" ng-click="rejeitarCotacao(dados.id_cotacao)">
+      Cancelar
+    </button>-->
+    <!--<button ng-show="dados.status_cotacao != 'ABERTA'" class="button button-assertive bar my-button-save"
+            ng-click="modal.show()">Cancelar
+    </button>-->
+  </ion-content>
+
+  <!--<script id="templates/modal.html" type="text/ng-template">
+    <ion-modal-view>
+      <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">New Contact</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+      </ion-header-bar>
+      <ion-content class="padding">
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">First Name</span>
+            <input ng-model="newUser.firstName" type="text">
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Last Name</span>
+            <input ng-model="newUser.lastName" type="text">
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Email</span>
+            <input ng-model="newUser.email" type="text">
+          </label>
+          <button class="button button-full button-positive" ng-click="createContact(newUser)">Create</button>
+        </div>
+      </ion-content>
+    </ion-modal-view>
+  </script>-->
+
+
+  <!-- <script id="home.html" type="text/ng-template">
+     <button class="button" ng-click="modal.show()">Open From Template Url</button>
+   </script>-->
+
+
+  <nav ng-show="dados.status_cotacao == 'ABERTA'" mfb-menu position="br"
+       effect="zoomin"
+       bgcolor='#3F51B5'
+       active-icon="fa fa-bars"
+       resting-icon="fa fa-bars"
+       toggling-method="click">
+
+    <button mfb-button bgcolor='#009688' label="Responder" icon="fa fa-edit" ng-click="openModal(2)" ></button>
+    <button mfb-button bgcolor='#F44336' label="Rejeitar" icon="fa fa-close"
+            ng-click="openModal(1)"></button>
+
+    <!--<button ng-show="dados.status_cotacao == 'ABERTA'" class="button button-clear bar my-button-save" type="submit">
+      Salvar
+    </button>-->
+  </nav>
+  <!--<nav mfb-menu position="br" effect="zoomin" label="hover here"-->
+  <!--active-icon="ion-edit" resting-icon="ion-plus-round"-->
+  <!--toggling-method="click">-->
+  <!--<button mfb-button icon="paper-airplane" label="menu item"></button>-->
+  <!--</nav>-->
+
+
+
+  <script id="templates/modal-1.html" type="text/ng-template">
+    <div class="modal">
+      <header class="bar bar-header barra-superior">
+        <h1 class="title font-barra-superior" style="text-align: center">Insira uma Justificativa</h1>
+        <div class="button button-clear" ng-click="closeModal(1)"><span class="icon ion-close"></span></div>
+      </header>
+      <content has-header="true" padding="true">
+        <p>This is a modal</p>
+        <div class="list" style="padding-top: 10px;">
+          <label class="item item-input item-stacked-label">
+            <div class="input-label my-font-form">Justificativa*</div>
+            <input ng-model="cotacaoAberta.motivo" type="text" name="motivo" required
+                   ng-maxlength="20">
+              <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.motivo.$error.required"
+                    class="cor-campo-novalid">campo obrigatório</span>
+              <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.motivo.$error.maxlength"
+                    class="cor-campo-novalid">máximo 50 caracteres</span>
+          </label>
+          <button class="button button-assertive button-full my-button-save"
+                  ng-click="rejeitarCotacao(dados.id_cotacao); modal.hide()" style="margin-top: 90px;">
+            Confirmar
+          </button>
+          <!--<button class="button button-full button-positive" ng-click="createContact(dado.id_cotacao)">Salvar</button>-->
+        </div>
+      </content>
+    </div>
+  </script>
+
+  <script id="templates/modal-2.html" type="text/ng-template">
+    <div class="modal">
+      <header class="bar bar-header barra-superior">
+        <h1 class="title font-barra-superior" style="text-align: center">Responder cotação</h1>
+        <div class="button button-clear" ng-click="closeModal(2)"><span class="icon ion-close"></span></div>
+      </header>
+      <content has-header="true" padding="true">
         <form id="cotacaoAbertaForm" name="cotacaoAbertaForm" novalidate ng-submit="submeter()">
-          <div class="list">
+          <p>This is a modal</p>
+          <div class="list" style="padding-top: 10px;">
             <label class="item item-input item-stacked-label">
               <span class="input-label my-font-form">Data entrega*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.data_entrega}}</p></div>
               <input ng-show="dados.status_cotacao == 'ABERTA'" type="date">
-            <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA'"
-                  class="cor-campo-novalid">campo obrigatório</span>
+            <span
+              ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA'"
+              class="cor-campo-novalid">campo obrigatório</span>
             </label>
             <label class="item item-input item-stacked-label">
               <div class="input-label my-font-form">Tipo pagamento*</div>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.tipo_pagamento}}</p></div>
-              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.tipo_pagamento" type="text" name="tipo_pagamento" required
+              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.tipo_pagamento" type="text"
+                     name="tipo_pagamento" required
                      ng-maxlength="20">
-              <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.tipo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
-                    class="cor-campo-novalid">campo obrigatório</span>
+              <span
+                ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.tipo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
+                class="cor-campo-novalid">campo obrigatório</span>
               <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.tipo_pagamento.$error.maxlength"
                     class="cor-campo-novalid">máximo 20 caracteres</span>
             </label>
             <label class="item item-input item-stacked-label">
               <div class="input-label my-font-form">Prazo pagamento*</div>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.prazo_pagamento}}</p></div>
-              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.prazo_pagamento" type="text" name="prazo_pagamento" required
+              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.prazo_pagamento" type="text"
+                     name="prazo_pagamento" required
                      ng-maxlength="20">
-              <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.prazo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
-                    class="cor-campo-novalid">campo obrigatório</span>
+              <span
+                ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.prazo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
+                class="cor-campo-novalid">campo obrigatório</span>
               <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.prazo_pagamento.$error.maxlength"
                     class="cor-campo-novalid">máximo 20 caracteres</span>
             </label>
@@ -80,44 +260,27 @@
             <label class="item item-input item-stacked-label">
               <span class="input-label my-font-form">Valor*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.valor}}</p></div>
-              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.valor" type="text" name="valor" mask="9.999,99" required>
-            <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.valor.$error.required && dados.status_cotacao == 'ABERTA'"
-                  class="cor-campo-novalid">campo obrigatório</span>
+              <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacaoAberta.valor" type="text" name="valor"
+                     mask="9.999,99" required>
+            <span
+              ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.valor.$error.required && dados.status_cotacao == 'ABERTA'"
+              class="cor-campo-novalid">campo obrigatório</span>
             </label>
             <label class="item item-input item-stacked-label">
               <span class="input-label my-font-form">Validade cotação*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.validade}}</p></div>
               <input ng-show="dados.status_cotacao == 'ABERTA'" type="date">
-            <span ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.validade.$error.required && dados.status_cotacao == 'ABERTA'"
-                  class="cor-campo-novalid">campo obrigatório</span>
+            <span
+              ng-show="cotacaoAbertaForm.$submitted && cotacaoAbertaForm.validade.$error.required && dados.status_cotacao == 'ABERTA'"
+              class="cor-campo-novalid">campo obrigatório</span>
             </label>
-
           </div>
+          <button ng-show="dados.status_cotacao == 'ABERTA'" class="button button-clear bar my-button-save" type="submit">
+            Salvar
+          </button>
         </form>
-      </div>
+      </content>
     </div>
-  </ion-content>
-  <nav ng-show="dados.status_cotacao == 'ABERTA'" mfb-menu position="br"
-       effect="zoomin"
-       bgcolor='#3F51B5'
-       active-icon="fa fa-bars"
-       resting-icon="fa fa-bars"
-       toggling-method="click">
-    <button ng-show="dados.status_cotacao == 'ABERTA'" class="button button-clear bar my-button-save" type="submit" form="cotacaoAbertaForm">
-      Salvar
-    </button>
-    <!--<button class="button button-assertive bar my-button-save" ng-click="regeitar()">
-      Regeitar
-    </button>-->
-    <!--<button mfb-button bgcolor='#009688' label="Enviar" icon="fa fa-edit" type="submit" form="cotacaoAbertaForm"></button>-->
-    <button mfb-button bgcolor='#009688' label="Enviar" icon="fa fa-edit" type="submit"
-            form="cotacaoAbertaForm"></button>
-    <button mfb-button bgcolor='#F44336' label="Rejeitar" icon="fa fa-close"
-            ng-click="rejeitarCotacao(dados.id_cotacao)"></button>
-  </nav>
-  <!--<nav mfb-menu position="br" effect="zoomin" label="hover here"-->
-  <!--active-icon="ion-edit" resting-icon="ion-plus-round"-->
-  <!--toggling-method="click">-->
-  <!--<button mfb-button icon="paper-airplane" label="menu item"></button>-->
-  <!--</nav>-->
+  </script>
+
 </ion-view>

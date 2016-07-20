@@ -19,6 +19,7 @@
 
 .my-font-form {
   font-size: 13px;
+  text-transform: capitalize;
 }
 
 .cor-campo-novalid {
@@ -101,7 +102,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 }
 
 .my-icon-color {
-  color: #009900 !important
+  color: #337AB7 !important
 }
 
 .content-stable{
@@ -153,5 +154,10 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 
 .collection-repeat-container .my-item-list{
   border-bottom: 1px solid #ddd; margin: -7px; padding: 0px;
+}
+
+.font-button {
+  text-transform: capitalize;
+  font-size: 13px;
 }
 
