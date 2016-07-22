@@ -106,7 +106,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 }
 
 .content-stable{
-  background-color: #f8f8f8!important;
+  background-color: #E8E8E8!important;
 }
 
 /* ------- SEARCH ----*/
@@ -151,6 +151,7 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   padding-left: 5px;
   padding-right:5px;
 }
+/*fim search bar*/
 
 .collection-repeat-container .my-item-list{
   border-bottom: 1px solid #ddd; margin: -7px; padding: 0px;

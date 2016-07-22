@@ -90,7 +90,7 @@ angular.module('app.controllers', [])
   //
   // })
 
-  .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope) {
+  .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope, $ionicFilterBar) {
     $ionicConfig.backButton.text("");
     $rootScope.status_cotacao = $stateParams.status_cotacao;
     $scope.pagetitle = 'Cotação '+$scope.status_cotacao;
@@ -99,12 +99,29 @@ angular.module('app.controllers', [])
         $scope.dados = data;
       });
 
-    $scope.IsVisible = false;
-    $scope.ShowHide = function () {
-      //If DIV is visible it will be hidden and vice versa.
-      $scope.IsVisible = $scope.IsVisible ? false : true;
-    }
+    var filterBarInstance;
+    $scope.showFilterBar = function () {
+      filterBarInstance = $ionicFilterBar.show({
+        items: $scope.dados,
+        update: function (filteredItems, filterText) {
+          $scope.items = filteredItems;
+          /*if (filterText) {
+            console.log(filterText);
+          }*/
+        }
+      });
+    };
+    $scope.refreshItems = function () {
+      if (filterBarInstance) {
+        filterBarInstance();
+        filterBarInstance = null;
+      }
 
+      $timeout(function () {
+        // getItems();
+        $scope.$broadcast('scroll.refreshComplete');
+      }, 1000);
+    };
   })
   //FAZER UM CONTROLLER SÓ E TAMBÉM UM HTML SÓ PRA TODOS OS STATUS
   .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal) {
@@ -206,87 +223,6 @@ angular.module('app.controllers', [])
 
   })
 
-  /*.directive('searchBar', [function () {
-    return {
-      scope: {
-        ngModel: '='
-      },
-      require: ['^ionNavBar', '?ngModel'],
-      restrict: 'E',
-      replace: true,
-      template: '<ion-nav-buttons side="right">' +
-      '<div class="searchBar">' +
-      '<div class="searchTxt" ng-show="ngModel.show">' +
-      '<div class="bgdiv"></div>' +
-      '<div class="bgtxt">' +
-      '<input type="text" placeholder="Procurar..." ng-model="ngModel.txt">' +
-      '</div>' +
-      '</div>' +
-      '<i class="icon placeholder-icon" ng-click="ngModel.txt=\'\';ngModel.show=!ngModel.show"></i>' +
-      '</div>' +
-      '</ion-nav-buttons>',
-
-      compile: function (element, attrs) {
-        var icon = attrs.icon
-          || (ionic.Platform.isAndroid() && 'ion-android-search')
-          || (ionic.Platform.isIOS() && 'ion-ios7-search')
-          || 'ion-search';
-        angular.element(element[0].querySelector('.icon')).addClass(icon);
-
-        return function ($scope, $element, $attrs, ctrls) {
-          var navBarCtrl = ctrls[0];
-          $scope.navElement = $attrs.side === 'right' ? navBarCtrl.rightButtonsElement : navBarCtrl.leftButtonsElement;
-
-        };
-      },
-      controller: ['$scope', '$ionicNavBarDelegate', function ($scope, $ionicNavBarDelegate) {
-        var title, definedClass;
-        $scope.$watch('ngModel.show', function (showing, oldVal, scope) {
-          if (showing !== oldVal) {
-            if (showing) {
-              if (!definedClass) {
-                var numicons = $scope.navElement.children().length;
-                angular.element($scope.navElement[0].querySelector('.searchBar')).addClass('numicons' + numicons);
-              }
-
-              title = $ionicNavBarDelegate.getTitle();
-              $ionicNavBarDelegate.setTitle('');
-            } else {
-              $ionicNavBarDelegate.setTitle(title);
-            }
-          } else if (!title) {
-            title = $ionicNavBarDelegate.getTitle();
-          }
-        });
-      }]
-    };
-  }])*/
-
-  /*.controller('CotacoesPendentesListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
-   $ionicConfig.backButton.text("");
-   $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=PENDENTE&idFornecedor=' + idFornecedor)
-   .success(function (data) {
-   $scope.dados = data;
-   });
-
-   })
-
-   .controller('CotacaoPendenteCtrl', function ($scope, $state, $location, $http, $stateParams) {
-   $http.get(servidor + '/v1/api.php?req=getCotacaoPendenteById&id_cotacao=' + $stateParams.id_cotacao)
-   .success(function (data) {
-   $scope.dados = data;
-   });
-   })
-
-   .controller('CotacoesEscolhidasListCtrl', function ($scope, $state, $location, $http, $ionicConfig) {
-   $ionicConfig.backButton.text("");
-   $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status=ABERTA&idFornecedor=' + idFornecedor)
-   .success(function (data) {
-   $scope.dados = data;
-   });
-
-   })*/
-
   .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http) {
 
     $scope.recuperarSenha = {};
@@ -316,3 +252,4 @@ angular.module('app.controllers', [])
     }
 
   })
+
