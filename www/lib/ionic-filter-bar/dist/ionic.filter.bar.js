@@ -209,7 +209,7 @@ angular.module('jett.ionic.filter.bar', ['ionic']);
         search: 'ion-ios-search-strong',
         backdrop: true,
         transition: 'vertical',
-        placeholder: 'Search'
+        placeholder: 'Filtrar'
       });
 
       // iOS (it is the default already)

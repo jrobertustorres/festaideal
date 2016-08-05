@@ -1,3 +1,7 @@
+.my-item {
+  border-color: #FFFFFF!important;
+}
+
 .font-barra-superior {
   color: #FFFFFF!important;
   font-size: 13px!important;
@@ -22,12 +26,17 @@
   text-transform: capitalize;
 }
 
+.my-font-form-span {
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
 .cor-campo-novalid {
   color: red;
 }
 
 .barra-superior {
-  background-color: #B11C27 !important
+  background-color: #BC1F26 !important
 }
 
 .bar.bar-positive {
@@ -42,6 +51,14 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   border-right-width: 0;
   border-top-width: 0;
   border-left-width: 0;
+}
+
+.my-border {
+  border: 1px solid #FFFFFF!important;
+  border-right-width: 0!important;
+  border-top-width: 0!important;
+  border-left-width: 0!important;
+  background-color: #BC1F26!important;
 }
 
 .my-button-save {
@@ -60,10 +77,10 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .bar .button {
   min-height: 30px;
   min-width: 44px;
-  max-width: 48px;
+  max-width: 60px;
   margin-bottom: 0;
   max-height: 4px;
-  width: 48px;
+  width: 60px;
 }
 
 .my-custom-icon {
@@ -162,3 +179,36 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
   font-size: 13px;
 }
 
+.circle {
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  font-size:50px;
+  color:#BC1F26;
+  line-height:130px;
+  text-align:center;
+  background-color: #fff;
+  padding: 30px;
+}
+
+.my-card-margin {
+  margin: 2px 1px!important;
+}
+
+.item-input input, .item-input {
+  width: 99%;
+}
+
+.bar.bar-profile {
+  background-color: #444;
+  height: 170px;
+}
+
+.profile-picture {
+  border-radius: 50%;
+}
+
+.menu .has-header
+{
+  top: 169px;
+}

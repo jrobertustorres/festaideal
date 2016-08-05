@@ -2,15 +2,18 @@ var servidor = "http://localhost";
 // var servidor = "http://festaideal.com.br/ws_mobile";
 var idFornecedor = 1;
 // var idFornecedor = 0;
-var status_header = "";
 
 angular.module('app.controllers', [])
 
-  .controller('homeCtrl', function ($scope, $http) {
+  .controller('homeCtrl', function ($scope, $http, $ionicLoading) {
 
     $scope.$on('$ionicView.enter', function () {
+      $scope.pagetitle = 'Cotações';
+      $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
+
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
         .success(function (data) {
+          $ionicLoading.hide();
           $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
           $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
           $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
@@ -44,7 +47,7 @@ angular.module('app.controllers', [])
       var confirmPopup = $ionicPopup.confirm({
         title: 'Deseja realmente sair?',
         cancelText: 'Não',
-        okText: 'Sim'
+        okText: 'Sair'
       });
       confirmPopup.then(function (res) {
         if (res) {
@@ -80,58 +83,51 @@ angular.module('app.controllers', [])
     }
   })
 
-  // .controller('CotacoesAbertasListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams) {
-  //   $ionicConfig.backButton.text("");
-  //   console.log('dados 1111 ==> '+$stateParams.status_cotacao)
-  //   $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=ABERTA&idFornecedor=' + idFornecedor)
-  //     .success(function (data) {
-  //       $scope.dados = data;
-  //     });
-  //
-  // })
-
   .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope, $ionicFilterBar) {
     $ionicConfig.backButton.text("");
     $rootScope.status_cotacao = $stateParams.status_cotacao;
-    $scope.pagetitle = 'Cotação '+$scope.status_cotacao;
+    $scope.pagetitle = 'Cotação ' + $scope.status_cotacao;
+    var filterBarInstance;
+
     $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + idFornecedor)
       .success(function (data) {
         $scope.dados = data;
+        // $scope.items = data;
       });
 
-    var filterBarInstance;
     $scope.showFilterBar = function () {
       filterBarInstance = $ionicFilterBar.show({
         items: $scope.dados,
         update: function (filteredItems, filterText) {
           $scope.items = filteredItems;
-          /*if (filterText) {
+          if (filterText) {
             console.log(filterText);
-          }*/
+          }
         }
       });
     };
+
     $scope.refreshItems = function () {
       if (filterBarInstance) {
         filterBarInstance();
         filterBarInstance = null;
       }
 
-      $timeout(function () {
+      /*$timeout(function () {
         // getItems();
         $scope.$broadcast('scroll.refreshComplete');
-      }, 1000);
+      }, 1000);*/
     };
   })
-  //FAZER UM CONTROLLER SÓ E TAMBÉM UM HTML SÓ PRA TODOS OS STATUS
-  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal) {
+
+  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading) {
 
     $ionicModal.fromTemplateUrl('templates/modal-1.html', {
       id: '1', // We need to use and ID to identify the modal that is firing the event!
       scope: $scope,
       backdropClickToClose: false,
       animation: 'slide-in-up'
-    }).then(function(modal) {
+    }).then(function (modal) {
       $scope.oModal1 = modal;
     });
 
@@ -141,84 +137,131 @@ angular.module('app.controllers', [])
       scope: $scope,
       backdropClickToClose: false,
       animation: 'slide-in-up'
-    }).then(function(modal) {
+    }).then(function (modal) {
       $scope.oModal2 = modal;
     });
 
-    $scope.openModal = function(index) {
+    $scope.openModal = function (index) {
       if (index == 1) $scope.oModal1.show();
       else $scope.oModal2.show();
     };
 
-    $scope.closeModal = function(index) {
+    $scope.closeModal = function (index) {
       if (index == 1) $scope.oModal1.hide();
       else $scope.oModal2.hide();
     };
 
-    /* Listen for broadcasted messages */
-
-    $scope.$on('modal.shown', function(event, modal) {
+    $scope.$on('modal.shown', function (event, modal) {
     });
 
-    $scope.$on('modal.hidden', function(event, modal) {
+    $scope.$on('modal.hidden', function (event, modal) {
     });
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       $scope.oModal1.remove();
       $scope.oModal2.remove();
     });
+    $ionicLoading.show();
 
     $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
       .success(function (data) {
+        $ionicLoading.hide();
         $scope.dados = data;
-        $scope.pagetitle = 'Dados cotação '+$rootScope.status_cotacao;
+        $scope.pagetitle = 'Dados cotação ' + $scope.dados.status_cotacao;
+      console.log('bbbbbbbbbbbbbbbbbbbb '+$scope.pagetitle);
       });
 
-    $scope.cotacaoAberta = {};
+    $scope.cotacao = {};
+    // $scope.cotacaoAberta = {};
     var msg = '';
-    $scope.submeter = function () {
-      // if ($scope.cotacaoAbertaForm.$valid) {
-      console.log('testesssssss ');
+    /*$scope.submeter = function () {
+     // if ($scope.cotacaoAbertaForm.$valid) {
+     console.log('testesssssss ');
 
-      if ($rootScope.status_cotacao == 'aberta') {
-        $scope.cotacaoAberta.status_cotacao = 'PENDENTE';
-        msg = 'enviada';
-      } else if ($rootScope.status_cotacao == 'escolhida') {
-        $scope.cotacaoAberta.status_cotacao = 'CONCLUIDA';
-        msg = 'concluida';
-      }
+     if ($rootScope.status_cotacao == 'aberta') {
+     $scope.cotacaoAberta.status_cotacao = 'PENDENTE';
+     msg = 'enviada';
+     } else if ($rootScope.status_cotacao == 'escolhida') {
+     $scope.cotacaoAberta.status_cotacao = 'CONCLUIDA';
+     msg = 'concluida';
+     }
 
-      $scope.cotacaoAberta.id_cotacao = $stateParams.id_cotacao;
-      editaCotacao();
-      // }
-    };
+     $scope.cotacaoAberta.id_cotacao = $stateParams.id_cotacao;
+     editaCotacao();
+     // }
+     };*/
 
-    function editaCotacao() {
-      $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacaoAberta)
-        .success(function (data) {
-          toastr.success('Cotação ' + msg + ' com sucesso!');
-          $ionicHistory.nextViewOptions({
-            disableBack: true
-          });
-          $location.path('side-menu21/home');
-        })
-        .error(function (erro) {
-          console.log(erro);
-        });
-    }
+    /*$scope.cotacaoRejeitarForm = {
+     cotacaoRejeitarForm: {}
+     };*/
 
-    $scope.rejeitarCotacao = function (id_cotacao) {
-      console.log('id cotacaosss  '+$scope.cotacaoAberta.id_cotacao);
-      console.log('motivo ==> '+$scope.cotacaoAberta.motivo);
-      $scope.cotacaoAberta.id_cotacao = id_cotacao;
-      if ($rootScope.status_cotacao == 'escolhida' || $rootScope.status_cotacao == 'concluida') {
-        $scope.cotacaoAberta.status_cotacao = 'CANCELADA';
-        msg = 'cancelada';
+    /*$scope.submeterMotivo = function () {
+     if ($scope.cotacao.motivo) {
+     rejeitarCotacao();
+     }
+     };*/
+    /*$scope.rejeitarCotacao = function () {
+     console.log('id cotacaosss  ' + $scope.dados.id_cotacao);
+     console.log('motivo ==> ' + $scope.cotacao.motivo);
+     console.log('status da cotação dentro do rejeitar  ==> ' + $scope.cotacao.status_cotacao);
+     if ($scope.cotacao.motivo) {
+     $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
+     if ($rootScope.status_cotacao == 'escolhida' || $rootScope.status_cotacao == 'concluida') {
+     $scope.cotacao.status_cotacao = 'CANCELADA';
+     msg = 'cancelada';
+     } else {
+     $scope.cotacao.status_cotacao = 'REJEITADA';
+     console.log('status da cotação dentro do rejeitar 22222  ==> ' + $scope.cotacao.status_cotacao);
+     msg = 'rejeitada';
+     }
+     editaCotacao();
+     }
+     }*/
+
+    $scope.editaCotacao = function () {
+      // function editaCotacao() {
+      $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
+      if ($scope.cotacao.motivo) {
+        if ($rootScope.status_cotacao == 'escolhida' || $rootScope.status_cotacao == 'concluida') {
+          $scope.cotacao.status_cotacao = 'CANCELADA';
+          msg = 'cancelada';
+        } else {
+          $scope.cotacao.status_cotacao = 'REJEITADA';
+          msg = 'rejeitada';
+        }
+        enviaEditar();
+
       } else {
-        $scope.cotacaoAberta.status_cotacao = 'REJEITADA';
-        msg = 'rejeitada';
+        var itemsLength = Object.keys($scope.cotacao).length;
+        if (itemsLength == 6) {
+          if ($rootScope.status_cotacao == 'aberta') {
+            $scope.cotacao.status_cotacao = 'PENDENTE';
+            msg = 'enviada';
+          } else if ($scope.dados.status_cotacao == 'escolhida') {
+            $scope.cotacao.status_cotacao = 'CONCLUIDA';
+            msg = 'concluida';
+          }
+          enviaEditar();
+        }
+
       }
-      editaCotacao();
+
+      function enviaEditar() {
+        $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacao)
+          .success(function (data) {
+            toastr.success('Cotação ' + msg + ' com sucesso!');
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+            $scope.closeModal(1);
+            $scope.closeModal(2);
+            $location.path('side-menu21/home');
+          })
+          .error(function (erro) {
+            console.log(erro);
+          });
+      }
+
     }
 
   })

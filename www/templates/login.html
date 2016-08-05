@@ -1,29 +1,32 @@
 <ion-nav-view animation="slide-left-right"></ion-nav-view>
 <ion-view hide-back-button="true" hide-nav-bar="true" class="barra-superior">
   <ion-content ng-controller="loginCtrl" padding="true" has-header="false">
-    <div style="margin: 0px; line-height: 250px; text-align: center; background-color: rgb(232, 235, 239);">
-      <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+
+    <div class="text-center">
+      <span class="circle">Festa Ideal</span>
+      <div style="text-align:center;">
+        <p>Bem vindo ao Festa Ideal</p>
+      </div>
+      <div style="color:#7D8286;text-align:center;">
+        <p>Login</p>
+      </div>
     </div>
-    <!--<div class="padding" align="center">-->
-    <!--<button class="button button-full button-border icon-left-->
-    <!--ion-social-facebook button-positive-900 initial" ng-click="facebookSignIn()">Login com Facebook-->
-    <!--</button>-->
-    <!--</div>-->
+    <!--<div style="margin: 0px; line-height: 250px; text-align: center; background-color: rgb(232, 235, 239);">
+      <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+    </div>-->
     <form name="loginForm" novalidate ng-submit="submeter()">
       <div style="margin-left: -15px;">
         <span class="cor-campo-novalid my-align-spam"> {{mensagem}}</span>
         <label class="item-input item-stacked-label">
-          <!--<span class="input-label my-font-form">Login*</span>-->
-          <input ng-model="login" type="text" name="login" required ng-maxlength="40" placeholder="Login">
+          <input ng-model="login" type="text" name="login" required ng-maxlength="40" placeholder="Login" class="my-border">
               <span ng-show="loginForm.$submitted && loginForm.login.$error.required"
-                    class="cor-campo-novalid my-font-form">campo obrigatório</span>
+                    class="my-font-form"><i class="ion-information-circled"></i> campo obrigatório</span>
           </label>
 
           <label class="item-input item-stacked-label">
-            <!--<span class="input-label my-font-form">Senha*</span>-->
-            <input ng-model="senha" type="password" name="senha" required ng-maxlength="20" placeholder="Senha">
+            <input ng-model="senha" type="password" name="senha" required ng-maxlength="20" placeholder="Senha" class="my-border">
               <span ng-show="loginForm.$submitted && loginForm.senha.$error.required"
-                    class="cor-campo-novalid my-font-form">campo obrigatório</span>
+                    class="my-font-form"><i class="ion-information-circled"></i> campo obrigatório</span>
           </label>
 
       </div>
