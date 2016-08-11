@@ -212,3 +212,11 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 {
   top: 169px;
 }
+
+.position-mfb-button {
+  top: 140px!important;
+}
+
+.margin-top-card {
+  margin-top: 5px;
+}
