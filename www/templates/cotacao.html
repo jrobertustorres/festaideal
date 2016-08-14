@@ -106,7 +106,7 @@
               <span class="input-label my-font-form">Data entrega*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.data_entrega}}</p></div>
               <input ng-model="cotacao.data_entrega" ng-show="dados.status_cotacao == 'ABERTA'" type="date"
-                     name="data_entrega" format-date ng-blur="compareDates()">
+                     name="data_entrega" format-date>
                      <!--name="data_entrega" format-date ng-blur="compareDates()">-->
             <span
               ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA'"

@@ -284,25 +284,46 @@ angular.module('app.controllers', [])
     }
 
     $scope.concluirCotacao = function () {
-      enviaEditar();
+      msg = 'concluida';
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Deseja realmente concluir\n esta cotação?',
+        cancelText: 'Não',
+        okText: 'Sim'
+      });
+      confirmPopup.then(function (res) {
+        if (res) {
+          $scope.cotacao.status_cotacao = 'CONCLUIDA';
+          enviaEditar();
+          /*$ionicHistory.nextViewOptions({
+           disableBack: true
+           });*/
+          // $location.path("/side-menu21/home");
+        } else {
+        }
+      });
     }
 
     $scope.compareDates = function () {
       // $scope.cotacao.data_entrega = new Date($scope.cotacao.data_entrega);
-      $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "dd/MM/yyyy");
-      console.log('data do evento '+$scope.dados.data_evento);
-      console.log('data da entrega '+$scope.cotacao.data_entrega);
-      // $scope.cotacao.data_entrega = Date.parse($scope.cotacao.data_entrega);
-      // $scope.dados.data_evento = Date.parse($scope.dados.data_evento);
-      // a.getTime() == b.getTime()
+      $scope.cotacao.data_entrega = $scope.cotacao.data_entrega;
+      $scope.dados.data_evento = $scope.dados.data_evento;
 
-      var dateOne = new Date($scope.dados.data_evento);
-      var dateTwo = new Date($scope.cotacao.data_entrega);
-      if (dateOne > dateTwo) {
-        alert("Date One is greather then Date Two.");
-      }else {
-        alert("Date Two is greather then Date One.");
-      }
+      $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "dd-MM-yyyy");
+      $scope.dados.data_evento = $filter('date')($scope.dados.data_evento, "dd-MM-yyyy");
+      $scope.dados.data_evento = $scope.dados.data_evento.split('/').join('-');
+
+      console.log('data do evento ' + $scope.dados.data_evento);
+      console.log('data da entrega ' + $scope.cotacao.data_entrega);
+
+      // var myDate = $scope.cotacao.data_entrega;
+      $scope.cotacao.data_entrega = $scope.cotacao.data_entrega.split("-");
+      $scope.cotacao.data_entrega = $scope.cotacao.data_entrega[1] + "/" + $scope.cotacao.data_entrega[0] + "/" + $scope.cotacao.data_entrega[2];
+      console.log("data da entrega " + new Date($scope.cotacao.data_entrega).getTime());
+
+      $scope.dados.data_evento = $scope.dados.data_evento.split("-");
+      $scope.dados.data_evento = $scope.dados.data_evento[1] + "/" + $scope.dados.data_evento[0] + "/" + $scope.dados.data_evento[2];
+      console.log("data do evento " + new Date($scope.dados.data_evento).getTime());
+
 
       if ($scope.cotacao.data_entrega > $scope.dados.data_evento) {
         console.log('data com erro');
