@@ -2,6 +2,10 @@
 <ion-view animation="slide-left-right" view-title="{{pagetitle}}">
   <ion-content ng-controller="homeCtrl" padding="true" class="has-header content-stable">
 
+    <ion-refresher
+      on-refresh="doRefresh()">
+    </ion-refresher>
+
     <div class="list card my-list-card-abertas my-card-margin">
 
       <div class="item-icon-left">

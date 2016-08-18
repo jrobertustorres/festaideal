@@ -220,3 +220,13 @@ textarea, input[type="text"], input[type="password"], input[type="datetime"], in
 .margin-top-card {
   margin-top: 5px;
 }
+
+.bar-footer.footer-buttons{
+  padding: 0px;
+}
+.bar-footer.footer-buttons .row{
+  padding: 0px;
+}
+.bar-footer.footer-buttons .row .col{
+  text-align: center;
+}

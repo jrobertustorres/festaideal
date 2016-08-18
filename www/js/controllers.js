@@ -19,8 +19,22 @@ angular.module('app.controllers', [])
           $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
           $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
           $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
-        });
+        })
     });
+
+    $scope.doRefresh = function () {
+      $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
+        .success(function (data) {
+          $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
+          $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
+          $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
+          $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
+          $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
+        }).finally(function () {
+        // Stop the ion-refresher from spinning
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    }
 
     /*$scope.hideNavBar = function () {
      document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
@@ -72,7 +86,6 @@ angular.module('app.controllers', [])
         $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha)
           .success(function (data) {
             idFornecedor = data.id_fornecedor;
-            console.log('id fornecedor ' + data.id_fornecedor);
             if (data) {
               $ionicHistory.nextViewOptions({
                 disableBack: true
@@ -111,6 +124,7 @@ angular.module('app.controllers', [])
     };
 
     $scope.refreshItems = function () {
+      console.log('dentro ==> ');
       if (filterBarInstance) {
         filterBarInstance();
         filterBarInstance = null;
@@ -123,7 +137,16 @@ angular.module('app.controllers', [])
     };
   })
 
-  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter) {
+  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout) {
+    $ionicLoading.show();
+    $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
+      .success(function (data) {
+        $ionicLoading.hide();
+        $scope.dados = data;
+        $scope.pagetitle = 'Dados cotação ' + $scope.dados.status_cotacao;
+        console.log('titulo pagina ' + $scope.pagetitle);
+      });
+
     $scope.cotacao = {};
 
     $ionicModal.fromTemplateUrl('templates/modal-1.html', {
@@ -169,6 +192,10 @@ angular.module('app.controllers', [])
       }
     };
 
+    function callAtTimeout() {
+      console.log("Timeout occurred");
+    }
+
     $scope.closeModal = function (index) {
       if (index == 1) $scope.oModal1.hide();
       else $scope.oModal2.hide();
@@ -185,14 +212,6 @@ angular.module('app.controllers', [])
       $scope.oModal1.remove();
       $scope.oModal2.remove();
     });
-    $ionicLoading.show();
-
-    $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
-      .success(function (data) {
-        $ionicLoading.hide();
-        $scope.dados = data;
-        $scope.pagetitle = 'Dados cotação ' + $scope.dados.status_cotacao;
-      });
 
     var msg = '';
 
@@ -210,21 +229,28 @@ angular.module('app.controllers', [])
       }
     }
 
-    $scope.responderCotacao = function () {
-      var itemsLength = Object.keys($scope.cotacao).length;
-      if (itemsLength == 5) {
+    $scope.responderCotacao = function (formValid) {
+      if (formValid && !$scope.mensagemErro && !$scope.mensagemErroValidade) {
         $scope.cotacao.status_cotacao = 'PENDENTE';
         msg = 'enviada';
         enviaEditar();
-
-        // if ($rootScope.status_cotacao == 'aberta') {
-        /*$scope.cotacao.status_cotacao = 'PENDENTE';
-         msg = 'enviada';*/
-        /*} else if ($scope.dados.status_cotacao == 'escolhida') {
-         $scope.cotacao.status_cotacao = 'CONCLUIDA';
-         msg = 'concluida';
-         }*/
+      } else {
+        console.log('Form is not valid');
       }
+      // var itemsLength = Object.keys($scope.cotacao).length;
+      /*if (itemsLength == 6) {
+       $scope.cotacao.status_cotacao = 'PENDENTE';
+       msg = 'enviada';
+       enviaEditar();
+
+       // if ($rootScope.status_cotacao == 'aberta') {
+       /!*$scope.cotacao.status_cotacao = 'PENDENTE';
+       msg = 'enviada';*!/
+       /!*} else if ($scope.dados.status_cotacao == 'escolhida') {
+       $scope.cotacao.status_cotacao = 'CONCLUIDA';
+       msg = 'concluida';
+       }*!/
+       }*/
     }
 
     $scope.editaCotacao = function () {
@@ -244,26 +270,11 @@ angular.module('app.controllers', [])
         enviaEditar();
 
       } else {
-        // if ($rootScope.status_cotacao == 'aberta') {
-        //   $scope.cotacao.status_cotacao = 'REJEITADA';
-        //   msg = 'rejeitada';
-        //   enviaEditar();
-        // } else {
-        /*var itemsLength = Object.keys($scope.cotacao).length;
-         if (itemsLength == 6) {
-         if ($rootScope.status_cotacao == 'aberta') {
-         $scope.cotacao.status_cotacao = 'PENDENTE';
-         msg = 'enviada';
-         } else if ($scope.dados.status_cotacao == 'escolhida') {
-         $scope.cotacao.status_cotacao = 'CONCLUIDA';
-         msg = 'concluida';
-         }
-         enviaEditar();
-         }*/
       }
     }
 
     function enviaEditar() {
+      console.log('dentro do enviar00');
       $scope.cotacao.id_fornecedor = idFornecedor;
       $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
       $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "yyyy-MM-dd HH:mm:ss");
@@ -279,7 +290,6 @@ angular.module('app.controllers', [])
           $location.path('side-menu21/home');
         })
         .error(function (erro) {
-          console.log(erro);
         });
     }
 
@@ -303,32 +313,26 @@ angular.module('app.controllers', [])
       });
     }
 
+    $scope.clearMessageErro = function () {
+      $scope.mensagemErro = "";
+      $scope.mensagemErroValidade = "";
+    }
+
     $scope.compareDates = function () {
-      // $scope.cotacao.data_entrega = new Date($scope.cotacao.data_entrega);
-      $scope.cotacao.data_entrega = $scope.cotacao.data_entrega;
-      $scope.dados.data_evento = $scope.dados.data_evento;
 
-      $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "dd-MM-yyyy");
-      $scope.dados.data_evento = $filter('date')($scope.dados.data_evento, "dd-MM-yyyy");
-      $scope.dados.data_evento = $scope.dados.data_evento.split('/').join('-');
+      var data_entrega = $filter('date')($scope.cotacao.data_entrega, "dd/MM/yyyy");
+      var validade = $filter('date')($scope.cotacao.validade, "dd/MM/yyyy");
 
-      console.log('data do evento ' + $scope.dados.data_evento);
-      console.log('data da entrega ' + $scope.cotacao.data_entrega);
-
-      // var myDate = $scope.cotacao.data_entrega;
-      $scope.cotacao.data_entrega = $scope.cotacao.data_entrega.split("-");
-      $scope.cotacao.data_entrega = $scope.cotacao.data_entrega[1] + "/" + $scope.cotacao.data_entrega[0] + "/" + $scope.cotacao.data_entrega[2];
-      console.log("data da entrega " + new Date($scope.cotacao.data_entrega).getTime());
-
-      $scope.dados.data_evento = $scope.dados.data_evento.split("-");
-      $scope.dados.data_evento = $scope.dados.data_evento[1] + "/" + $scope.dados.data_evento[0] + "/" + $scope.dados.data_evento[2];
-      console.log("data do evento " + new Date($scope.dados.data_evento).getTime());
-
-
-      if ($scope.cotacao.data_entrega > $scope.dados.data_evento) {
-        console.log('data com erro');
+      if (data_entrega > $scope.dados.data_evento) {
+        $scope.mensagemErro = "data da entrega superior à data do evento";
       } else {
-        console.log('data ok');
+        // $scope.mensagemErro = "";
+      }
+
+      if (validade < $scope.dados.data_evento) {
+        $scope.mensagemErroValidade = "data da validade inferior à data do evento";
+      } else {
+        // console.log('data ok aaaaaaaaaa');
       }
     }
 
@@ -361,5 +365,4 @@ angular.module('app.controllers', [])
           });
       }
     }
-
   })

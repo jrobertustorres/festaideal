@@ -13,7 +13,7 @@
     </div>-->
     <form name="loginForm" novalidate ng-submit="submeter()">
       <div style="margin-left: -15px;">
-        <span class="my-align-spam"> {{mensagem}}</span>
+        <span class="my-align-spam"><i ng-if="mensagem" class="ion-information-circled"></i> {{mensagem}}</span>
         <label class="item-input item-stacked-label">
           <input ng-model="login" type="text" name="login" required ng-maxlength="40" placeholder="Login"
                  class="my-border" ng-focus="clearMessage()">
