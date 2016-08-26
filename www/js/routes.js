@@ -108,6 +108,27 @@ angular.module('app.routes', [])
         templateUrl: 'templates/recuperarSenha.html',
         controller: 'RecuperarSenhaCtrl'
       })
+
+      .state('menu.agenda', {
+        url: '/agenda',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/agenda.html',
+            controller: 'AgendaCtrl'
+          }
+        }
+      })
+
+      .state('menu.alterarSenha', {
+        url: '/alterarSenha',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/alterarSenha.html',
+            controller: 'AlterarSenhaCtrl'
+          }
+        }
+      })
+
 /*
       .state('cotacoes-abertas-list', {
         url: '/cotacoes-abertas-list',

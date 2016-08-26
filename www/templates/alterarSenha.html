@@ -1,0 +1,45 @@
+<ion-nav-bar>
+</ion-nav-bar>
+<ion-view hide-nav-bar="false" animation="slide-left-right">
+  <ion-nav-title>
+    <span class="font-barra-superior">Alterar senha</span>
+  </ion-nav-title>
+  <ion-nav-buttons side="right">
+    <button class="button button-clear bar my-button-save" type="submit"
+            form="alterarSenhaForm" style="color: #FFFFFF;">
+      Salvar
+    </button>
+  </ion-nav-buttons>
+  <ion-content ng-controller="AlterarSenhaCtrl" scroll="true" padding="true" class="has-header">
+
+    <div class="content item-body" style="padding: 1px;">
+      <div class="list" >
+        <form id="alterarSenhaForm" name="alterarSenhaForm" novalidate ng-submit="verificaContrasenha()">
+
+          <div class="list" style="margin-bottom: 2px;">
+            <label class="item item-input item-stacked-label my-item">
+              <div class="input-label my-font-form">Nova Senha*</div>
+              <input ng-model="novasenha.senha" type="password" name="senha" required ng-maxlength="15"
+                     ng-minlength="4">
+              <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.required"
+                    class="cor-campo-novalid my-font-form-span">campo obrigatório</span>
+              <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.maxlength"
+                    class="cor-campo-novalid my-font-form-span">máximo 15 caracteres</span>
+              <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.minlength"
+                    class="cor-campo-novalid my-font-form-span">mínimo 4 caracteres</span>
+            </label>
+          </div>
+          <div class="list" style="margin-bottom: 2px;">
+            <label class="item item-input item-stacked-label my-item">
+              <div class="input-label my-font-form">Confirmar Senha*</div>
+              <input ng-model="novasenha.conf_senha" type="password" name="conf_senha">
+              <span class="cor-campo-novalid my-font-form-span"> {{mensagem}}</span>
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </ion-content>
+
+</ion-view>
