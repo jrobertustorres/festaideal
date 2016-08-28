@@ -7,32 +7,78 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+  .run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
 
-    // Check for network connection
-    if(window.Connection) {
-      if(navigator.connection.type == Connection.NONE) {
-        $ionicPopup.confirm({
-            title: 'Não conectado à internet',
-            content: 'Nenhuma conexão à internet detectada.\n Favor conectar e tentar novamente.'
-          })
-          .then(function(result) {
-            if(!result) {
-              ionic.Platform.exitApp();
-            }
-          });
+      // Check for network connection
+      if (window.Connection) {
+        if (navigator.connection.type == Connection.NONE) {
+          $ionicPopup.confirm({
+              title: 'Não conectado à internet',
+              content: 'Nenhuma conexão à internet detectada.\n Favor conectar e tentar novamente.'
+            })
+            .then(function (result) {
+              if (!result) {
+                ionic.Platform.exitApp();
+              }
+            });
+        }
       }
-    }
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
-})
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
+
+      var push = PushNotification.init({
+        "android": {"senderID": "990686468351", icon: "icon"},
+
+        "ios": {"alert": "true", "badge": "true", "sound": "true"}, "windows": {}
+      });
+
+
+      /*
+
+       Este é o evento que será chamado assim que o GCM responder a requisição
+
+       com o id do dispositivo.
+
+       É neste método que devendo mandar o id e armazenar em nosso servidor para enviarmos
+
+       notificações posteriormente
+
+       */
+
+      push.on('registration', function (data) {
+
+        console.log(data);
+
+        alert(data.registrationId);
+
+      });
+
+
+      // Este é o evento no qual implementando o comportamento do nosso app
+
+      // quando o usuário clicar na notificação
+
+      push.on('notification', function (data) {
+
+        alert('Notificação acionada, agora deve-se implementar a navegação no app de acordo com os dados: ' + JSON.stringify(data));
+
+      });
+
+
+      push.on('error', function (e) {
+
+        alert('registration error: ' + e.message);
+
+      });
+
+    });
+  })

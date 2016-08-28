@@ -1,7 +1,7 @@
-var servidor = "http://localhost";
-// var servidor = "http://festaideal.com.br/ws_mobile";
-var idFornecedor = 1;
-// var idFornecedor = 0;
+// var servidor = "http://localhost";
+var servidor = "http://festaideal.com.br/ws_mobile";
+// var idFornecedor = 1;
+var idFornecedor = 0;
 
 angular.module('app.controllers', [])
 
@@ -105,10 +105,15 @@ angular.module('app.controllers', [])
     $rootScope.status_cotacao = $stateParams.status_cotacao;
     $scope.pagetitle = 'Cotação ' + $scope.status_cotacao;
 
-    $scope.mostraFiltro = false;
+    $rootScope.mostraFiltro = false;
     $scope.toggle = function() {
-      $scope.mostraFiltro = !$scope.mostraFiltro;
-      console.log('mostra === '+$scope.mostraFiltro);
+      $rootScope.mostraFiltro = !$rootScope.mostraFiltro;
+      console.log('mostra === '+$rootScope.mostraFiltro);
+    };
+
+    $scope.clearSearch = function() {
+      $scope.filter = '';
+      $rootScope.mostraFiltro = false;
     };
 
     // var filterBarInstance;
@@ -118,10 +123,6 @@ angular.module('app.controllers', [])
         .success(function (data) {
           $scope.dados = data;
         });
-
-    $scope.clearSearch = function() {
-      $scope.filter = '';
-    };
 
     /*$scope.showFilterBar2 = function () {
       filterBarInstance = $ionicFilterBar.show({
@@ -406,7 +407,7 @@ angular.module('app.controllers', [])
     $scope.selectedDates = [];
 
     $scope.datepickerObject = {
-      templateType: 'MODAL', // POPUP | MODAL
+      templateType: 'POPUP', // POPUP | MODAL
       modalFooterClass: 'bar-light',
       //header: 'multi-date-picker',
       headerClass: 'royal-bg light',

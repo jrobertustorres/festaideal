@@ -6,12 +6,12 @@
     </button>
   </ion-nav-buttons>
 
-  <ion-header-bar class="fixedheader" ng-style="{ 'margin-top' : (mostraFiltro == true) ? '48px' : '0px'}">
+  <ion-header-bar ng-style="{ 'margin-top' : mostraFiltro == true ? '48px' : '0px'}">
+  <!--<ion-header-bar class="fixedheader">-->
     <input type="search"
            placeholder="Buscar..."
            ng-model="filter"
            ng-focus="searchFocused = true"
-           ng-blur="mostraFiltro = false"
            ng-change="scrollTop()"
            class="full-width">
     <button ng-if="filter.length"
@@ -20,19 +20,19 @@
     </button>
   </ion-header-bar>
 
-  <ion-content ng-controller="CotacoesListCtrl" scroll="true">
+  <ion-content ng-controller="CotacoesListCtrl" scroll="true" ng-class="{'fixedlist': mostraFiltro == true}" class="my-item-list" >
     <div ng-show="dados.length == 0">
       <p style="color: #8f8f8f; font-size: 15px; padding-top: 25px;" align="center">Não há
         informações para mostrar</p>
       <p style="text-align: center"><i class="ion-android-sad" style="color: #8f8f8f; font-size: 50px;"></i></p>
     </div>
     <ion-list>
-      <!--ng-style="{ 'margin-top' : (mostra == true) ? '100px' : '0px'}"-->
-      <!--ng-style="{fixedheaderUp: mostra == false, fixedheaderDown: mostra == true}"-->
-      <!--ng-style="{ 'padding-top' : (mostra == true) ? '50px' : '0px'}"-->
-      <!--ng-class="{'teste': mostra == true}"-->
+      <!--ng-style="{ 'margin-top' : (mostraFiltro == true) ? '100px' : '0px'}"-->
+      <!--ng-style="{fixedheaderUp: mostraFiltro == false, fixedheaderDown: mostra == true}"-->
+      <!--ng-style="{ 'padding-top' : (mostraFiltro == true) ? '50px' : '0px'}"-->
+      <!--ng-class="{'teste': mostraFiltro == true}"-->
       <!--<li ng-repeat="d in data|filter:search.txt">{{d}}</li>-->
-      <ion-item ng-class="{'fixedlist': mostraFiltro == true}" class="my-item-list" collection-repeat="dado in dados | filter:filter" href="#/side-menu21/cotacao/{{item.id_cotacao}}">
+      <ion-item collection-repeat="dado in dados | filter:filter" href="#/side-menu21/cotacao/{{item.id_cotacao}}">
 
       <!--<ion-item class="my-item-list" collection-repeat="item in items" href="#/side-menu21/cotacao/{{item.id_cotacao}}">-->
         <p><strong>Tipo Evento:</strong> {{ dado.nome_evento }}</p>
@@ -40,8 +40,6 @@
         <p><strong>Data Evento:</strong> {{ dado.data_evento}}</p>
 
       </ion-item>
-
-    </ion-list>
 
     <!--<div ng-if="dados !== undefined && !dados.length" class="no-results">
       <p>No Results</p>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "990686468351",
+    "firebase_url": "https://geventos-fd104.firebaseio.com",
+    "project_id": "geventos-fd104",
+    "storage_bucket": "geventos-fd104.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990686468351:android:f71e759160aa2f66",
+        "android_client_info": {
+          "package_name": "com.ionicframework.festaideal894818"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990686468351-qdeaqb1evlcmuk98k17ktta9u0r5a159.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnwz_VbNjj_Vdfnh0yomibxzR49W0wJgI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
