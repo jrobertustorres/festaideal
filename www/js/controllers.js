@@ -1,7 +1,7 @@
-// var servidor = "http://localhost";
-var servidor = "http://festaideal.com.br/ws_mobile";
-// var idFornecedor = 1;
-var idFornecedor = 0;
+var servidor = "http://localhost";
+// var servidor = "http://festaideal.com.br/ws_mobile";
+var idFornecedor = 1;
+// var idFornecedor = 0;
 
 angular.module('app.controllers', [])
 
@@ -428,7 +428,7 @@ angular.module('app.controllers', [])
       btnClear: 'Clear',
       btnClearClass: 'button-clear button-dark',
 
-      selectType: 'MULTI', // SINGLE | PERIOD | MULTI
+      selectType: 'SINGLE', // SINGLE | PERIOD | MULTI
 
       tglSelectByWeekShow: false, // true | false (default)
       tglSelectByWeek: 'By week',
