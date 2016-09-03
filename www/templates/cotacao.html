@@ -1,23 +1,6 @@
-<ion-view view-title="{{pagetitle| lowercase}}">
-  <ion-nav-buttons side="right">
-  </ion-nav-buttons>
-  <ion-content ng-controller="CotacaoCtrl" scroll="true" padding="true" class="has-header content-stable">
+<ion-view view-title="{{pagetitle | lowercase}}">
+  <ion-content ng-controller="CotacaoCtrl" scroll="true" padding="true" class="content-stable">
 
-    <!--<div class="list " id="cotacao-card23">
-      <div class=" item item-image">
-        <img src="img/festa-infantil.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
-      </div>
-      <div class="item item-body " id="cotacao-list-item-container4" style=" background-color: #0a9dc7;">
-        <p id="cotacao-null" style="margin-top:0px;color:#000000;" class=" "><strong style="font-size: large; color: #FFFFFF">{{dados.nome_evento}}</strong>
-        </p>
-      </div>
-      <div class="item item-body " id="cotacao-list-item-container5">
-        <p id="cotacao-markdown6" style="margin-top:0px;color:#000000;" class=" ">Some friendly
-          <strong>markdown</strong>fdfdff</p>
-        <p id="cotacao-markdown7" style="margin-top:0px;color:#000000;" class=" ">Some friendly
-          <strong>markdown</strong>fdfdff</p>
-      </div>
-    </div>-->
     <div class="list card margin-top-card">
 
       <div class="item">
@@ -99,19 +82,22 @@
         <div class="button button-clear" ng-click="closeModal(2)"><span class="icon ion-close"></span></div>
       </header>
       <ion-content has-header="true" padding="true" scroll="true">
-        <form id="cotacaoResponderForm" name="cotacaoResponderForm" novalidate ng-submit="responderCotacao(cotacaoResponderForm.$valid)">
+        <form id="cotacaoResponderForm" name="cotacaoResponderForm" novalidate
+              ng-submit="responderCotacao(cotacaoResponderForm.$valid)">
           <p>This is a modal</p>
           <div class="list" style="padding-top: 10px;">
             <label class="item item-input item-stacked-label my-item">
               <span class="input-label my-font-form">Data entrega*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.data_entrega}}</p></div>
               <input ng-model="cotacao.data_entrega" ng-show="dados.status_cotacao == 'ABERTA'" type="date"
-                     name="data_entrega" id="data_entrega" format-date ng-blur="compareDates()" ng-focus="clearMessageErro()">
+                     name="data_entrega" id="data_entrega" format-date ng-blur="compareDates()"
+                     ng-focus="clearMessageErro()">
             <span
               ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA'"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
-              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErro" class="ion-information-circled"></i> {{mensagemErro}}</span>
+              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErro"
+                                                                   class="ion-information-circled"></i> {{mensagemErro}}</span>
             </label>
             <label class="item item-input item-stacked-label my-item">
               <div class="input-label my-font-form">Tipo pagamento*</div>
@@ -158,7 +144,8 @@
               ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.validade.$error.required && dados.status_cotacao == 'ABERTA'"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
-              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErroValidade" class="ion-information-circled"></i> {{mensagemErroValidade}}</span>
+              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErroValidade"
+                                                                   class="ion-information-circled"></i> {{mensagemErroValidade}}</span>
             </label>
             <label class="item item-input item-stacked-label my-item">
               <div class="input-label my-font-form">Observação</div>
@@ -182,12 +169,13 @@
             <div class="col">
               <button class="button icon-left ion-checkmark-round"
                       style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #FFFFFF;"
-                      type="submit" form="cotacaoResponderForm">Salvar</button>
+                      type="submit" form="cotacaoResponderForm">Salvar
+              </button>
             </div>
-              <!--<button class="button icon-left ion-checkmark-round"
-                      style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #FFFFFF;"
-                      ng-submit="submeterModal(cotacaoResponderForm)">Salvar</button>
-            </div>-->
+            <!--<button class="button icon-left ion-checkmark-round"
+                    style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #FFFFFF;"
+                    ng-submit="submeterModal(cotacaoResponderForm)">Salvar</button>
+          </div>-->
           </div>
         </div>
       </ion-footer-bar>

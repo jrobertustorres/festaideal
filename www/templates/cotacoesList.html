@@ -20,7 +20,7 @@
     </button>
   </ion-header-bar>
 
-  <ion-content ng-controller="CotacoesListCtrl" scroll="true" ng-class="{'fixedlist': mostraFiltro == true}" class="my-item-list" >
+  <ion-content ng-controller="CotacoesListCtrl" scroll="true" ng-class="{'fixedlist': mostraFiltro == true}" class="my-item-list  content-stable" >
     <div ng-show="dados.length == 0">
       <p style="color: #8f8f8f; font-size: 15px; padding-top: 25px;" align="center">Não há
         informações para mostrar</p>
@@ -32,7 +32,7 @@
       <!--ng-style="{ 'padding-top' : (mostraFiltro == true) ? '50px' : '0px'}"-->
       <!--ng-class="{'teste': mostraFiltro == true}"-->
       <!--<li ng-repeat="d in data|filter:search.txt">{{d}}</li>-->
-      <ion-item collection-repeat="dado in dados | filter:filter" href="#/side-menu21/cotacao/{{item.id_cotacao}}">
+      <ion-item collection-repeat="dado in dados | filter:filter track by dado.id_cotacao" href="#/side-menu21/cotacao/{{dado.id_cotacao}}">
 
       <!--<ion-item class="my-item-list" collection-repeat="item in items" href="#/side-menu21/cotacao/{{item.id_cotacao}}">-->
         <p><strong>Tipo Evento:</strong> {{ dado.nome_evento }}</p>

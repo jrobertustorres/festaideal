@@ -1,35 +1,42 @@
 <ion-view view-title="Agenda">
-  <ion-content ng-controller="AgendaCtrl" scroll="true" padding="true" class="has-header content-stable">
-
-
-    <div class="padding-horizontal">
-      <ionic-multi-date-picker input-obj="datepickerObject">
-        <button class="button button-block my-icon-color">
-          <i class="icon ion-calendar"></i> Calendário
-          <!--{{selectedDates.length}} date(s) / {{ datepickerObject.templateType }}-->
+    <ion-nav-buttons side="right">
+        <ionic-multi-date-picker input-obj="datepickerObject" style="margin-top: -8px;">
+            <button class="button button-block my-button-calendar-color">
+          <i class="icon ion-calendar-icon"></i>
         </button>
-      </ionic-multi-date-picker>
-    </div>
+        </ionic-multi-date-picker>
+    </ion-nav-buttons>
+    <ion-content ng-controller="AgendaCtrl" scroll="true" padding="true" class="has-header content-stable">
 
-    <!--<ionic-multi-date-picker input-obj="datepickerObject"
+
+        <div class="padding-horizontal">
+            <ionic-multi-date-picker input-obj="datepickerObject">
+                <button class="button button-block button-assertive">
+          <i class="icon ion-calendar"></i> Calendário
+          {{selectedDates.length}} date(s) / {{ datepickerObject.templateType }}
+        </button>
+            </ionic-multi-date-picker>
+        </div>
+
+        <!--<ionic-multi-date-picker input-obj="datepickerObject"
                              calendar="true">
-    </ionic-multi-date-picker>-->
+        </ionic-multi-date-picker>-->
 
-    <div class="list">
-      <div class="item item-divider">
-        Selected dates ({{ selectedDates.length }}):
-      </div>
-      <div class="item" ng-repeat="d in selectedDates">
-        {{ d.getDate() }}/{{ d.getMonth() + 1 }}/{{ d.getFullYear() }}
-      </div>
+        <div class="list">
+            <div class="item item-divider">
+                Selected dates ({{ selectedDates.length }}):
+            </div>
+            <div class="item" ng-repeat="d in selectedDates">
+                {{ d.getDate() }}/{{ d.getMonth() + 1 }}/{{ d.getFullYear() }}
+            </div>
 
-      <!--<div class="item item-divider">
+            <!--<div class="item item-divider">
         Disabled dates ({{ datepickerObject.disabledDates.length }}):
       </div>
       <div class="item" ng-repeat="d in datepickerObject.disabledDates">
         {{ d.getDate() }}.{{ d.getMonth() + 1 }}.{{ d.getFullYear() }}
       </div>-->
 
-    </div>
-  </ion-content>
+        </div>
+    </ion-content>
 </ion-view>
