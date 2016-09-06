@@ -88,8 +88,3 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
     // factory function body that constructs shinyNewServiceInstance
     return { token };
 })
-
-.service('Token2', function() {
-    var token = '123';
-    return token;
-});

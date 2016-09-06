@@ -291,7 +291,6 @@ angular.module('app.controllers', [])
     }
 
     function enviaEditar() {
-        console.log('dentro do enviar00');
         $scope.cotacao.id_fornecedor = idFornecedor;
         $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
         $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "yyyy-MM-dd HH:mm:ss");
@@ -353,9 +352,93 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('AgendaCtrl', function($scope) {
+.controller('AgendaCtrl', function($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr) {
     var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
     var monthList = ["Janeiro", "Feveiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+    // Modal 3 - Agenda
+    $ionicModal.fromTemplateUrl('templates/modal-3.html', {
+        id: '3', // We need to use and ID to identify the modal that is firing the event!
+        scope: $scope,
+        backdropClickToClose: false,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.oModal3 = modal;
+    });
+
+    $scope.openModal = function(index) {
+        $scope.oModal3.show();
+    };
+
+    $scope.closeModal = function(index) {
+        $scope.oModal3.hide();
+        // $scope.cotacao = {};
+    };
+
+    $scope.$on('modal.shown', function(event, modal) {});
+
+    $scope.$on('modal.hidden', function(event, modal) {});
+
+    $scope.$on('$destroy', function() {
+        $scope.oModal3.remove();
+    });
+
+    $scope.tiposNotificacao = [
+        { tipoNotificacao: 'SEM_NOTIFICACAO', label: 'Sem notificação' },
+        { tipoNotificacao: 'HORA_DO_EVENTO', label: 'Hora do evento' },
+        { tipoNotificacao: 'TRINTA_MINUTO_ANTES', label: '30 minutos antes' },
+        { tipoNotificacao: 'UMA_HORA_ANTES', label: '1 hora antes' },
+        { tipoNotificacao: 'UM_DIA_ANTES', label: '1 dia antes' },
+        { tipoNotificacao: 'UMA_SEMANA_ANTES', label: '1 semana antes' }
+    ];
+
+    $scope.tiposAgenda = [
+        { tipoAgenda: 'ABERTA', label: 'Aberta' },
+        { tipoAgenda: 'CONCLUIDA', label: 'Concluída' }
+    ];
+
+    $scope.agenda = {};
+
+    $scope.incluirAgenda = function(formValid) {
+        $scope.agenda.dataInicial = $rootScope.dataInicial;
+        $scope.agenda.idFornecedor = idFornecedor;
+        $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.agenda)
+            .success(function(data) {
+                toastr.success('Agenda salva com sucesso!');
+                // $ionicHistory.nextViewOptions({
+                //     disableBack: true
+                // });
+                $scope.closeModal(3);
+            })
+            .error(function(erro) {});
+
+        // enviaAgenda();
+        // if (formValid && !$scope.mensagemErro && !$scope.mensagemErroValidade) {
+        //     enviaAgenda();
+        // } else {
+        //     console.log('Form is not valid');
+        // }
+    }
+
+    function enviaAgenda() {
+        console.log('dentro do envia Agenda ' + $rootScope.dataInicial);
+        // $scope.cotacao.id_fornecedor = idFornecedor;
+        // $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
+        // $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "yyyy-MM-dd HH:mm:ss");
+        // $scope.cotacao.validade = $filter('date')($scope.cotacao.validade, "yyyy-MM-dd HH:mm:ss");
+        // $http.post(servidor + '/v1/api.php?req=enviaAgenda', $scope.cotacao)
+        //     .success(function(data) {
+        //         toastr.success('Agenda salva com sucesso!');
+        //         $ionicHistory.nextViewOptions({
+        //             disableBack: true
+        //         });
+        //         $scope.closeModal(3);
+        //     })
+        //     .error(function(erro) {});
+    }
+
+
+
 
     /* var h0 = new Date(2015, 11, 11)
      , h1 = new Date(2015, 11, 9)
@@ -487,16 +570,43 @@ angular.module('app.controllers', [])
         monthList: monthList,
 
         callback: function(dates) { //Mandatory
-            retSelectedDates(dates);
+            // retSelectedDates(dates);
+            openModalAgenda();
         }
     };
 
-    var retSelectedDates = function(dates) {
-        $scope.selectedDates.length = 0;
-        for (var i = 0; i < dates.length; i++) {
-            $scope.selectedDates.push(angular.copy(dates[i]));
-        }
+    // function openModal3() {
+    //     console.log('aaaaaaaaaa');
+    // }
+
+    var openModalAgenda = function() {
+        $scope.oModal3.show();
     };
+
+    // var retSelectedDates = function(dates) {
+    //     // $scope.openModal = function(index) {
+    //     //     console.log('aaaaaaaaaa');
+    //     //     $scope.oModal3.show();
+    //     // };
+
+    //     $scope.selectedDates.length = 0;
+    //     var date = new Date(dates);
+    //     var dataInicial = date.getFullYear() + '/' + date.getDate() + '/' + (date.getMonth() + 1);
+    //     $rootScope.dataInicial = dataInicial;
+    //     console.log('data inicial ==> ' + $rootScope.dataInicial);
+    //     console.log('fornecedor ' + idFornecedor);
+    //     // $http.post(servidor + '/v2/api.php?req=editSenha', {'novasenha': $scope.novasenha}).success(function (data) {
+    //     //     var alertPopup = $ionicPopup.alert({
+    //     //       title: 'Alterado com sucesso!'
+    //     //     });
+    //     //   })
+    //     //   .error(function (erro) {
+    //     //     console.log(erro);
+    //     //   });
+    //     for (var i = 0; i < dates.length; i++) {
+    //         $scope.selectedDates.push(angular.copy(dates[i]));
+    //     }
+    // };
 
 })
 

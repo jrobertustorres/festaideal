@@ -303,3 +303,7 @@ input[type="color"] {
 .ion-calendar-icon {
     content: url('../img/calendar.svg') !important;
 }
+
+.position-button {
+    margin-left: 93%!important;
+}
