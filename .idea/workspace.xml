@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e064907-d6da-45f4-b0a5-e7684e16fddd" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/style.css" afterPath="$PROJECT_DIR$/www/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controllers.js" afterPath="$PROJECT_DIR$/www/js/controllers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/directives.js" afterPath="$PROJECT_DIR$/www/js/directives.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js" afterPath="$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/agenda.html" afterPath="$PROJECT_DIR$/www/templates/agenda.html" />
     </list>
@@ -28,9 +31,16 @@
       <file leaf-file-name="controllers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="359" column="5" selection-start-line="359" selection-start-column="5" selection-end-line="359" selection-end-column="5" />
-              <folding />
+            <state relative-caret-position="5695">
+              <caret line="335" column="5" selection-start-line="335" selection-start-column="5" selection-end-line="335" selection-end-column="5" />
+              <folding>
+                <marker date="1473278118445" expanded="true" signature="4221:4892" placeholder="{...}" />
+                <marker date="1473278118445" expanded="true" signature="4451:4518" placeholder="{...}" />
+                <marker date="1473278118445" expanded="true" signature="4557:4633" placeholder="{...}" />
+                <marker date="1473278118445" expanded="true" signature="4845:4889" placeholder="{...}" />
+                <marker date="1473278118445" expanded="true" signature="20005:20008" placeholder="//..." />
+                <marker date="1473278118445" expanded="true" signature="20005:20011" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -50,7 +60,7 @@
       <file leaf-file-name="config.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-367">
+            <state relative-caret-position="17">
               <caret line="1" column="101" selection-start-line="1" selection-start-column="101" selection-end-line="1" selection-end-column="101" />
               <folding />
             </state>
@@ -70,15 +80,9 @@
       <file leaf-file-name="ionic-multi-date-picker.bundle.min.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="837" column="53" selection-start-line="837" selection-start-column="53" selection-end-line="837" selection-end-column="53" />
-              <folding>
-                <marker date="1472906662388" expanded="true" signature="11179:11526" placeholder="{...}" />
-                <marker date="1472906662388" expanded="true" signature="11189:11266" placeholder="{...}" />
-                <marker date="1472906662388" expanded="true" signature="11277:11358" placeholder="{...}" />
-                <marker date="1472906662388" expanded="true" signature="11374:11526" placeholder="[...]" />
-                <marker date="1472906662388" expanded="true" signature="11418:11526" placeholder="{...}" />
-              </folding>
+            <state relative-caret-position="14212">
+              <caret line="836" column="53" selection-start-line="836" selection-start-column="53" selection-end-line="836" selection-end-column="53" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -86,11 +90,9 @@
       <file leaf-file-name="agenda.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/templates/agenda.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-748">
-              <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
-              <folding>
-                <element signature="n#style#0;n#ionic-multi-date-picker#0;n#ion-nav-buttons#0;n#ion-view#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="255">
+              <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,8 +100,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="18" column="12" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="12" />
+            <state relative-caret-position="306">
+              <caret line="32" column="12" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -350,11 +352,13 @@
       <workItem from="1470574514020" duration="30119000" />
       <workItem from="1471179614646" duration="96227000" />
       <workItem from="1472511643666" duration="16897000" />
+      <workItem from="1473252796917" duration="2000" />
+      <workItem from="1473290989517" duration="186000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="426845000" />
+    <option name="totallyTimeSpent" value="427033000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -365,18 +369,18 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3268921" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -420,7 +424,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -431,34 +434,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker.module.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="106" selection-start-line="4" selection-start-column="106" selection-end-line="4" selection-end-column="106" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker.provider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker.styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3513">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker.module.js" />
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker.service.js" />
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker.provider.js" />
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker.styles.css" />
     <entry file="file://$PROJECT_DIR$/www/lib/ion-datetime-picker/src/ion-datetime-picker.min.js" />
     <entry file="file://$PROJECT_DIR$/www/lib/ion-datetime-picker/src/picker.scss">
       <provider selected="true" editor-type-id="text-editor">
@@ -496,20 +475,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker-popup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3310">
-          <caret line="7" column="401" selection-start-line="7" selection-start-column="401" selection-end-line="7" selection-end-column="401" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/src/ionic-datepicker-popup.html" />
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js" />
     <entry file="file://$PROJECT_DIR$/www/lib/ion-datetime-picker/release/ion-datetime-picker.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -517,13 +484,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/onezone-datepicker/dist/onezone-datepicker.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="202" column="97" selection-start-line="202" selection-start-column="92" selection-end-line="202" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/onezone-datepicker/dist/onezone-datepicker.min.js" />
     <entry file="file://$PROJECT_DIR$/www/templates/cotacaoPendente.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="74">
@@ -549,7 +510,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="69" selection-start-line="2" selection-start-column="69" selection-end-line="2" selection-end-column="69" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -557,7 +517,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
           <caret line="3896" column="5" selection-start-line="3896" selection-start-column="5" selection-end-line="3896" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -572,7 +531,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3706">
           <caret line="218" column="16" selection-start-line="218" selection-start-column="16" selection-end-line="218" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -587,7 +545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="38" column="45" selection-start-line="38" selection-start-column="33" selection-end-line="38" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -595,7 +552,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -603,14 +559,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
           <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#ion-item#0;n#ion-list#0;n#ion-content#0;n#ion-side-menu#0;n#ion-side-menus#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#ion-item#1;n#ion-list#0;n#ion-content#0;n#ion-side-menu#0;n#ion-side-menus#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#ion-item#2;n#ion-list#0;n#ion-content#0;n#ion-side-menu#0;n#ion-side-menus#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#ion-item#3;n#ion-list#0;n#ion-content#0;n#ion-side-menu#0;n#ion-side-menus#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#ion-item#4;n#ion-list#0;n#ion-content#0;n#ion-side-menu#0;n#ion-side-menus#0;n#!!top" expanded="true" />
-            <marker date="1472256244015" expanded="false" signature="579:611" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -618,7 +566,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="15" column="84" selection-start-line="15" selection-start-column="84" selection-end-line="15" selection-end-column="84" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -626,7 +573,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="8" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -634,9 +580,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="628">
           <caret line="151" column="56" selection-start-line="151" selection-start-column="56" selection-end-line="151" selection-end-column="56" />
-          <folding>
-            <marker date="1471702828937" expanded="true" signature="1143:2174" placeholder="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -644,7 +587,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -652,7 +594,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -660,7 +601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -668,7 +608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="881" column="68" selection-start-line="881" selection-start-column="68" selection-end-line="881" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -676,7 +615,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -684,21 +622,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="837" column="53" selection-start-line="837" selection-start-column="53" selection-end-line="837" selection-end-column="53" />
-          <folding>
-            <marker date="1472906662388" expanded="true" signature="11179:11526" placeholder="{...}" />
-            <marker date="1472906662388" expanded="true" signature="11189:11266" placeholder="{...}" />
-            <marker date="1472906662388" expanded="true" signature="11277:11358" placeholder="{...}" />
-            <marker date="1472906662388" expanded="true" signature="11374:11526" placeholder="[...]" />
-            <marker date="1472906662388" expanded="true" signature="11418:11526" placeholder="{...}" />
-          </folding>
+        <state relative-caret-position="14212">
+          <caret line="836" column="53" selection-start-line="836" selection-start-column="53" selection-end-line="836" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -706,14 +637,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="6587" column="11" selection-start-line="6587" selection-start-column="11" selection-end-line="6587" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="18" column="12" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="12" />
+        <state relative-caret-position="306">
+          <caret line="32" column="12" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -722,15 +652,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="57" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="57" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="359" column="5" selection-start-line="359" selection-start-column="5" selection-end-line="359" selection-end-column="5" />
-          <folding />
+        <state relative-caret-position="5695">
+          <caret line="335" column="5" selection-start-line="335" selection-start-column="5" selection-end-line="335" selection-end-column="5" />
+          <folding>
+            <marker date="1473278118445" expanded="true" signature="4221:4892" placeholder="{...}" />
+            <marker date="1473278118445" expanded="true" signature="4451:4518" placeholder="{...}" />
+            <marker date="1473278118445" expanded="true" signature="4557:4633" placeholder="{...}" />
+            <marker date="1473278118445" expanded="true" signature="4845:4889" placeholder="{...}" />
+            <marker date="1473278118445" expanded="true" signature="20005:20008" placeholder="//..." />
+            <marker date="1473278118445" expanded="true" signature="20005:20011" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -738,7 +674,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="79" selection-start-line="1" selection-start-column="79" selection-end-line="1" selection-end-column="79" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -746,7 +681,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="89" selection-start-line="2" selection-start-column="89" selection-end-line="2" selection-end-column="89" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -760,7 +694,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-367">
+        <state relative-caret-position="17">
           <caret line="1" column="101" selection-start-line="1" selection-start-column="101" selection-end-line="1" selection-end-column="101" />
           <folding />
         </state>
@@ -778,11 +712,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/agenda.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-748">
-          <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
-          <folding>
-            <element signature="n#style#0;n#ionic-multi-date-picker#0;n#ion-nav-buttons#0;n#ion-view#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>

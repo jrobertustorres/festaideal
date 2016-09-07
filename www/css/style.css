@@ -307,3 +307,16 @@ input[type="color"] {
 .position-button {
     margin-left: 93%!important;
 }
+
+.input-date {
+    width: 43%;
+    position: relative;
+    float: left!important;
+}
+
+.input-time {
+    width: 50%;
+    position: relative;
+    float: right!important;
+    margin-top: -34px!important;
+}

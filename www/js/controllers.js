@@ -127,35 +127,6 @@ angular.module('app.controllers', [])
         .success(function(data) {
             $scope.dados = data;
         });
-
-    /*$scope.showFilterBar2 = function () {
-     filterBarInstance = $ionicFilterBar.show({
-     // items: $scope.dados,
-     items: $scope.items,
-     update: function (filteredItems, filterText) {
-     $scope.items = filteredItems;
-
-     console.log('aaaaaaaaaaaaa '+filteredItems.length);
-     console.log('bbbbbbbbbbbbb '+$scope.items);
-     if (filterText) {
-     console.log(filterText);
-     }
-     }
-     });
-     };*/
-
-    /*$scope.refreshItems = function () {
-     console.log('dentro ==> ');
-     if (filterBarInstance) {
-     filterBarInstance();
-     filterBarInstance = null;
-     }
-
-     $timeout(function () {
-     getItems();
-     $scope.$broadcast('scroll.refreshComplete');
-     }, 1000);
-     };*/
 })
 
 .controller('CotacaoCtrl', function($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout) {
@@ -356,6 +327,12 @@ angular.module('app.controllers', [])
     var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
     var monthList = ["Janeiro", "Feveiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
+    // $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor)
+    //     .success(function(data) {
+    //         // $ionicLoading.hide();
+    //         $scope.dados = data;
+    //     })
+
     // Modal 3 - Agenda
     $ionicModal.fromTemplateUrl('templates/modal-3.html', {
         id: '3', // We need to use and ID to identify the modal that is firing the event!
@@ -400,14 +377,13 @@ angular.module('app.controllers', [])
     $scope.agenda = {};
 
     $scope.incluirAgenda = function(formValid) {
-        $scope.agenda.dataInicial = $rootScope.dataInicial;
         $scope.agenda.idFornecedor = idFornecedor;
+        $scope.agenda.horaInicial = $filter('date')($scope.agenda.horaInicial, "HH:mm");
+        $scope.agenda.horaFinal = $filter('date')($scope.agenda.horaFinal, "HH:mm");
+
         $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.agenda)
             .success(function(data) {
                 toastr.success('Agenda salva com sucesso!');
-                // $ionicHistory.nextViewOptions({
-                //     disableBack: true
-                // });
                 $scope.closeModal(3);
             })
             .error(function(erro) {});
@@ -570,43 +546,31 @@ angular.module('app.controllers', [])
         monthList: monthList,
 
         callback: function(dates) { //Mandatory
-            // retSelectedDates(dates);
+            retSelectedDates(dates);
             openModalAgenda();
         }
     };
-
-    // function openModal3() {
-    //     console.log('aaaaaaaaaa');
-    // }
 
     var openModalAgenda = function() {
         $scope.oModal3.show();
     };
 
-    // var retSelectedDates = function(dates) {
-    //     // $scope.openModal = function(index) {
-    //     //     console.log('aaaaaaaaaa');
-    //     //     $scope.oModal3.show();
-    //     // };
+    var retSelectedDates = function(dates) {
 
-    //     $scope.selectedDates.length = 0;
-    //     var date = new Date(dates);
-    //     var dataInicial = date.getFullYear() + '/' + date.getDate() + '/' + (date.getMonth() + 1);
-    //     $rootScope.dataInicial = dataInicial;
-    //     console.log('data inicial ==> ' + $rootScope.dataInicial);
-    //     console.log('fornecedor ' + idFornecedor);
-    //     // $http.post(servidor + '/v2/api.php?req=editSenha', {'novasenha': $scope.novasenha}).success(function (data) {
-    //     //     var alertPopup = $ionicPopup.alert({
-    //     //       title: 'Alterado com sucesso!'
-    //     //     });
-    //     //   })
-    //     //   .error(function (erro) {
-    //     //     console.log(erro);
-    //     //   });
-    //     for (var i = 0; i < dates.length; i++) {
-    //         $scope.selectedDates.push(angular.copy(dates[i]));
-    //     }
-    // };
+        // $scope.selectedDates.length = 0;
+        var date = new Date(dates);
+        var dataInicial = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+        var hora = date.getHours();
+
+        $scope.agenda.dataInicial = dataInicial;
+        $scope.agenda.dataFinal = dataInicial;
+        $scope.agenda.horaInicial = new Date();
+        $scope.agenda.horaFinal = new Date();
+
+        // for (var i = 0; i < dates.length; i++) {
+        //     $scope.selectedDates.push(angular.copy(dates[i]));
+        // }
+    };
 
 })
 
