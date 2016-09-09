@@ -186,11 +186,12 @@ angular.module('app.controllers', [])
     /*function callAtTimeout() {
      console.log("Timeout occurred");
      }*/
-
+    $scope.hideSpan = false;
     $scope.closeModal = function(index) {
         if (index == 1) $scope.oModal1.hide();
         else $scope.oModal2.hide();
         $scope.cotacao = {};
+        $scope.hideSpan = true;
     };
 
     $scope.$on('modal.shown', function(event, modal) {});
@@ -224,22 +225,8 @@ angular.module('app.controllers', [])
             msg = 'enviada';
             enviaEditar();
         } else {
-            console.log('Form is not valid');
+            $scope.hideSpan = false;
         }
-        // var itemsLength = Object.keys($scope.cotacao).length;
-        /*if (itemsLength == 6) {
-         $scope.cotacao.status_cotacao = 'PENDENTE';
-         msg = 'enviada';
-         enviaEditar();
-
-         // if ($rootScope.status_cotacao == 'aberta') {
-         /!*$scope.cotacao.status_cotacao = 'PENDENTE';
-         msg = 'enviada';*!/
-         /!*} else if ($scope.dados.status_cotacao == 'escolhida') {
-         $scope.cotacao.status_cotacao = 'CONCLUIDA';
-         msg = 'concluida';
-         }*!/
-         }*/
     }
 
     $scope.editaCotacao = function() {
@@ -323,15 +310,15 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('AgendaCtrl', function($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr) {
+.controller('AgendaCtrl', function($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr, $ionicLoading) {
     var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
     var monthList = ["Janeiro", "Feveiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-    // $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor)
-    //     .success(function(data) {
-    //         // $ionicLoading.hide();
-    //         $scope.dados = data;
-    //     })
+    $ionicLoading.show();
+    $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor)
+        .success(function(data) {
+            $ionicLoading.hide();
+            $scope.dados = data;
+        })
 
     // Modal 3 - Agenda
     $ionicModal.fromTemplateUrl('templates/modal-3.html', {
@@ -347,9 +334,14 @@ angular.module('app.controllers', [])
         $scope.oModal3.show();
     };
 
+    $scope.hideSpan = false;
+
     $scope.closeModal = function(index) {
         $scope.oModal3.hide();
-        // $scope.cotacao = {};
+        $scope.agenda = {};
+        $scope.agenda.titulo = "";
+        $scope.agenda.descricao = "";
+        $scope.hideSpan = true;
     };
 
     $scope.$on('modal.shown', function(event, modal) {});
@@ -370,30 +362,30 @@ angular.module('app.controllers', [])
     ];
 
     $scope.tiposAgenda = [
-        { tipoAgenda: 'ABERTA', label: 'Aberta' },
-        { tipoAgenda: 'CONCLUIDA', label: 'Concluída' }
+        { tipoAgenda: 'USUARIO', label: 'Usuário' },
+        { tipoAgenda: 'EQUIPE', label: 'Equipse' }
     ];
 
     $scope.agenda = {};
 
     $scope.incluirAgenda = function(formValid) {
         $scope.agenda.idFornecedor = idFornecedor;
-        $scope.agenda.horaInicial = $filter('date')($scope.agenda.horaInicial, "HH:mm");
-        $scope.agenda.horaFinal = $filter('date')($scope.agenda.horaFinal, "HH:mm");
 
-        $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.agenda)
-            .success(function(data) {
-                toastr.success('Agenda salva com sucesso!');
-                $scope.closeModal(3);
-            })
-            .error(function(erro) {});
+        if ($scope.agenda.$valid) {
+            console.log('aqui !! ');
+            $scope.agenda.horaInicial = $filter('date')($scope.agenda.horaInicial, "HH:mm");
+            $scope.agenda.horaFinal = $filter('date')($scope.agenda.horaFinal, "HH:mm");
 
-        // enviaAgenda();
-        // if (formValid && !$scope.mensagemErro && !$scope.mensagemErroValidade) {
-        //     enviaAgenda();
-        // } else {
-        //     console.log('Form is not valid');
-        // }
+            $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.agenda)
+                .success(function(data) {
+                    toastr.success('Agenda salva com sucesso!');
+                    $scope.closeModal(3);
+                    $scope.agenda = {};
+                })
+                .error(function(erro) {});
+        } else {
+            $scope.hideSpan = false;
+        }
     }
 
     function enviaAgenda() {

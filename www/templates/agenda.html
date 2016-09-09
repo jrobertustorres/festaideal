@@ -1,88 +1,96 @@
 <ion-view view-title="Agenda">
-  <ion-nav-buttons side="right">
-    <ionic-multi-date-picker input-obj="datepickerObject" style="margin-top: -8px;">
-      <button class="button button-block my-button-calendar-color">
+    <ion-nav-buttons side="right">
+        <ionic-multi-date-picker input-obj="datepickerObject" style="margin-top: -8px;">
+            <button class="button button-block my-button-calendar-color">
         <i class="icon ion-calendar-icon"></i>
       </button>
-    </ionic-multi-date-picker>
-  </ion-nav-buttons>
-  <ion-content ng-controller="AgendaCtrl" scroll="true" padding="true" class="has-header content-stable">
+        </ionic-multi-date-picker>
+    </ion-nav-buttons>
+    <ion-content ng-controller="AgendaCtrl" scroll="true" padding="true" class="has-header content-stable">
 
 
-    <div class="padding-horizontal">
-      <ionic-multi-date-picker input-obj="datepickerObject">
-        <button class="button button-block button-assertive">
+        <div class="padding-horizontal">
+            <ionic-multi-date-picker input-obj="datepickerObject">
+                <button class="button button-block button-assertive">
           <i class="icon ion-calendar"></i> Calendário
           {{selectedDates.length}} date(s) / {{ datepickerObject.templateType }}
         </button>
-      </ionic-multi-date-picker>
-    </div>
+            </ionic-multi-date-picker>
+        </div>
 
-    <!--<ionic-multi-date-picker input-obj="datepickerObject"
-                         calendar="true">
-    </ionic-multi-date-picker>-->
+        <!--<ionic-multi-date-picker input-obj="datepickerObject"
+                     calendar="true">
+</ionic-multi-date-picker>-->
 
-    <div class="list">
-      <div class="item item-divider">
-        Eventos ({{ selectedDates.length }}):
-      </div>
-      <div class="item" ng-repeat="d in selectedDates" ng-click="openModal(3)">
-        {{ d.getDate() }}/{{ d.getMonth() + 1 }}/{{ d.getFullYear() }}<i
-        class="icon ion-edit positive position-button"></i>
-      </div>
+        <div class="list">
+            <div class="item item-divider">
+                Eventos ({{ dados.length }}):
+                <!--Eventos ({{ selectedDates.length }}):-->
+            </div>
+            <div class="item" ng-repeat="d in selectedDates" ng-click="openModal(3)">
+                {{ d.getDate() }}/{{ d.getMonth() + 1 }}/{{ d.getFullYear() }}<i class="icon ion-edit positive position-button"></i>
+            </div>
 
-      <!--<div class="item item-divider">
-  Disabled dates ({{ datepickerObject.disabledDates.length }}):
+            <ion-item collection-repeat="dado in dados track by dado.idAgenda" ng-click="openModal(3)">
+                <p><strong>Título agenda:</strong> {{ dado.tituloAgenda }}</p>
+                <p><strong>Data incial:</strong> {{ dado.dataInicial }}</p>
+                <p><strong>Data final:</strong> {{ dado.dataFinal}}</p>
+            </ion-item>
+
+            <!--<div class="item item-divider">
+Disabled dates ({{ datepickerObject.disabledDates.length }}):
 </div>
 <div class="item" ng-repeat="d in datepickerObject.disabledDates">
-  {{ d.getDate() }}.{{ d.getMonth() + 1 }}.{{ d.getFullYear() }}
+{{ d.getDate() }}.{{ d.getMonth() + 1 }}.{{ d.getFullYear() }}
 </div>-->
 
-    </div>
-  </ion-content>
+        </div>
+    </ion-content>
 
-  <script id="templates/modal-3.html" type="text/ng-template">
-    <div class="modal">
-      <header class="bar bar-header barra-superior">
-        <h1 class="title font-barra-superior" style="text-align: center">Seu Evento</h1>
-        <div class="button button-clear" ng-click="closeModal(3)"><span class="icon ion-close"></span></div>
-      </header>
-      <ion-content has-header="true" padding="true" scroll="true" class="grid-basic-page">
-        <form id="AgendaForm" name="AgendaForm" novalidate ng-submit="incluirAgenda(agendaForm.$valid)">
-          <p>This is a modal</p>
-          <div class="list" style="padding-top: 18px;">
+    <script id="templates/modal-3.html" type="text/ng-template">
+        <div class="modal">
+            <header class="bar bar-header barra-superior">
+                <h1 class="title font-barra-superior" style="text-align: center">Seu Evento</h1>
+                <div class="button button-clear" ng-click="closeModal(3)"><span class="icon ion-close"></span></div>
+            </header>
+            <ion-content has-header="true" padding="true" scroll="true" class="grid-basic-page">
+                <form id="AgendaForm" name="AgendaForm" novalidate ng-submit="incluirAgenda(agendaForm.$valid)">
+                    <p>This is a modal</p>
+                    <div class="list" style="padding-top: 18px;">
 
 
-            <!--<label class="item item-input item-stacked-label my-item">
+                        <!--<label class="item item-input item-stacked-label my-item">
 <input type="text" placeholder="Placeholder 1">
 </label>
-            <label class="item item-input item-stacked-label my-item">
+<label class="item item-input item-stacked-label my-item">
 <input type="text" placeholder="Placeholder 2">
 </label>
-            <label class="item item-input item-stacked-label my-item">
+<label class="item item-input item-stacked-label my-item">
 <input type="text" placeholder="Placeholder 2">
 </label>-->
 
-            <label class="item item-input item-stacked-label my-item">
+                        <label class="item item-input item-stacked-label my-item">
               <div class="input-label my-font-form">Título</div>
               <div><p>{{dados.titulo}}</p></div>
-              <input ng-model="agenda.titulo" type="text" name="titulo">
-              <span ng-show="AgendaForm.$submitted && AgendaForm.obs.$error.maxlength"
+              <input ng-model="agenda.titulo" type="text" name="titulo" required ng-maxlength="60">
+              <span ng-show="AgendaForm.$submitted && AgendaForm.titulo.$error.maxlength && !hideSpan"
                     class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> máximo 60 caracteres</span>
+                    <span ng-show="AgendaForm.$submitted && AgendaForm.titulo.$error.required && !hideSpan"
+                          class="my-font-form-span cor-campo-novalid"><i class="ion-information-circled"></i> campo obrigatório</span>
             </label>
 
-            <li class="item item-toggle my-item" style="padding: 16px;">
-              <span class="input-label my-font-form">Dia inteiro?</span>
-              <label class="toggle toggle-positive my-item">
+                        <li class="item item-toggle my-item" style="padding: 16px;">
+                            <span class="input-label my-font-form">Dia inteiro?</span>
+                            <label class="toggle toggle-positive my-item">
                 <input type="checkbox" ng-model="agenda.diaInteiro" ng-true-value="'1'" ng-false-value="'0'"
                        name="agenda.diaInteiro">
                 <div class="track">
                   <div class="handle"></div>
                 </div>
               </label>
-            </li>
+                        </li>
 
-            <label class="item item-stacked-label my-item">
+                        <label class="item item-stacked-label my-item">
               <span class="input-label my-font-form">Data inicial</span>
               <!--<div><p>{{dataInicial}}</p></div>-->
               <input type="date" ng-model="agenda.dataInicial" name="agenda.dataInicial"
@@ -98,7 +106,7 @@
               </div>
             </label>
 
-            <label class="item item-stacked-label my-item">
+                        <label class="item item-stacked-label my-item">
               <span class="input-label my-font-form">Data Final</span>
               <input type="date" ng-model="agenda.dataFinal" name="agenda.dataFinal"
                      format-date ng-focus="clearMessageErro()">
@@ -113,40 +121,41 @@
               </div>
             </label>
 
-            <label class="item item-input item-select my-item" style="padding: 5px 16px;">
+                        <label class="item item-input item-select my-item" style="padding: 5px 16px;">
               <div class="input-label my-font-form">Tipo notificação</div>
               <select name="tipoNotificacao" ng-model="agenda.tipoNotificacao" required>
                 <option ng-repeat="tipo in tiposNotificacao" value="{{tipo.tipoNotificacao}}">{{tipo.label}}</option>
               </select>
             </label>
+                        <span ng-show="AgendaForm.$submitted && AgendaForm.tipoNotificacao.$error.required && !hideSpan" class="my-font-form-span cor-campo-novalid my-align-spam"><i class="ion-information-circled"></i> campo obrigatório</span>
 
-            <label class="item item-input item-select my-item" style="padding: 10px 16px;">
+                        <label class="item item-input item-select my-item" style="padding: 10px 16px;">
               <div class="input-label my-font-form">Tipo agenda</div>
               <select name="tipoAgenda" ng-model="agenda.tipoAgenda" required>
                 <option ng-repeat="tipoAgenda in tiposAgenda" value="{{tipoAgenda.tipoAgenda}}">{{tipoAgenda.label}}
                 </option>
               </select>
             </label>
+                        <span ng-show="AgendaForm.$submitted && AgendaForm.tipoAgenda.$error.required && !hideSpan" class="my-font-form-span cor-campo-novalid  my-align-spam"><i class="ion-information-circled"></i> campo obrigatório</span>
 
-            <label class="item item-input item-stacked-label my-item">
+                        <label class="item item-input item-stacked-label my-item">
               <div class="input-label my-font-form">Descrição</div>
               <div><p>{{dados.descricao}}</p></div>
-              <input ng-model="agenda.descricao" type="text" name="descricao">
-              <span ng-show="AgendaForm.$submitted && AgendaForm.obs.$error.maxlength"
-                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> máximo 100 caracteres</span>
+              <input ng-model="agenda.descricao" type="text" name="descricao" ng-maxlength="60">
+              <span ng-show="AgendaForm.$submitted && AgendaForm.descricao.$error.maxlength && !hideSpan"
+                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> máximo 60 caracteres</span>
             </label>
 
 
-          </div>
-        </form>
-      </ion-content>
-      <ion-footer-bar align-title="left" class="bar-stable">
-        <button class="button icon-left ion-checkmark-round" style="margin-left: 90%; color: #0c60ee; padding: 0 0px;"
-                type="submit" form="AgendaForm">Salvar
+                    </div>
+                </form>
+            </ion-content>
+            <ion-footer-bar align-title="left" class="bar-stable">
+                <button class="button icon-left ion-checkmark-round" style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #F8F8F8; margin-left: 90%; padding: 0 0px;" type="submit" form="AgendaForm">Salvar
         </button>
-        <!--<button class="button" style="margin-left: 45%; color: #0c60ee" type="submit" form="cotacaoRejeitarForm">Salvar-->
-        <!--</button>-->
-      </ion-footer-bar>
-    </div>
-  </script>
+                <!--<button class="button" style="margin-left: 45%; color: #0c60ee" type="submit" form="cotacaoRejeitarForm">Salvar-->
+                <!--</button>-->
+            </ion-footer-bar>
+        </div>
+    </script>
 </ion-view>

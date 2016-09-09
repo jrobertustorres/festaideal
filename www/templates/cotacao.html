@@ -54,7 +54,7 @@
               <div class="input-label my-font-form">Justificativa*</div>
               <input ng-model="cotacao.motivo" type="text" name="motivo" required ng-maxlength="50">
               <span ng-show="cotacaoCancelarForm.$submitted && cotacaoCancelarForm.motivo.$error.required"
-                    class="cor-campo-novalid my-font-form-span">
+                    class="cor-campo-novalid my-font-form-span && !hideSpan">
                 <i class="ion-information-circled"></i> campo obrigatório</span>
               <span ng-show="cotacaoCancelarForm.$submitted && cotacaoCancelarForm.motivo.$error.maxlength"
                     class="cor-campo-novalid my-font-form"><i class="ion-information-circled"></i> máximo 50 caracteres</span>
@@ -103,7 +103,7 @@
               <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacao.tipo_pagamento" type="text"
                      name="tipo_pagamento" required ng-maxlength="20">
               <span
-                ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.tipo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
+                ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.tipo_pagamento.$error.required && dados.status_cotacao == 'ABERTA' && !hideSpan"
                 class="cor-campo-novalid my-font-form-span"><i
                 class="ion-information-circled"></i> campo obrigatório</span>
               <span ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.tipo_pagamento.$error.maxlength"
@@ -116,7 +116,7 @@
                      name="prazo_pagamento" required
                      ng-maxlength="20">
               <span
-                ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.prazo_pagamento.$error.required && dados.status_cotacao == 'ABERTA'"
+                ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.prazo_pagamento.$error.required && dados.status_cotacao == 'ABERTA' && !hideSpan"
                 class="cor-campo-novalid my-font-form-span"><i
                 class="ion-information-circled"></i> campo obrigatório</span>
               <span ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.prazo_pagamento.$error.maxlength"
@@ -129,7 +129,7 @@
               <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacao.valor" type="text" name="valor"
                      mask="9.999,99" required>
             <span
-              ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.valor.$error.required && dados.status_cotacao == 'ABERTA'"
+              ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.valor.$error.required && dados.status_cotacao == 'ABERTA' && !hideSpan"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
             </label>
@@ -157,21 +157,12 @@
                 </form>
             </ion-content>
             <ion-footer-bar align-title="left" class="bar-stable">
-                <!--<div>
-          <button class="button icon-left ion-checkmark-round" style="margin-left: 355%; color: #0c60ee; padding: 0 0px;"
-                  type="submit" form="cotacaoResponderForm">Salvar
-          </button>
-        </div>-->
                 <div class="bar bar-footer bar-light footer-buttons">
                     <div class="row">
                         <div class="col">
-                            <button class="button icon-left ion-checkmark-round" style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #FFFFFF;" type="submit" form="cotacaoResponderForm">Salvar
+                            <button class="button icon-left ion-checkmark-round" style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #FFFFFF; margin-left: 90%; padding: 0 0px;" type="submit" form="cotacaoResponderForm">Salvar
               </button>
                         </div>
-                        <!--<button class="button icon-left ion-checkmark-round"
-                    style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #FFFFFF;"
-                    ng-submit="submeterModal(cotacaoResponderForm)">Salvar</button>
-          </div>-->
                     </div>
                 </div>
             </ion-footer-bar>
