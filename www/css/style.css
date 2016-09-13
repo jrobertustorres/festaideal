@@ -328,3 +328,11 @@ input[type="time"],
     float: right!important;
     margin-top: -34px!important;
 }
+
+.list-left-editing .item {
+    pointer-events: initial !important;
+}
+
+.popup-buttons .button {
+    font-size: 14px;
+}

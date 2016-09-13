@@ -149,9 +149,9 @@
               <div class="input-label my-font-form">Observação</div>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.obs}}</p></div>
               <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacao.obs" type="text"
-                     name="obs">
+                     name="obs" ng-maxlength="100">
               <span ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.obs.$error.maxlength"
-                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> máximo 60 caracteres</span>
+                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> máximo 100 caracteres</span>
             </label>
                     </div>
                 </form>
