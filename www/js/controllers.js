@@ -3,6 +3,7 @@ var servidor = "http://localhost";
 var idFornecedor = 1;
 // var idFornecedor = 0;
 var idUsuario = 1;
+// var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
@@ -339,8 +340,10 @@ angular.module('app.controllers', [])
             $http.get(servidor + '/v1/api.php?req=getAgendaById&idAgenda=' + idAgenda)
                 .success(function(data) {
                     $scope.dadosAgenda = data;
-                    $scope.dadosAgenda.horaInicial = new Date($scope.dadosAgenda.dataInicial);
-                    $scope.dadosAgenda.horaFinal = new Date($scope.dadosAgenda.dataFinal);
+                    $scope.dadosAgenda.dataInicialModal = new Date($scope.dadosAgenda.dataInicial);
+                    $scope.dadosAgenda.dataFinalModal = new Date($scope.dadosAgenda.dataInicial);
+                    $scope.dadosAgenda.horaInicialModal = new Date($scope.dadosAgenda.dataInicial);
+                    $scope.dadosAgenda.horaFinalModal = new Date($scope.dadosAgenda.dataFinal);
                 })
         }
     };
@@ -348,11 +351,11 @@ angular.module('app.controllers', [])
     $scope.hideSpan = false;
 
     $scope.closeModal = function(index) {
-        $scope.oModal3.hide();
-        $scope.dadosAgenda = {};
-        $scope.dadosAgenda.tituloAgenda = "";
-        $scope.dadosAgenda.descricao = "";
-        $scope.hideSpan = true;
+      $scope.oModal3.hide();
+      $scope.dadosAgenda = {};
+      $scope.dadosAgenda.tituloAgenda = "";
+      $scope.dadosAgenda.descricao = "";
+      $scope.hideSpan = true;
     };
 
     $scope.$on('modal.shown', function(event, modal) {});
@@ -380,14 +383,36 @@ angular.module('app.controllers', [])
     $scope.agenda = {};
     $scope.dadosAgenda = {};
 
-    //PEGAR OS CAMPOS DE DATA E CONCATENAR COM A HORA E PEGAR COM GET TIME PARA COMPARAR SE A DATA FINAL É MAIOR QUE A INICIAL
+  $scope.teste = function () {
+    var dadosList =
+    {
+      tituloAgenda: "USUARIO",
+      dataInicial: "FORNECEDOR" };
 
-    $scope.incluirAgenda = function(formValid) {
-        $scope.dadosAgenda.idFornecedor = idFornecedor;
-        $scope.dadosAgenda.idUsuario = idUsuario;
-        $scope.dadosAgenda.idAgenda = $scope.idAgenda;
-        $scope.dadosAgenda.horaInicial = $filter('date')($scope.agenda.horaInicial, "HH:mm");
-        $scope.dadosAgenda.horaFinal = $filter('date')($scope.agenda.horaFinal, "HH:mm");
+    console.log(dadosList);
+    $scope.dados.push(dadosList);
+  }
+
+    //PEGAR OS CAMPOS DE DATA E CONCATENAR COM A HORA E PEGAR COM GET TIME PARA COMPARAR SE A DATA FINAL É MAIOR QUE A INICIAL
+  $scope.incluirAgenda = function(formValid) {
+
+    $scope.dadosAgenda.idFornecedor = idFornecedor;
+    $scope.dadosAgenda.idUsuario = idUsuario;
+    $scope.dadosAgenda.idAgenda = $scope.idAgenda;
+
+    var dia = $scope.dadosAgenda.dataInicialModal.getDate();
+    var mes = $scope.dadosAgenda.dataInicialModal.getMonth();
+    var ano = $scope.dadosAgenda.dataInicialModal.getFullYear();
+    var hora = $scope.dadosAgenda.horaInicialModal.getHours();
+    var minutos = $scope.dadosAgenda.horaInicialModal.getMinutes();
+    $scope.dadosAgenda.dataInicial = new Date(ano, mes, dia, hora, minutos, 00, 000).toLocaleString();
+
+    var diaF = $scope.dadosAgenda.dataFinalModal.getDate();
+    var mesF = $scope.dadosAgenda.dataFinalModal.getMonth();
+    var anoF = $scope.dadosAgenda.dataFinalModal.getFullYear();
+    var horaF = $scope.dadosAgenda.horaFinalModal.getHours();
+    var minutosF = $scope.dadosAgenda.horaFinalModal.getMinutes();
+    $scope.dadosAgenda.dataFinal = new Date(anoF, mesF, diaF, horaF, minutosF, 00, 000).toLocaleString();
 
         if (formValid) {
             if ($scope.idAgenda) {
@@ -395,17 +420,22 @@ angular.module('app.controllers', [])
                     .success(function(data) {
                         toastr.success('Agenda alterada com sucesso!');
                         $scope.closeModal(3);
-                        $scope.agenda = {};
+                        $scope.dadosAgenda = {};
                     })
                     .error(function(erro) {});
             } else {
                 $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.dadosAgenda)
                     .success(function(data) {
-                        toastr.success('Agenda salva com sucesso!');
-                            console.log('dados -------------- ' + data.tituloAgenda);
-                        for (var i = 0; i < data.length; i++) {
-                            $scope.dados.push(data[i]);
-                        }
+                      var dadosList =
+                        {
+                          tituloAgenda: "USUARIO",
+                         dataInicial: "FORNECEDOR" };
+
+                      console.log(dadosList);
+                      $scope.dados.push(dadosList);
+
+                      console.log('dados list 2'+$scope.dados);
+                      toastr.success('Agenda salva com sucesso!');
                         $scope.closeModal(3);
                         $scope.dadosAgenda = {};
                     })
@@ -580,20 +610,12 @@ angular.module('app.controllers', [])
     };
 
     var retSelectedDates = function(dates) {
-        // $scope.selectedDates.length = 0;
-        var date = new Date(dates);
-        var dataInicial = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-        console.log('dates ' + dataInicial);
-        var hora = date.getHours();
+      var date = new Date(dates);
 
-        $scope.dadosAgenda.dataInicial = dataInicial;
-        $scope.dadosAgenda.dataFinal = dataInicial;
-        $scope.dadosAgenda.horaInicial = new Date();
-        $scope.dadosAgenda.horaFinal = new Date();
-
-        // for (var i = 0; i < dates.length; i++) {
-        //     $scope.selectedDates.push(angular.copy(dates[i]));
-        // }
+        $scope.dadosAgenda.dataInicialModal = date;
+        $scope.dadosAgenda.dataFinalModal = date;
+        $scope.dadosAgenda.horaInicialModal = new Date();
+        $scope.dadosAgenda.horaFinalModal = new Date();
     };
 
 })

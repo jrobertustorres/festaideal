@@ -1,32 +1,3 @@
-<ion-view view-title="Agenda">
-  <ion-nav-buttons side="right">
-    <ionic-multi-date-picker input-obj="datepickerObject" style="margin-top: -8px;">
-      <button class="button button-block my-button-calendar-color">
-        <i class="icon ion-calendar-icon"></i>
-      </button>
-    </ionic-multi-date-picker>
-  </ion-nav-buttons>
-  <ion-content ng-controller="AgendaCtrl" scroll="true" padding="true" class="has-header content-stable">
-    <ion-list show-delete="true">
-      <div class="item item-divider">
-        Eventos ({{ dados.length }}):
-      </div>
-      <!--<div class="item" ng-repeat="d in selectedDates" ng-click="openModal(3)">
-          {{ d.getDate() }}/{{ d.getMonth() + 1 }}/{{ d.getFullYear() }}<i class="icon ion-edit positive position-button"></i>
-      </div>-->
-
-      <ion-item collection-repeat="dado in dados track by dado.idAgenda" ng-click="openModal(3,dado.idAgenda)">
-        <p><strong>Título agenda:</strong> {{ dado.tituloAgenda }}</p>
-        <p><strong>Data incial:</strong> {{ dado.dataInicial }}</p>
-        <!--<p><strong>Data final:</strong> {{ dado.dataFinal}}</p>-->
-        <ion-delete-button class="ion-minus-circled" ng-click="removerAgenda(dado)"></ion-delete-button>
-      </ion-item>
-    </ion-list>
-    <button class="button" style="margin-left: 45%; color: #0c60ee"
-            ng-click="teste()">Salvar
-    </button>
-  </ion-content>
-
   <script id="templates/modal-3.html" type="text/ng-template">
     <div class="modal">
       <header class="bar bar-header barra-superior">
@@ -135,4 +106,3 @@
       </ion-footer-bar>
     </div>
   </script>
-</ion-view>
