@@ -3,10 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="2e064907-d6da-45f4-b0a5-e7684e16fddd" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/style.css" afterPath="$PROJECT_DIR$/www/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controllers.js" afterPath="$PROJECT_DIR$/www/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/directives.js" afterPath="$PROJECT_DIR$/www/js/directives.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/routes.js" afterPath="$PROJECT_DIR$/www/js/routes.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js" afterPath="$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/agenda.html" afterPath="$PROJECT_DIR$/www/templates/agenda.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/templates/agendaModal.html" afterPath="$PROJECT_DIR$/www/templates/agendaModal.html" />
     </list>
     <ignored path="festaideal.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,31 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="controllers.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="controllers.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="312" column="2" selection-start-line="312" selection-start-column="2" selection-end-line="312" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="79" column="54" selection-start-line="79" selection-start-column="54" selection-end-line="79" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="agendaModal.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/templates/agendaModal.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+            <state relative-caret-position="342">
+              <caret line="430" column="32" selection-start-line="430" selection-start-column="32" selection-end-line="430" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -60,12 +41,31 @@
       <file leaf-file-name="agenda.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/templates/agenda.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="603">
-              <caret line="36" column="104" selection-start-line="36" selection-start-column="104" selection-end-line="36" selection-end-column="104" />
+            <state relative-caret-position="234">
+              <caret line="19" column="57" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
               <folding>
                 <element signature="n#style#0;n#ionic-multi-date-picker#0;n#ion-nav-buttons#0;n#ion-view#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="128" column="10" selection-start-line="128" selection-start-column="10" selection-end-line="128" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="agendaModal.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/agendaModal.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="36">
+              <caret line="2" column="52" selection-start-line="2" selection-start-column="52" selection-end-line="2" selection-end-column="52" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -103,18 +103,8 @@
       <file leaf-file-name="ionic-multi-date-picker.bundle.min.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="837" column="53" selection-start-line="837" selection-start-column="53" selection-end-line="837" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="319" column="15" selection-start-line="319" selection-start-column="15" selection-end-line="319" selection-end-column="15" />
+            <state relative-caret-position="272">
+              <caret line="921" column="58" selection-start-line="921" selection-start-column="58" selection-end-line="921" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -167,7 +157,6 @@
         <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/js/app.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js" />
         <option value="$PROJECT_DIR$/www/lib/ionic/css/ionic.css" />
         <option value="$PROJECT_DIR$/www/templates/home.html" />
         <option value="$PROJECT_DIR$/www/templates/cotacao.html" />
@@ -175,10 +164,11 @@
         <option value="$PROJECT_DIR$/www/templates/login.html" />
         <option value="$PROJECT_DIR$/www/js/directives.js" />
         <option value="$PROJECT_DIR$/www/css/style.css" />
-        <option value="$PROJECT_DIR$/www/js/routes.js" />
-        <option value="$PROJECT_DIR$/www/js/controllers.js" />
-        <option value="$PROJECT_DIR$/www/templates/agenda.html" />
         <option value="$PROJECT_DIR$/www/templates/agendaModal.html" />
+        <option value="$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js" />
+        <option value="$PROJECT_DIR$/www/js/routes.js" />
+        <option value="$PROJECT_DIR$/www/templates/agenda.html" />
+        <option value="$PROJECT_DIR$/www/js/controllers.js" />
       </list>
     </option>
   </component>
@@ -278,56 +268,7 @@
       <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="festaideal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="festaideal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="festaideal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="festaideal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="festaideal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="festaideal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="festaideal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
+        <subPane />
       </pane>
     </panes>
   </component>
@@ -430,12 +371,12 @@
       <workItem from="1473252796917" duration="2000" />
       <workItem from="1473290989517" duration="1416000" />
       <workItem from="1473730638551" duration="7013000" />
-      <workItem from="1473979831885" duration="43084000" />
+      <workItem from="1473979831885" duration="50984000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="478360000" />
+    <option name="totallyTimeSpent" value="486260000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -726,53 +667,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="837" column="53" selection-start-line="837" selection-start-column="53" selection-end-line="837" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="319" column="15" selection-start-line="319" selection-start-column="15" selection-end-line="319" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/directives.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="522">
           <caret line="29" column="2" selection-start-line="29" selection-start-column="2" selection-end-line="29" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="119" column="8" selection-start-line="111" selection-start-column="6" selection-end-line="119" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/agenda.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="36" column="104" selection-start-line="36" selection-start-column="104" selection-end-line="36" selection-end-column="104" />
-          <folding>
-            <element signature="n#style#0;n#ionic-multi-date-picker#0;n#ion-nav-buttons#0;n#ion-view#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#ion-content#0;n#ion-view#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="312" column="2" selection-start-line="312" selection-start-column="2" selection-end-line="312" selection-end-column="2" />
           <folding />
         </state>
       </provider>
@@ -785,10 +683,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="319" column="15" selection-start-line="319" selection-start-column="15" selection-end-line="319" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/ionic-multi-date-picker/dist/ionic-multi-date-picker.bundle.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="921" column="58" selection-start-line="921" selection-start-column="58" selection-end-line="921" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/agendaModal.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+        <state relative-caret-position="36">
+          <caret line="2" column="52" selection-start-line="2" selection-start-column="52" selection-end-line="2" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="128" column="10" selection-start-line="128" selection-start-column="10" selection-end-line="128" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/agenda.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="19" column="57" selection-start-line="19" selection-start-column="57" selection-end-line="19" selection-end-column="57" />
+          <folding>
+            <element signature="n#style#0;n#ionic-multi-date-picker#0;n#ion-nav-buttons#0;n#ion-view#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="430" column="32" selection-start-line="430" selection-start-column="32" selection-end-line="430" selection-end-column="32" />
           <folding />
         </state>
       </provider>

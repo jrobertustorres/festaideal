@@ -118,6 +118,15 @@ angular.module('app.routes', [])
           }
         }
       })
+      /*.state('menu.agendaModal', {
+        url: '/agendaModal',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/agendaModal.html',
+            controller: 'AgendaModalCtrl'
+          }
+        }
+      })*/
 
       .state('menu.alterarSenha', {
         url: '/alterarSenha',

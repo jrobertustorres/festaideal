@@ -1,4 +1,4 @@
-<ion-view view-title="Agenda">
+<ion-view view-title="Agenda" ng-controller="AgendaCtrl">
   <ion-nav-buttons side="right">
     <ionic-multi-date-picker input-obj="datepickerObject" style="margin-top: -8px;">
       <button class="button button-block my-button-calendar-color">
@@ -6,7 +6,7 @@
       </button>
     </ionic-multi-date-picker>
   </ion-nav-buttons>
-  <ion-content ng-controller="AgendaCtrl" scroll="true" padding="true" class="has-header content-stable">
+  <ion-content scroll="true" padding="true" class="has-header content-stable">
     <ion-list show-delete="true">
       <div class="item item-divider">
         Eventos ({{ dados.length }}):
@@ -22,9 +22,6 @@
         <ion-delete-button class="ion-minus-circled" ng-click="removerAgenda(dado)"></ion-delete-button>
       </ion-item>
     </ion-list>
-    <button class="button" style="margin-left: 45%; color: #0c60ee"
-            ng-click="teste()">Salvar
-    </button>
   </ion-content>
 
   <script id="templates/modal-3.html" type="text/ng-template">

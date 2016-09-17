@@ -4,7 +4,7 @@
         <h1 class="title font-barra-superior" style="text-align: center">Evento</h1>
         <div class="button button-clear" ng-click="closeModal(3)"><span class="icon ion-close"></span></div>
       </header>
-      <ion-content has-header="true" padding="true" scroll="true" class="grid-basic-page">
+      <ion-content ng-controller="AgendaModalCtrl" has-header="true" padding="true" scroll="true" class="grid-basic-page">
         <form id="agendaForm" name="agendaForm" novalidate ng-submit="incluirAgenda(agendaForm.$valid)">
           <!--<p>This is a modal</p>-->
           <div class="list" style="padding-top: 47px;">
