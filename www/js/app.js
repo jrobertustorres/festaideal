@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 var token = "";
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker'])
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -59,7 +59,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
         push.on('registration', function(data) {
 
             token = data.registrationId;
-            alert(data.registrationId);
+            // alert(data.registrationId);
 
         });
 

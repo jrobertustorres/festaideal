@@ -1,9 +1,9 @@
-var servidor = "http://localhost";
-// var servidor = "http://festaideal.com.br/ws_mobile";
-var idFornecedor = 1;
-// var idFornecedor = 0;
-var idUsuario = 1;
-// var idUsuario = 0;
+// var servidor = "http://localhost";
+var servidor = "http://festaideal.com.br/ws_mobile";
+// var idFornecedor = 1;
+var idFornecedor = 0;
+// var idUsuario = 1;
+var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
@@ -136,8 +136,7 @@ angular.module('app.controllers', [])
 
     $ionicLoading.show();
     $scope.cotacao = {};
-    $scope.pagetitle = 'Dados cotação ' + $rootScope.status_cotacao;
-    console.log('titulo pagina ' + $rootScope.status_cotacao);
+    $scope.pagetitle = 'Dados cotação';
     $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
       .success(function(data) {
         $ionicLoading.hide();
@@ -167,8 +166,8 @@ angular.module('app.controllers', [])
       if (index == 1 && $scope.dados.status_cotacao == "ABERTA") {
         var confirmPopup = $ionicPopup.confirm({
           title: 'Deseja realmente rejeitar\n esta cotação?',
-          cancelText: 'Não',
-          okText: 'Sim'
+          cancelText: 'Cancelar',
+          okText: 'Rejeitar'
         });
         confirmPopup.then(function(res) {
           if (res) {
@@ -233,8 +232,6 @@ angular.module('app.controllers', [])
     }
 
     $scope.editaCotacao = function() {
-      console.log('$scope.cotacao.motivo ' + $scope.cotacao.motivo);
-      console.log('$scope.cotacao.status_cotacao ' + $rootScope.status_cotacao);
       if ($scope.cotacao.motivo && $rootScope.status_cotacao != 'ABERTA') {
         if ($rootScope.status_cotacao == 'escolhida' || $rootScope.status_cotacao == 'concluida') {
           $scope.cotacao.status_cotacao = 'CANCELADA';
@@ -296,17 +293,20 @@ angular.module('app.controllers', [])
 
       var data_entrega = $filter('date')($scope.cotacao.data_entrega, "dd/MM/yyyy");
       var validade = $filter('date')($scope.cotacao.validade, "dd/MM/yyyy");
+      var data_evento = $filter('date')($scope.dados.data_evento, "dd/MM/yyyy");
+
+      // var data_entrega = new Date($scope.cotacao.data_entrega).getTime();
+      // var data_evento = $scope.dados.data_evento.getTime();
+
+      console.log('data da entrega '+data_entrega);
+      console.log('data do evento '+data_evento);
 
       if (data_entrega > $scope.dados.data_evento) {
         $scope.mensagemErro = "data da entrega superior à data do evento";
-      } else {
-        // $scope.mensagemErro = "";
       }
 
       if (validade < $scope.dados.data_evento) {
-        $scope.mensagemErroValidade = "data da validade inferior à data do evento";
-      } else {
-        // console.log('data ok aaaaaaaaaa');
+        $scope.mensagemErroValidade = "data de validade inferior à data do evento";
       }
     }
 
@@ -318,7 +318,6 @@ angular.module('app.controllers', [])
     $ionicLoading.show();
     $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor + '&idUsuario=' + idUsuario)
       .success(function(data) {
-        console.log(data);
         $ionicLoading.hide();
         $scope.dados = data;
       })
@@ -620,7 +619,6 @@ angular.module('app.controllers', [])
 
   .controller('usuarioCtrl', function($scope, $state, $q, UserService, $ionicLoading, $location, $http, $ionicHistory, Token) {
     $scope.answer = Token.token($scope.token);
-    alert($scope.answer);
     $http.get(servidor + '/v1/api.php?req=setToken&idFornecedor=' + $idFornecedor)
       .success(function(data) {
         // idFornecedor = data.id_fornecedor;

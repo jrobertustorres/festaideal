@@ -9,6 +9,7 @@
     "ionic-multi-date-picker": "~2.0.0",
     "ion-datetime-picker": "~0.3.1",
     "ionic-datepicker": "~1.2.0",
-    "onezone-datepicker": "*"
+    "onezone-datepicker": "*",
+    "ngMask": "angular-mask#~3.1.1"
   }
 }
