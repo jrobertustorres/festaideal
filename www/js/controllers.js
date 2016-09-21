@@ -175,7 +175,9 @@ angular.module('app.controllers', [])
             $ionicHistory.nextViewOptions({
               disableBack: true
             });
-            $location.path("/side-menu21/home");
+            $timeout(function(){
+              $location.path("/side-menu21/home");
+            },3000);
           } else {}
         });
       } else if ($scope.dados.status_cotacao != "ABERTA") {
@@ -237,7 +239,6 @@ angular.module('app.controllers', [])
           $scope.cotacao.status_cotacao = 'CANCELADA';
           msg = 'cancelada';
         } else {
-          console.log('dentro do else');
           $scope.cotacao.status_cotacao = 'REJEITADA';
           msg = 'rejeitada';
         }
@@ -259,7 +260,10 @@ angular.module('app.controllers', [])
           });
           $scope.closeModal(1);
           $scope.closeModal(2);
-          $location.path('side-menu21/home');
+          $timeout(function(){
+            $location.path("/side-menu21/home");
+          },3000);
+          // $location.path('side-menu21/home');
         })
         .error(function(erro) {});
     }
@@ -293,15 +297,12 @@ angular.module('app.controllers', [])
 
       var data_entrega = $filter('date')($scope.cotacao.data_entrega, "dd/MM/yyyy");
       var validade = $filter('date')($scope.cotacao.validade, "dd/MM/yyyy");
-      var data_evento = $filter('date')($scope.dados.data_evento, "dd/MM/yyyy");
+      // var data_evento = $filter('date')($scope.dados.data_evento, "dd/MM/yyyy");
 
-      // var data_entrega = new Date($scope.cotacao.data_entrega).getTime();
-      // var data_evento = $scope.dados.data_evento.getTime();
+      var data_entrega = parseInt(data_entrega.split("/")[2].toString() + data_entrega.split("/")[1].toString() + data_entrega.split("/")[0].toString());
+      var data_evento = parseInt($scope.dados.data_evento.split("/")[2].toString() + $scope.dados.data_evento.split("/")[1].toString() + $scope.dados.data_evento.split("/")[0].toString());
 
-      console.log('data da entrega '+data_entrega);
-      console.log('data do evento '+data_evento);
-
-      if (data_entrega > $scope.dados.data_evento) {
+      if (data_entrega > data_evento) {
         $scope.mensagemErro = "data da entrega superior à data do evento";
       }
 
@@ -467,50 +468,6 @@ angular.module('app.controllers', [])
       });
     }
 
-    /* var h0 = new Date(2015, 11, 11)
-     , h1 = new Date(2015, 11, 9)
-     , h2 = new Date(2015, 11, 3)
-     , h3 = new Date(2015, 11, 10)
-     , h4 = new Date(2015, 10, 30)
-     , h5 = new Date(2015, 11, 16)
-     , h6 = new Date(2015, 11, 6)
-     , calendar0 = [h0, h1, h2, h3, h4, h5, h6];
-
-     var c0 = new Date(2015, 11, 11)
-     , c1 = new Date(2015, 11, 9)
-     , c2 = new Date(2015, 12, 3)
-     , c3 = new Date(2015, 11, 10)
-     , c4 = new Date(2015, 11, 12)
-     , c5 = new Date(2015, 11, 16)
-     , c6 = new Date(2015, 11, 18)
-     , c7 = new Date(2015, 11, 19)
-     , c8 = new Date(2015, 11, 22)
-     , c9 = new Date(2015, 11, 27)
-     , c10 = new Date(2015, 11, 25)
-     , c11 = new Date(2015, 11, 6)
-     , calendar1 = [c0, c1]
-     , calendar2 = [c2, c3]
-     , calendar3 = [c4]
-     , calendar4 = [c2, c5, c11]
-     , calendar5 = [c4, c10]
-     , calendar6 = [c6, c7, c8, c9]
-     , calendar7 = [c5, c6, c11];
-
-     var d0 = new Date(2015, 11, 16)
-     , d1 = new Date(2015, 11, 17)
-     , d2 = new Date(2015, 11, 17)
-     , d3 = new Date(2015, 10, 30)
-     , d4 = new Date(2015, 12, 1)
-     , disabledDates = [d0, d1, d2, d3, d4];*/
-
-    // var s0 = new Date(2015, 10, 31)  // preview month
-    //   , s1 = new Date(2015, 11, 10) // holiday
-    //   , s2 = new Date(2015, 11, 11) // holiday
-    //   , s7 = new Date(2015, 11, 6) //
-    //   , s3 = new Date(2015, 11, 12) //
-    //   , s4 = new Date(2015, 11, 12) // clone
-    //   , s5 = new Date(2015, 11, 17) // conflict with disabled
-    //   , s6 = new Date(2015, 12, 1); // conflict with disabled, next month
     // $scope.selectedDates = [s1, s2, s3, s4, s0, s5, s6, s7];
     $scope.selectedDates = [];
 
@@ -555,38 +512,6 @@ angular.module('app.controllers', [])
       selectedDates: $scope.selectedDates,
       //viewMonth: $scope.selectedDates, //
       // disabledDates: disabledDates,
-
-      /*calendar0: calendar0,
-       calendar0Class: '',
-       calendar0Name: 'holidays',
-
-       calendar1: calendar1,
-       //calendar1Class: '',
-       calendar1Name: 'same days',
-
-       calendar2: calendar2,
-       calendar2Class: '',
-       //calendar2Name: 'calendar 2',
-
-       calendar3: calendar3,
-       calendar3Class: '',
-       calendar3Name: 'birthdays',
-
-       calendar4: calendar4,
-       calendar4Class: 'cal-color-black',
-       calendar4Name: 'date-picker',
-
-       calendar5: calendar5,
-       calendar5Class: '',
-       calendar5Name: 'vacation',
-
-       calendar6: calendar6,
-       calendar6Class: '',
-       calendar6Name: 'red days',
-
-       calendar7: calendar7,
-       calendar7Class: '',
-       calendar7Name: 'same dates',*/
 
       conflictSelectedDisabled: 'DISABLED', // SELECTED | DISABLED
 
@@ -633,12 +558,31 @@ angular.module('app.controllers', [])
       });
   })
 
-  .controller('AlterarSenhaCtrl', function($scope, $stateParams, $http, $ionicPopup) {
+  .controller('AlterarSenhaCtrl', function($scope, $stateParams, $http, $ionicHistory, toastr, $location, $timeout) {
 
     $scope.result;
     $scope.senhaOk = false;
+    $scope.senhaAtualOk = false;
+    $scope.novaSenha = {};
+    $scope.hideSpan = false;
+
+    $scope.novaSenha.idFornecedor = idFornecedor;
+    $scope.novaSenha.idUsuario= idFornecedor;
+
+    $scope.verificaSenha = function () {
+      $http.post(servidor + '/v1/api.php?req=verificaSenha', $scope.novaSenha)
+        .success(function(data) {
+          if (data) {
+            $scope.senhaAtualOk = true;
+            $scope.mensagemSenha = "";
+          } else {
+            $scope.mensagemSenha = "senha atual não confere";
+          }
+        });
+    }
+
     $scope.verificaContrasenha = function() {
-      $scope.result = angular.equals($scope.novasenha.conf_senha, $scope.novasenha.senha);
+      $scope.result = angular.equals($scope.novaSenha.confSenha, $scope.novaSenha.senha);
       if ($scope.result == false) {
         $scope.mensagem = "as senhas não conferem";
       } else {
@@ -648,23 +592,34 @@ angular.module('app.controllers', [])
       }
     }
 
-    $scope.novasenha = {};
-
     function submeter() {
-      if ($scope.senhaOk) {
+      if ($scope.senhaOk && $scope.senhaAtualOk) {
         if ($scope.alterarSenhaForm.$valid) {
-          console.log('senhas ok');
-          // $scope.novasenha.id_pessoa = id_pessoa;
-          // $http.post(servidor + '/v2/api.php?req=editSenha', {'novasenha': $scope.novasenha}).success(function (data) {
-          //     var alertPopup = $ionicPopup.alert({
-          //       title: 'Alterado com sucesso!'
-          //     });
-          //   })
-          //   .error(function (erro) {
-          //     console.log(erro);
-          //   });
+          $http.post(servidor + '/v1/api.php?req=editSenha', {'novaSenha': $scope.novaSenha})
+            .success(function (data) {
+              $ionicHistory.nextViewOptions({
+                disableBack: true
+              });
+              toastr.success('Senha alterada com sucesso!');
+              $timeout(function(){
+                $location.path("/side-menu21/home");
+              },3000);
+
+              $scope.novaSenha.senha = "";
+              $scope.novaSenha.confSenha = "";
+              $scope.novaSenha.senhaAtual = "";
+              $scope.clearMessageSenha();
+              $scope.hideSpan = true;
+            })
+            .error(function (erro) {
+              console.log(erro);
+            });
         }
       }
+    }
+
+    $scope.clearMessageSenha = function() {
+      $scope.mensagemSenha = "";
     }
   })
 
