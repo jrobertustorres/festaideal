@@ -4007,7 +4007,7 @@ a.subdued {
     margin: 0 10px;
     min-width: 30px;
     height: 43px;
-    text-align: left;
+    text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 13px;

@@ -1,9 +1,9 @@
-// var servidor = "http://localhost";
-var servidor = "http://festaideal.com.br/ws_mobile";
-// var idFornecedor = 1;
-var idFornecedor = 0;
-// var idUsuario = 1;
-var idUsuario = 0;
+var servidor = "http://localhost";
+// var servidor = "http://festaideal.com.br/ws_mobile";
+var idFornecedor = 1;
+// var idFornecedor = 0;
+var idUsuario = 1;
+// var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
@@ -163,6 +163,7 @@ angular.module('app.controllers', [])
     });
 
     $scope.openModal = function(index) {
+      $scope.closeMfbMenu = 'closed';
       if (index == 1 && $scope.dados.status_cotacao == "ABERTA") {
         var confirmPopup = $ionicPopup.confirm({
           title: 'Deseja realmente rejeitar\n esta cotação?',
@@ -316,12 +317,33 @@ angular.module('app.controllers', [])
   .controller('AgendaCtrl', function($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr, $ionicLoading, $stateParams) {
     var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
     var monthList = ["Janeiro", "Feveiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    getAgenda();
+    $scope.mesSelecionado = 0;
+    $scope.getPreviousMonth = function (numeroMes) {
+      $scope.mesSelecionado = parseInt(numeroMes) - 1;
+      getAgenda();
+      alert($scope.mesSelecionado);
+    }
+
+    $scope.getNextMonth = function (numeroMes) {
+      $scope.mesSelecionado = parseInt(numeroMes) + 1;
+      getAgenda();
+      alert($scope.mesSelecionado);
+    }
+
     $ionicLoading.show();
-    $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor + '&idUsuario=' + idUsuario)
-      .success(function(data) {
-        $ionicLoading.hide();
-        $scope.dados = data;
-      })
+    function getAgenda() {
+      console.log('dentro da agenda');
+      $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor + '&idUsuario=' + idUsuario + '&mesSelecionado=' + $scope.mesSelecionado)
+        .success(function (data) {
+          $ionicLoading.hide();
+          $scope.dados = data;
+          for (var i = 0; i < $scope.dados.length; i++) {
+            $scope.nomeMes = $scope.dados[i].nomeMes;
+            $scope.numeroMes = $scope.dados[i].numeroMes;
+          }
+        })
+    }
 
     // Modal 3 - Agenda
     $ionicModal.fromTemplateUrl('templates/modal-3.html', {
@@ -340,7 +362,6 @@ angular.module('app.controllers', [])
       if (idAgenda) {
         $http.get(servidor + '/v1/api.php?req=getAgendaById&idAgenda=' + idAgenda)
           .success(function(data) {
-            console.log(data);
             $scope.dadosAgenda = data;
             $scope.dadosAgenda.dataInicialModal = new Date($scope.dadosAgenda.dataInicial);
             $scope.dadosAgenda.dataFinalModal = new Date($scope.dadosAgenda.dataFinal);
@@ -385,17 +406,6 @@ angular.module('app.controllers', [])
     $scope.agenda = {};
     $scope.dadosAgenda = {};
 
-    $scope.teste = function () {
-      var dadosList =
-      {
-        tituloAgenda: "USUARIO",
-        dataInicial: "FORNECEDOR" };
-
-      console.log(dadosList);
-      $scope.dados.push(dadosList);
-    }
-
-    //PEGAR OS CAMPOS DE DATA E CONCATENAR COM A HORA E PEGAR COM GET TIME PARA COMPARAR SE A DATA FINAL É MAIOR QUE A INICIAL
     $scope.incluirAgenda = function(formValid) {
 
       $scope.dadosAgenda.idFornecedor = idFornecedor;

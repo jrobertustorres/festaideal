@@ -1,4 +1,4 @@
-<ion-view view-title="{{pagetitle | lowercase}}">
+<ion-view view-title="{{pagetitle}}">
   <ion-content ng-controller="CotacaoCtrl" scroll="true" padding="true" class="content-stable">
 
     <div class="list card margin-top-card">
@@ -159,7 +159,7 @@
         <div class="bar bar-footer bar-light footer-buttons">
           <div class="row">
             <div class="col">
-              <button class="button icon-left ion-checkmark-round"
+              <button class="button"
                       style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #FFFFFF; margin-left: 90%; padding: 0 0px;"
                       type="submit" form="cotacaoResponderForm">Salvar
               </button>
@@ -171,7 +171,7 @@
   </script>
 
   <nav mfb-menu position="br" effect="zoomin" bgcolor='#337AB7' active-icon="fa fa-bars" resting-icon="fa fa-bars"
-       toggling-method="click">
+       toggling-method="click" menu-state="closeMfbMenu">
 
     <button ng-show="dados.status_cotacao == 'ABERTA'" mfb-button bgcolor='#009688' label="Responder" icon="ion-compose"
             ng-click="openModal(2)"></button>

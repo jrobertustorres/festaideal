@@ -6,8 +6,16 @@
       </button>
     </ionic-multi-date-picker>
   </ion-nav-buttons>
+  <!--<div class="bar bar-subheader">
+    <h2 class="title">Sub Header</h2>
+  </div>-->
   <ion-content scroll="true" padding="true" class="has-header content-stable">
     <ion-list show-delete="true">
+      <div class="item item-divider" style="text-align: center">
+        <i class="icon ion-arrow-left-b" style="margin-right: 30px" ng-click="getPreviousMonth(numeroMes)"></i>
+        {{ nomeMes }}
+        <i class="icon ion-arrow-right-b" style="margin-left: 30px" ng-click="getNextMonth(numeroMes)"></i>
+      </div>
       <div class="item item-divider">
         Eventos ({{ dados.length }}):
       </div>

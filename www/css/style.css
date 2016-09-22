@@ -35,7 +35,8 @@
 }
 
 .barra-superior {
-    background-color: #BC1F26 !important
+    background-color: #515E6F !important
+    /*background-color: #BC1F26 !important*/
 }
 
 .bar.bar-positive {
@@ -241,6 +242,10 @@ input[type="time"]
 .item-input input,
 .item-input {
     width: 99%;
+}
+
+.my-item-input{
+    width: 100%!important;
 }
 
 .bar.bar-profile {
