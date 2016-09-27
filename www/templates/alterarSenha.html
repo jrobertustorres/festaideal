@@ -27,14 +27,14 @@
           <div class="list" style="margin-bottom: 2px;">
             <label class="item item-input item-stacked-label my-item">
               <div class="input-label my-font-form">Nova senha*</div>
-              <input ng-model="novaSenha.senha" type="password" name="senha" required ng-maxlength="15"
-                     ng-minlength="4">
+              <input ng-model="novaSenha.senha" type="password" name="senha" required ng-maxlength="14"
+                     ng-minlength="6">
               <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.required && !hideSpan"
                     class="cor-campo-novalid my-font-form-span">campo obrigatório</span>
               <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.maxlength && !hideSpan"
-                    class="cor-campo-novalid my-font-form-span">máximo 15 caracteres</span>
+                    class="cor-campo-novalid my-font-form-span">máximo 14 caracteres</span>
               <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.minlength && !hideSpan"
-                    class="cor-campo-novalid my-font-form-span">mínimo 4 caracteres</span>
+                    class="cor-campo-novalid my-font-form-span">mínimo 6 caracteres</span>
             </label>
           </div>
           <div class="list" style="margin-bottom: 2px;">

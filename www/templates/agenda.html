@@ -70,35 +70,31 @@
             <label class="item item-stacked-label my-item">
               <span class="input-label my-font-form">Data inicial</span>
               <!--<div><p>{{dataInicial}}</p></div>-->
-              <input type="date" ng-model="dadosAgenda.dataInicialModal" name="dataInicial"
-                     format-date ng-focus="clearMessageErro()">
+              <input type="date" ng-model="dadosAgenda.dataInicialModal" name="dataInicial" format-date required>
             <span
-              ng-show="agendaForm.$submitted && agendaForm.validade.$error.required"
+              ng-show="agendaForm.$submitted && agendaForm.dataInicialModal.$error.required"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
-              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErroValidade"
-                                                                   class="ion-information-circled"></i> {{mensagemErroValidade}}</span>
 
             </label>
             <div ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">
-              <input type="time" ng-model="dadosAgenda.horaInicialModal" name="horaInicial" formatted-time>
+              <input type="time" ng-model="dadosAgenda.horaInicialModal" name="horaInicial" formatted-time required>
             </div>
 
             <label class="item item-stacked-label my-item">
               <span class="input-label my-font-form">Data Final</span>
               <input type="date" ng-model="dadosAgenda.dataFinalModal" name="dataFinal"
-                     format-date ng-focus="clearMessageErro()">
+                     format-date ng-focus="clearMessageErroAgenda()" ng-blur="compareDatesAgenda()" required>
             <span
-              ng-show="agendaForm.$submitted && agendaForm.validade.$error.required"
+              ng-show="agendaForm.$submitted && agendaForm.dataFinalModal.$error.required"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
-              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErroValidade"
-                                                                   class="ion-information-circled"></i> {{mensagemErroValidade}}</span>
+              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErro"
+                                                                   class="ion-information-circled"></i> {{mensagemErro}}</span>
 
             </label>
-            <!--<div class="input-time" ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">-->
             <div ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">
-              <input type="time" ng-model="dadosAgenda.horaFinalModal" name="horaFinal" formatted-time>
+              <input type="time" ng-model="dadosAgenda.horaFinalModal" name="horaFinal" formatted-time required>
             </div>
 
             <label class="item item-input item-select my-item" style="padding: 5px 16px;">

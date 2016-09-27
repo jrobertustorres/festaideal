@@ -133,7 +133,7 @@ angular.module('app.controllers', [])
       });
   })
 
-  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout) {
+  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout, $ionicScrollDelegate) {
 
     $ionicLoading.show();
     $scope.cotacao = {};
@@ -190,9 +190,6 @@ angular.module('app.controllers', [])
       }
     };
 
-    /*function callAtTimeout() {
-     console.log("Timeout occurred");
-     }*/
     $scope.hideSpan = false;
     $scope.closeModal = function (index) {
       if (index == 1) $scope.oModal1.hide();
@@ -200,6 +197,7 @@ angular.module('app.controllers', [])
       $scope.cotacao = {};
       $scope.hideSpan = true;
       $scope.clearMessageErro();
+      $ionicScrollDelegate.scrollTop();
     };
 
     $scope.$on('modal.shown', function (event, modal) {
@@ -249,7 +247,6 @@ angular.module('app.controllers', [])
           msg = 'rejeitada';
         }
         enviaEditar();
-
       } else {
       }
     }
@@ -270,7 +267,6 @@ angular.module('app.controllers', [])
           $timeout(function () {
             $location.path("/side-menu21/home");
           }, 3000);
-          // $location.path('side-menu21/home');
         })
         .error(function (erro) {
         });
@@ -301,9 +297,7 @@ angular.module('app.controllers', [])
       $scope.mensagemErroValidade = "";
     }
 
-
     $scope.compareDates = function () {
-
       var data_entrega = $filter('date')($scope.cotacao.data_entrega, "dd/MM/yyyy");
       var validade = $filter('date')($scope.cotacao.validade, "dd/MM/yyyy");
 
@@ -318,7 +312,7 @@ angular.module('app.controllers', [])
 
   })
 
-  .controller('AgendaCtrl', function ($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr, $ionicLoading) {
+  .controller('AgendaCtrl', function ($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr, $ionicLoading, $ionicScrollDelegate) {
       var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
       var monthList = ["Janeiro", "Feveiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
       $scope.agenda = {};
@@ -363,7 +357,6 @@ angular.module('app.controllers', [])
           .success(function (data) {
             $ionicLoading.hide();
             $scope.dados = data;
-            // console.log('dados agenda '+$scope.dadosAgenda);
           })
       }
 
@@ -401,6 +394,8 @@ angular.module('app.controllers', [])
         $scope.dadosAgenda.tituloAgenda = "";
         $scope.dadosAgenda.descricao = "";
         $scope.hideSpan = true;
+        $scope.clearMessageErroAgenda();
+        $ionicScrollDelegate.scrollTop();
       };
 
       $scope.$on('modal.shown', function (event, modal) {
@@ -447,7 +442,7 @@ angular.module('app.controllers', [])
         var minutosF = $scope.dadosAgenda.horaFinalModal.getMinutes();
         $scope.dadosAgenda.dataFinal = new Date(anoF, mesF, diaF, horaF, minutosF, 00, 000).toLocaleString();
 
-        if (formValid) {
+        if (formValid && !$scope.mensagemErro) {
           if ($scope.idAgenda) {
             $http.post(servidor + '/v1/api.php?req=editAgenda', $scope.dadosAgenda)
               .success(function (data) {
@@ -461,7 +456,6 @@ angular.module('app.controllers', [])
             $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.dadosAgenda)
               .success(function (data) {
                 $scope.dadosAgenda.dataInicial = $scope.dadosAgenda.dataInicialModal.toLocaleDateString();
-                console.log($scope.dadosAgenda.dataInicialModal);
                 $scope.dadosAgenda.idAgenda = data;
                 $scope.dados.push($scope.dadosAgenda);
 
@@ -626,6 +620,29 @@ angular.module('app.controllers', [])
             $scope.numeroMes = 12;
             break;
         }
+      }
+
+      $scope.compareDatesAgenda = function () {
+        var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
+        var horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
+        var dataInicialModal = $filter('date')($scope.dadosAgenda.dataInicialModal, "dd/MM/yyyy");
+        var dataFinalModal = $filter('date')($scope.dadosAgenda.dataFinalModal, "dd/MM/yyyy");
+
+        console.log('hora inicial ' + horaInicialModal);
+        console.log('hora final ' + horaFinalModal);
+
+        // if (horaFinalModal < horaInicialModal) {
+        //   $scope.mensagemErroHora = "hora final menor que a hora inicial";
+        // }
+
+        if (dataFinalModal < dataInicialModal) {
+          $scope.mensagemErro = "data final menor que a data inicial";
+        }
+      }
+
+      $scope.clearMessageErroAgenda = function () {
+        $scope.mensagemErro = "";
+        // $scope.mensagemErroHora = "";
       }
     }
   )

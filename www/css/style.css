@@ -35,7 +35,7 @@
 }
 
 .barra-superior {
-    background-color: #515E6F !important
+    background-color: #003B50 !important
     /*background-color: #BC1F26 !important*/
 }
 
@@ -143,7 +143,8 @@ input[type="time"]
 }
 
 .my-icon-color {
-    color: #CD3700 !important
+    color: #003B50 !important
+    /*color: #CD3700 !important*/
 }
 
 .my-calendar-color {
@@ -257,9 +258,9 @@ input[type="time"]
     border-radius: 50%;
 }
 
-.menu .has-header {
-    top: 169px;
-}
+/*.menu .has-header {*/
+    /*top: 169px;*/
+/*}*/
 
 .position-mfb-button {
     top: 140px!important;
