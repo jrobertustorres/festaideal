@@ -640,15 +640,15 @@ angular.module('app.controllers', [])
         }
       }
 
-    $scope.compareHoraAgenda = function () {
-      var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
-      var horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
+      $scope.compareHoraAgenda = function () {
+        var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
+        var horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
 
-      if (horaFinalModal < horaInicialModal) {
-        $scope.mensagemErroHora = "hora final menor que a hora inicial";
+        if (horaFinalModal < horaInicialModal) {
+          $scope.mensagemErroHora = "hora final menor que a hora inicial";
+        }
+
       }
-
-    }
 
       $scope.clearMessageErroAgenda = function () {
         $scope.mensagemErro = "";
@@ -722,12 +722,8 @@ angular.module('app.controllers', [])
               $timeout(function () {
                 $location.path("/side-menu21/home");
               }, 3000);
+              clearFormNovaSenha();
 
-              $scope.novaSenha.senha = "";
-              $scope.novaSenha.confSenha = "";
-              $scope.novaSenha.senhaAtual = "";
-              $scope.clearMessageSenha();
-              $scope.hideSpan = true;
             })
             .error(function (erro) {
               console.log(erro);
@@ -736,9 +732,23 @@ angular.module('app.controllers', [])
       }
     }
 
+    function clearFormNovaSenha() {
+      $scope.novaSenha.senha = "";
+      $scope.novaSenha.confSenha = "";
+      $scope.novaSenha.senhaAtual = "";
+      $scope.clearMessageSenha();
+      $scope.hideSpan = true;
+    }
+
     $scope.clearMessageSenha = function () {
       $scope.mensagemSenha = "";
+      $scope.mensagem = "";
     }
+
+    $scope.$on('$locationChangeStart', function () {
+      $scope.clearMessageSenha();
+      clearFormNovaSenha();
+    });
   })
 
   .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http) {

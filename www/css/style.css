@@ -86,7 +86,8 @@ input[type="time"]
     border-right-width: 0!important;
     border-top-width: 0!important;
     border-left-width: 0!important;
-    background-color: #BC1F26!important;
+    background-color: #003B50!important;
+    /*background-color: #BC1F26!important;*/
 }
 
 .my-button-save {
@@ -347,4 +348,8 @@ input[type="time"]
 
 .popup-buttons .button {
     font-size: 14px;
+}
+
+.no-border {
+  border-color: #fff!important;
 }

@@ -15,35 +15,37 @@
     <div class="content item-body" style="padding: 1px;">
       <div class="list" >
         <form id="alterarSenhaForm" name="alterarSenhaForm" novalidate ng-submit="verificaContrasenha();">
-
           <div class="list" style="margin-bottom: 2px;">
             <label class="item item-input item-stacked-label my-item">
-              <div class="input-label my-font-form">Senha atual</div>
-              <input ng-model="novaSenha.senhaAtual" type="password" name="senhaAtual" ng-blur="verificaSenha()" ng-focus="clearMessageSenha()">
-              <span class="cor-campo-novalid my-font-form-span"> {{mensagemSenha}}</span>
+              <div class="input-label my-font-form">Senha atual*</div>
+              <input ng-model="novaSenha.senhaAtual" type="password" name="senhaAtual" ng-blur="verificaSenha()" ng-focus="clearMessageSenha()" required>
+              <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senhaAtual.$error.required && !hideSpan"
+                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
+              <span class="cor-campo-novalid my-font-form-span"><i ng-if="mensagemSenha"
+                                                                   class="ion-information-circled"></i> {{mensagemSenha}}</span>
             </label>
           </div>
 
           <div class="list" style="margin-bottom: 2px;">
             <label class="item item-input item-stacked-label my-item">
               <div class="input-label my-font-form">Nova senha*</div>
-              <input ng-model="novaSenha.senha" type="password" name="senha" required ng-maxlength="14"
-                     ng-minlength="6">
+              <input ng-model="novaSenha.senha" type="password" name="senha" required ng-maxlength="14" ng-minlength="6">
               <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.required && !hideSpan"
-                    class="cor-campo-novalid my-font-form-span">campo obrigatório</span>
+                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
               <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.maxlength && !hideSpan"
-                    class="cor-campo-novalid my-font-form-span">máximo 14 caracteres</span>
+                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> máximo 14 caracteres</span>
               <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.senha.$error.minlength && !hideSpan"
-                    class="cor-campo-novalid my-font-form-span">mínimo 6 caracteres</span>
+                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> mínimo 6 caracteres</span>
             </label>
           </div>
           <div class="list" style="margin-bottom: 2px;">
             <label class="item item-input item-stacked-label my-item">
-              <div class="input-label my-font-form">Confirmar senha*</div>
-              <input ng-model="novaSenha.confSenha" type="password" name="confSenha" required>
-              <span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.confSenha.$error.required && !hideSpan"
-                    class="cor-campo-novalid my-font-form-span">campo obrigatório</span>
-              <span class="cor-campo-novalid my-font-form-span"> {{mensagem}}</span>
+              <div class="input-label my-font-form">Confirmar senha</div>
+              <input ng-model="novaSenha.confSenha" type="password" name="confSenha" required ng-focus="clearMessageSenha()" >
+              <!--<span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.confSenha.$error.required && !hideSpan"-->
+                    <!--class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>-->
+              <span class="cor-campo-novalid my-font-form-span"><i ng-if="mensagem"
+                                                                   class="ion-information-circled"></i> {{mensagem}}</span>
             </label>
           </div>
         </form>
