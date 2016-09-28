@@ -69,7 +69,7 @@ angular.module('app.controllers', [])
     $scope.doLogout = function () {
       var confirmPopup = $ionicPopup.confirm({
         title: 'Deseja realmente sair?',
-        cancelText: 'Não',
+        cancelText: 'Cancelar',
         okText: 'Sair'
       });
       confirmPopup.then(function (res) {
@@ -395,6 +395,7 @@ angular.module('app.controllers', [])
         $scope.dadosAgenda.descricao = "";
         $scope.hideSpan = true;
         $scope.clearMessageErroAgenda();
+        $scope.clearMessageErroHoraAgenda();
         $ionicScrollDelegate.scrollTop();
       };
 
@@ -442,7 +443,7 @@ angular.module('app.controllers', [])
         var minutosF = $scope.dadosAgenda.horaFinalModal.getMinutes();
         $scope.dadosAgenda.dataFinal = new Date(anoF, mesF, diaF, horaF, minutosF, 00, 000).toLocaleString();
 
-        if (formValid && !$scope.mensagemErro) {
+        if (formValid && !$scope.mensagemErro && !$scope.mensagemErroHora) {
           if ($scope.idAgenda) {
             $http.post(servidor + '/v1/api.php?req=editAgenda', $scope.dadosAgenda)
               .success(function (data) {
@@ -623,26 +624,38 @@ angular.module('app.controllers', [])
       }
 
       $scope.compareDatesAgenda = function () {
-        var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
-        var horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
+
         var dataInicialModal = $filter('date')($scope.dadosAgenda.dataInicialModal, "dd/MM/yyyy");
         var dataFinalModal = $filter('date')($scope.dadosAgenda.dataFinalModal, "dd/MM/yyyy");
+        var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
+        var horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
 
-        console.log('hora inicial ' + horaInicialModal);
-        console.log('hora final ' + horaFinalModal);
 
         // if (horaFinalModal < horaInicialModal) {
         //   $scope.mensagemErroHora = "hora final menor que a hora inicial";
         // }
 
-        if (dataFinalModal < dataInicialModal) {
-          $scope.mensagemErro = "data final menor que a data inicial";
+        if (dataFinalModal < dataInicialModal || horaFinalModal < horaInicialModal) {
+          $scope.mensagemErro = "data/hora final menor que a inicial";
         }
       }
 
+    $scope.compareHoraAgenda = function () {
+      var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
+      var horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
+
+      if (horaFinalModal < horaInicialModal) {
+        $scope.mensagemErroHora = "hora final menor que a hora inicial";
+      }
+
+    }
+
       $scope.clearMessageErroAgenda = function () {
         $scope.mensagemErro = "";
-        // $scope.mensagemErroHora = "";
+      }
+
+      $scope.clearMessageErroHoraAgenda = function () {
+        $scope.mensagemErroHora = "";
       }
     }
   )

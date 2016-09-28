@@ -69,7 +69,6 @@
 
             <label class="item item-stacked-label my-item">
               <span class="input-label my-font-form">Data inicial</span>
-              <!--<div><p>{{dataInicial}}</p></div>-->
               <input type="date" ng-model="dadosAgenda.dataInicialModal" name="dataInicial" format-date required>
             <span
               ng-show="agendaForm.$submitted && agendaForm.dataInicialModal.$error.required"
@@ -78,7 +77,7 @@
 
             </label>
             <div ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">
-              <input type="time" ng-model="dadosAgenda.horaInicialModal" name="horaInicial" formatted-time required>
+              <input type="time" ng-model="dadosAgenda.horaInicialModal" name="horaInicial" formatted-time required class="input-time">
             </div>
 
             <label class="item item-stacked-label my-item">
@@ -89,12 +88,14 @@
               ng-show="agendaForm.$submitted && agendaForm.dataFinalModal.$error.required"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
-              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErro"
-                                                                   class="ion-information-circled"></i> {{mensagemErro}}</span>
-
             </label>
             <div ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">
-              <input type="time" ng-model="dadosAgenda.horaFinalModal" name="horaFinal" formatted-time required>
+              <input type="time" ng-model="dadosAgenda.horaFinalModal" name="horaFinal" formatted-time required ng-blur="compareDatesAgenda()"
+                     ng-focus="clearMessageErroAgenda()" class="input-time">
+              <!--<span class="my-font-form-span cor-campo-novalid my-margin-span"><i ng-if="mensagemErroHora"-->
+                                                                   <!--class="ion-information-circled"></i> {{mensagemErroHora}}</span>-->
+              <span ng-if="!mensagemErroHora" class="my-font-form-span cor-campo-novalid my-margin-span"><i ng-if="mensagemErro"
+                                                                   class="ion-information-circled"></i> {{mensagemErro}}</span>
             </div>
 
             <label class="item item-input item-select my-item" style="padding: 5px 16px;">

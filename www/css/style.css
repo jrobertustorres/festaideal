@@ -30,6 +30,10 @@
     text-transform: lowercase;
 }
 
+.my-margin-span {
+  margin-left: 16px;
+}
+
 .cor-campo-novalid {
     color: red;
 }
@@ -152,7 +156,8 @@ input[type="time"]
 }
 
 .my-button-calendar-color {
-    background-color: #BC1F26 !important
+    background-color: #003B50 !important
+    /*background-color: #BC1F26 !important*/
 }
 
 .content-stable {
@@ -333,6 +338,7 @@ input[type="time"]
     position: relative;
     float: right!important;
     margin-top: -34px!important;
+    z-index: 2;
 }
 
 .list-left-editing .item {
