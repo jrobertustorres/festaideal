@@ -1,5 +1,9 @@
 <ion-nav-view animation="slide-left-right"></ion-nav-view>
-<ion-view animation="slide-left-right" view-title="{{pagetitle}}">
+<!--<ion-view animation="slide-left-right" view-title="{{pagetitle}}">-->
+<ion-view animation="slide-left-right">
+  <ion-nav-title>
+    <span class="font-barra-superior">{{pagetitle}}</span>
+  </ion-nav-title>
   <ion-content ng-controller="homeCtrl" padding="true" class="has-header content-stable">
 
     <ion-refresher
