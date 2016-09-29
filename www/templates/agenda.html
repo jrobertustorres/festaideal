@@ -16,9 +16,9 @@
   <ion-content scroll="true" padding="true" class="has-header content-stable">
     <ion-list show-delete="true">
       <div class="item item-divider" style="text-align: center">
-        <i class="icon ion-arrow-left-b" style="margin-right: 30px" ng-click="getPreviousMonth()"></i>
+        <i class="icon ion-arrow-left-b" style="margin-right: 30px; font-size: 30px;" ng-click="getPreviousMonth()"></i>
         {{ nomeMes }} {{anoAtual}}
-        <i class="icon ion-arrow-right-b" style="margin-left: 30px" ng-click="getNextMonth()"></i>
+        <i class="icon ion-arrow-right-b" style="margin-left: 30px; font-size: 30px;" ng-click="getNextMonth()"></i>
       </div>
       <div ng-hide="dados.length">
         <p style="color: #8f8f8f; font-size: 15px; padding-top: 25px;" align="center">Não há eventos
@@ -133,7 +133,7 @@
         </form>
       </ion-content>
       <ion-footer-bar align-title="left" class="bar-stable">
-        <button class="button icon-left ion-checkmark-round" style="margin-left: 45%; color: #0c60ee; padding: 0 0px;" type="submit" form="agendaForm">Salvar
+        <button class="button icon-left" style="margin-left: 45%; color: #0c60ee; padding: 0 0px;" type="submit" form="agendaForm">Salvar
         </button>
         <!--<button class="button" style="margin-left: 45%; color: #0c60ee"
                 type="submit" form="agendaForm">Salvar

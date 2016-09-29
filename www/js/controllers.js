@@ -1,9 +1,9 @@
 var servidor = "http://localhost";
 // var servidor = "http://festaideal.com.br/ws_mobile";
-var idFornecedor = 1;
-// var idFornecedor = 0;
-var idUsuario = 1;
-// var idUsuario = 0;
+// var idFornecedor = 1;
+var idFornecedor = idFornecedor ? idFornecedor : 0;
+// var idUsuario = 1;
+var idUsuario = idUsuario ? idUsuario : 0;
 
 angular.module('app.controllers', [])
 
@@ -33,7 +33,6 @@ angular.module('app.controllers', [])
           $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
           $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
         }).finally(function () {
-        // Stop the ion-refresher from spinning
         $scope.$broadcast('scroll.refreshComplete');
       });
     }
@@ -44,25 +43,6 @@ angular.module('app.controllers', [])
     $http.post(servidor + '/v1/api.php?req=setToken', {'usuario': $scope.usuario})
       .success(function (data) {
       });
-
-    /*$scope.hideNavBar = function () {
-     document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
-     };
-
-     $scope.hideHeader = function () {
-     $scope.hideNavBar();
-     $scope.noHeader();
-     };
-
-     $scope.noHeader = function () {
-     var content = document.getElementsByTagName('ion-content');
-     for (var i = 0; i < content.length; i++) {
-     if (content[i].classList.contains('has-header')) {
-     content[i].classList.toggle('has-header');
-     }
-     }
-     };*/
-
   })
 
   .controller('menuCtrl', function ($scope, $ionicPopup, $ionicHistory, $location) {
@@ -74,6 +54,8 @@ angular.module('app.controllers', [])
       });
       confirmPopup.then(function (res) {
         if (res) {
+          idFornecedor = 0;
+          idUsuario = 0;
           $ionicHistory.nextViewOptions({
             disableBack: true
           });
@@ -86,14 +68,27 @@ angular.module('app.controllers', [])
   })
 
   .controller('loginCtrl', function ($scope, $state, $q, UserService, $ionicLoading, $location, $http, $ionicHistory) {
+
+    // $scope.$on('$ionicView.enter', function () {
+    //   if (idFornecedor != 0) {
+    //     $ionicHistory.nextViewOptions({
+    //       disableBack: true
+    //     });
+    //     $location.path("/side-menu21/home");
+    //   }
+    // });
+
+    $scope.clearForm = false;
     $scope.clearMessage = function () {
       $scope.mensagem = "";
     }
 
     $scope.submeter = function () {
       if ($scope.loginForm.$valid) {
+        $ionicLoading.show();
         $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha)
           .success(function (data) {
+            $ionicLoading.hide();
             idFornecedor = data.idFornecedor;
             idUsuario = data.idUsuario;
             if (data) {
@@ -107,6 +102,13 @@ angular.module('app.controllers', [])
           });
       }
     }
+
+    $scope.$on('$locationChangeStart', function () {
+      $scope.clearForm = true;
+      $scope.login = "";
+      $scope.senha = "";
+      $scope.clearMessage();
+    });
   })
 
   .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope, $ionicFilterBar, $timeout, $ionicScrollDelegate) {
@@ -684,6 +686,8 @@ angular.module('app.controllers', [])
     $scope.novaSenha = {};
     $scope.hideSpan = false;
 
+    console.log('no inicio do metodo '+$scope.hideSpan);
+
     $scope.novaSenha.idFornecedor = idFornecedor;
     $scope.novaSenha.idUsuario = idFornecedor;
 
@@ -711,6 +715,7 @@ angular.module('app.controllers', [])
     }
 
     function submeter() {
+      $scope.hideSpan = false;
       if ($scope.senhaOk && $scope.senhaAtualOk) {
         if ($scope.alterarSenhaForm.$valid) {
           $http.post(servidor + '/v1/api.php?req=editSenha', {'novaSenha': $scope.novaSenha})

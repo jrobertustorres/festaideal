@@ -15,16 +15,16 @@
       <div style="margin-left: -15px;">
         <span class="my-align-spam"><i ng-if="mensagem" class="ion-information-circled"></i> {{mensagem}}</span>
         <label class="item-input item-stacked-label">
-          <input ng-model="login" type="text" name="login" required ng-maxlength="40" placeholder="Login"
-                 class="my-border my-item-input" ng-focus="clearMessage()">
-              <span ng-show="loginForm.$submitted && loginForm.login.$error.required"
+          <input ng-model="login" type="email" name="login" required ng-maxlength="40" placeholder="Login"
+                 class="my-border my-item-input my-color-input" ng-focus="clearMessage()">
+              <span ng-show="loginForm.$submitted && loginForm.login.$error.required && !clearForm"
                     class="my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
         </label>
 
         <label class="item-input item-stacked-label">
           <input ng-model="senha" type="password" name="senha" required ng-maxlength="14" placeholder="Senha"
-                 class="my-border my-item-input">
-              <span ng-show="loginForm.$submitted && loginForm.senha.$error.required"
+                 class="my-border my-item-input my-color-input">
+              <span ng-show="loginForm.$submitted && loginForm.senha.$error.required && !clearForm"
                     class="my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
         </label>
 
