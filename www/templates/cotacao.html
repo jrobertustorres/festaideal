@@ -1,7 +1,7 @@
 <!--<ion-view view-title="{{pagetitle}}">-->
 <ion-view>
   <ion-nav-title>
-    <span class="font-barra-superior">{{pagetitle}}</span>
+    <span class="font-barra-superior">Dados cotação</span>
   </ion-nav-title>
   <ion-content ng-controller="CotacaoCtrl" scroll="true" padding="true" class="content-stable">
 
@@ -67,12 +67,11 @@
           </div>
         </form>
       </ion-content>
-      <ion-footer-bar align-title="left" class="bar-stable">
-        <button class="button icon-left" style="margin-left: 45%; color: #0c60ee; padding: 0 0px;"
-                type="submit" form="cotacaoCancelarForm">Salvar
+      <ion-footer-bar>
+        <button class="bar bar-footer bar-positive" type="submit" form="cotacaoCancelarForm">
+          <p class="title my-align-title">Salvar
+          <p>
         </button>
-        <!--<button class="button" style="margin-left: 45%; color: #0c60ee" type="submit" form="cotacaoRejeitarForm">Salvar-->
-        <!--</button>-->
       </ion-footer-bar>
     </div>
   </script>
@@ -93,9 +92,9 @@
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.data_entrega}}</p></div>
               <input ng-model="cotacao.data_entrega" ng-show="dados.status_cotacao == 'ABERTA'" type="date"
                      name="data_entrega" id="data_entrega" format-date ng-blur="compareDates()"
-                     ng-focus="clearMessageErro()">
+                     ng-focus="clearMessageErro()" required>
             <span
-              ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA'"
+              ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA' && !hideSpan"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
               <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErro"
@@ -141,9 +140,9 @@
               <span class="input-label my-font-form">Validade cotação*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.validade}}</p></div>
               <input ng-show="dados.status_cotacao == 'ABERTA'" type="date" ng-model="cotacao.validade" name="validade"
-                     format-date ng-blur="compareDates()" ng-focus="clearMessageErro()">
+                     format-date ng-blur="compareDates()" ng-focus="clearMessageErro()" required>
             <span
-              ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.validade.$error.required && dados.status_cotacao == 'ABERTA'"
+              ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.validade.$error.required && dados.status_cotacao == 'ABERTA' && !hideSpan"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
               <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErroValidade"
@@ -160,17 +159,11 @@
           </div>
         </form>
       </ion-content>
-      <ion-footer-bar align-title="left" class="bar-stable">
-        <div class="bar bar-footer bar-light footer-buttons">
-          <div class="row">
-            <div class="col">
-              <button class="button"
-                      style="color: #0c60ee;max-width: 80px;width: 80px; font-size: 15px; background-color: #FFFFFF; margin-left: 90%; padding: 0 0px;"
-                      type="submit" form="cotacaoResponderForm">Salvar
-              </button>
-            </div>
-          </div>
-        </div>
+      <ion-footer-bar>
+        <button class="bar bar-footer bar-positive" type="submit" form="cotacaoResponderForm">
+          <p class="title my-align-title">Salvar
+          <p>
+        </button>
       </ion-footer-bar>
     </div>
   </script>

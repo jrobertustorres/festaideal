@@ -1,9 +1,9 @@
 var servidor = "http://localhost";
 // var servidor = "http://festaideal.com.br/ws_mobile";
-// var idFornecedor = 1;
-var idFornecedor = idFornecedor ? idFornecedor : 0;
-// var idUsuario = 1;
-var idUsuario = idUsuario ? idUsuario : 0;
+var idFornecedor = 1;
+// var idFornecedor = idFornecedor ? idFornecedor : 0;
+var idUsuario = 1;
+// var idUsuario = idUsuario ? idUsuario : 0;
 
 angular.module('app.controllers', [])
 
@@ -22,6 +22,9 @@ angular.module('app.controllers', [])
           $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
           $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
         })
+        .error(function (erro) {
+          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+        });
     });
 
     $scope.doRefresh = function () {
@@ -132,6 +135,9 @@ angular.module('app.controllers', [])
     $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + idFornecedor)
       .success(function (data) {
         $scope.dados = data;
+      })
+      .error(function (erro) {
+        toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
       });
   })
 
@@ -139,12 +145,14 @@ angular.module('app.controllers', [])
 
     $ionicLoading.show();
     $scope.cotacao = {};
-    $scope.pagetitle = 'Dados cotação';
+    // $scope.pagetitle = 'Dados cotação';
     $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
       .success(function (data) {
         $ionicLoading.hide();
         $scope.dados = data;
-      });
+      }).error(function (erro) {
+      toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+    });
 
     $ionicModal.fromTemplateUrl('templates/modal-1.html', {
       id: '1', // We need to use and ID to identify the modal that is firing the event!
@@ -271,6 +279,7 @@ angular.module('app.controllers', [])
           }, 3000);
         })
         .error(function (erro) {
+          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
         });
     }
 
@@ -285,10 +294,6 @@ angular.module('app.controllers', [])
         if (res) {
           $scope.cotacao.status_cotacao = 'CONCLUIDA';
           enviaEditar();
-          /*$ionicHistory.nextViewOptions({
-           disableBack: true
-           });*/
-          // $location.path("/side-menu21/home");
         } else {
         }
       });
@@ -359,7 +364,9 @@ angular.module('app.controllers', [])
           .success(function (data) {
             $ionicLoading.hide();
             $scope.dados = data;
-          })
+          }).error(function (erro) {
+          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+        });
       }
 
       // Modal 3 - Agenda
@@ -385,6 +392,9 @@ angular.module('app.controllers', [])
               $scope.dadosAgenda.horaInicialModal = new Date($scope.dadosAgenda.dataInicial);
               $scope.dadosAgenda.horaFinalModal = new Date($scope.dadosAgenda.dataFinal);
             })
+            .error(function (erro) {
+              toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+            });
         }
       };
 
@@ -454,6 +464,7 @@ angular.module('app.controllers', [])
                 $scope.closeModal(3);
               })
               .error(function (erro) {
+                toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
               });
           } else {
             $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.dadosAgenda)
@@ -467,6 +478,7 @@ angular.module('app.controllers', [])
                 $scope.dadosAgenda = {};
               })
               .error(function (erro) {
+                toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
               });
           }
         } else {
@@ -632,11 +644,6 @@ angular.module('app.controllers', [])
         var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
         var horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
 
-
-        // if (horaFinalModal < horaInicialModal) {
-        //   $scope.mensagemErroHora = "hora final menor que a hora inicial";
-        // }
-
         if (dataFinalModal < dataInicialModal || horaFinalModal < horaInicialModal) {
           $scope.mensagemErro = "data/hora final menor que a inicial";
         }
@@ -686,7 +693,7 @@ angular.module('app.controllers', [])
     $scope.novaSenha = {};
     $scope.hideSpan = false;
 
-    console.log('no inicio do metodo '+$scope.hideSpan);
+    console.log('no inicio do metodo ' + $scope.hideSpan);
 
     $scope.novaSenha.idFornecedor = idFornecedor;
     $scope.novaSenha.idUsuario = idFornecedor;
@@ -731,7 +738,7 @@ angular.module('app.controllers', [])
 
             })
             .error(function (erro) {
-              console.log(erro);
+              toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
             });
         }
       }

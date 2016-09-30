@@ -39,7 +39,8 @@
 }
 
 .barra-superior {
-    background-color: #003B50 !important
+  /*background-color: #003B50 !important*/
+  background-color: #006C85 !important
     /*background-color: #2C6BB2 !important*/
     /*background-color: #BC1F26 !important*/
 }
@@ -357,4 +358,9 @@ input[type="time"]
 
 .my-color-input {
   color: #fff!important;
+}
+
+.my-align-title {
+  left: 30px!important;
+  right: 30px!important;
 }
