@@ -6,25 +6,25 @@
   </ion-nav-title>
   <ion-nav-buttons side="right">
     <button class="button button-clear bar my-button-save" type="submit"
-            form="recuperarSenhaForm">
+            form="recuperarSenhaForm" style="color: #FFFFFF;">
       Enviar
     </button>
   </ion-nav-buttons>
   <ion-content ng-controller="RecuperarSenhaCtrl" scroll="true" padding="true" class="has-header">
 
-    <div class="content item-body">
+    <div class="content item-body" style="padding: 1px;">
       <div class="list">
-        <form id="recuperarSenhaForm" name="recuperarSenhaForm" novalidate ng-submit="submeter()">
+        <form id="recuperarSenhaForm" name="recuperarSenhaForm" novalidate ng-submit="submeter();">
+          <label class="item item-input item-stacked-label my-item">
+            <span class="input-label my-font-form">E-mail*</span>
+            <input ng-model="recuperarSenha.email" type="email" name="email" required ng-maxlength="40">
+              <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.required && !hideSpan"
+                    class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
+            <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.email && !hideSpan"
+                  class="cor-campo-novalid my-font-form"><i class="ion-information-circled"></i> e-mail inválido</span>
 
-          <div class="list">
-            <label class="item item-input item-stacked-label">
-              <span class="input-label my-font-form">E-mail*</span>
-              <input ng-model="recuperarSenha.email" type="email" name="email" required ng-maxlength="40">
-              <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.required" class="cor-campo-novalid my-font-form">campo obrigatório</span>
-              <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.email" class="cor-campo-novalid my-font-form">e-mail inválido</span>
+          </label>
 
-            </label>
-          </div>
         </form>
       </div>
     </div>

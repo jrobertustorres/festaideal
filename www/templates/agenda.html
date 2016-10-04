@@ -82,7 +82,7 @@
             </label>
             <div ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">
               <input type="time" ng-model="dadosAgenda.horaInicialModal" name="horaInicial" formatted-time required
-                     class="input-time">
+                     class="input-time my-margin-input-time">
             </div>
 
             <label class="item item-stacked-label my-item">
@@ -97,7 +97,7 @@
             <div ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">
               <input type="time" ng-model="dadosAgenda.horaFinalModal" name="horaFinal" formatted-time required
                      ng-blur="compareDatesAgenda()"
-                     ng-focus="clearMessageErroAgenda()" class="input-time">
+                     ng-focus="clearMessageErroAgenda()" class="input-time my-margin-input-time">
               <!--<span class="my-font-form-span cor-campo-novalid my-margin-span"><i ng-if="mensagemErroHora"-->
               <!--class="ion-information-circled"></i> {{mensagemErroHora}}</span>-->
               <span ng-if="!mensagemErroHora" class="my-font-form-span cor-campo-novalid my-margin-span"><i
@@ -130,8 +130,6 @@
               <span ng-show="agendaForm.$submitted && agendaForm.descricao.$error.maxlength && !hideSpan"
                     class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> máximo 60 caracteres</span>
             </label>
-
-
           </div>
         </form>
       </ion-content>
@@ -140,21 +138,6 @@
           <p class="title my-align-title">Salvar<p>
         </button>
       </ion-footer-bar>
-      <!--<button class="button button-full button-positive" type="submit" form="agendaForm" style="margin-top: 100px;">-->
-      <!--Salvar-->
-      <!--</button>-->
-      <!--<ion-footer-bar align-title="left" class="bar-stable">-->
-      <!--<ion-footer-bar class="bar-positive tabs">-->
-      <!--<a class="tab-item">-->
-      <!--Home-->
-      <!--</a>-->
-
-      <!--&lt;!&ndash;<button class="button icon-left" style="margin-left: 45%; color: #0c60ee; padding: 0 0px;" type="submit" form="agendaForm">Salvar&ndash;&gt;-->
-      <!--&lt;!&ndash;</button>&ndash;&gt;-->
-      <!--&lt;!&ndash;<button class="button" style="margin-left: 45%; color: #0c60ee"-->
-      <!--type="submit" form="agendaForm">Salvar-->
-      <!--</button>&ndash;&gt;-->
-      <!--</ion-footer-bar>-->
     </div>
   </script>
 </ion-view>

@@ -6,85 +6,107 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 var token = "";
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask'])
+var db = null;
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask', 'ngCordova'])
 
-.run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
+  .run(function ($ionicPlatform, $ionicPopup, $rootScope, $ionicLoading, $location, $http, $cordovaSQLite) {
 
-        // Check for network connection
-        if (window.Connection) {
-            if (navigator.connection.type == Connection.NONE) {
-                $ionicPopup.confirm({
-                        title: 'Não conectado à internet',
-                        content: 'Nenhuma conexão à internet detectada.\n Favor conectar e tentar novamente.'
-                    })
-                    .then(function(result) {
-                        if (!result) {
-                            ionic.Platform.exitApp();
-                        }
-                    });
-            }
+    $ionicPlatform.ready(function () {
+      // criaDataBase($cordovaSQLite);
+      // verificaUsuario($cordovaSQLite, $rootScope);
+      if (window.Connection) {
+        if (navigator.connection.type == Connection.NONE) {
+          $ionicPopup.alert({
+              title: 'Não conectado à internet',
+              content: 'Nenhuma conexão à internet detectada.\n Favor conectar e tentar novamente.',
+              cssClass: 'my-popup-body'
+            })
+            .then(function () {
+              ionic.Platform.exitApp();
+            });
         }
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            cordova.plugins.Keyboard.disableScroll(true);
-        }
-        if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
-        }
+      }
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
+      }
+      if (window.StatusBar) {
+        StatusBar.styleDefault();
+      }
 
-        var push = PushNotification.init({
-            "android": { "senderID": "990686468351", icon: "icon" },
+      var push = PushNotification.init({
+        "android": {"senderID": "990686468351", icon: "icon"},
 
-            "ios": { "alert": "true", "badge": "true", "sound": "true" },
-            "windows": {}
-        });
+        "ios": {"alert": "true", "badge": "true", "sound": "true"},
+        "windows": {}
+      });
 
 
-        /*
+      /*
 
-         Este é o evento que será chamado assim que o GCM responder a requisição
+       Este é o evento que será chamado assim que o GCM responder a requisição
 
-         com o id do dispositivo.
+       com o id do dispositivo.
 
-         É neste método que devendo mandar o id e armazenar em nosso servidor para enviarmos
+       É neste método que devendo mandar o id e armazenar em nosso servidor para enviarmos
 
-         notificações posteriormente
+       notificações posteriormente
 
-         */
+       */
 
-        push.on('registration', function(data) {
+      push.on('registration', function (data) {
+        token = data.registrationId;
+        $rootScope.token = token;
 
-            token = data.registrationId;
-            // alert(data.registrationId);
+      });
 
-        });
+      // Este é o evento no qual implementando o comportamento do nosso app
 
+      // quando o usuário clicar na notificação
 
-        // Este é o evento no qual implementando o comportamento do nosso app
+      push.on('notification', function (data) {
 
-        // quando o usuário clicar na notificação
+        // alert('Notificação acionada, agora deve-se implementar a navegação no app de acordo com os dados: ' + JSON.stringify(data));
 
-        push.on('notification', function(data) {
-
-            // alert('Notificação acionada, agora deve-se implementar a navegação no app de acordo com os dados: ' + JSON.stringify(data));
-
-        });
+      });
 
 
-        push.on('error', function(e) {
+      push.on('error', function (e) {
 
-            alert('registration error: ' + e.message);
+        alert('registration error: ' + e.message);
 
-        });
+      });
 
     });
-})
+  })
 
-.factory('Token', function() {
-    // factory function body that constructs shinyNewServiceInstance
-    return { token };
-})
+// function criaDataBase($cordovaSQLite) {
+  // if (window.cordova) {
+  //   db = $cordovaSQLite.openDB({name: "festaideal.db"}); //device
+  // } else {
+  //   db = window.openDatabase("festaideal.db", '1', 'my', 1024 * 1024 * 100); // browser
+  // }
+  // $cordovaSQLite.execute(db, "DROP TABLE usuario");
+  // $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS usuario (id integer primey key, idUsuario integer)");
+  // $cordovaSQLite.execute(db, "DROP DATABASE festaideal");
+  // this.deleteDatabase("festaideal.db");
+// }
+
+/*function verificaUsuario($cordovaSQLite, $rootScope, event) {
+  var query = "SELECT idUsuario FROM usuario";
+  $rootScope.idUsuario = 0;
+  $cordovaSQLite.execute(db, query).then(function(res) {
+    if(res.rows.length > 0) {
+      for(var i = 0; i < res.rows.length; i++){
+        $rootScope.idUsuario = res.rows.item(i).idUsuario;
+        // alert($rootScope.idUsuario);
+      }
+    }
+  }, function (err) {
+    console.error(err);
+  });
+}*/
+
+  /*.factory('Token', function () {
+    return token;
+  })*/

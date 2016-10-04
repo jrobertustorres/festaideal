@@ -1,13 +1,13 @@
 var servidor = "http://localhost";
 // var servidor = "http://festaideal.com.br/ws_mobile";
 var idFornecedor = 1;
-// var idFornecedor = idFornecedor ? idFornecedor : 0;
+// var idFornecedor = 0;
 var idUsuario = 1;
-// var idUsuario = idUsuario ? idUsuario : 0;
+// var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
-  .controller('homeCtrl', function ($scope, $http, $ionicLoading, Token) {
+  .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope) {
 
     $scope.$on('$ionicView.enter', function () {
       $scope.pagetitle = 'Cotações';
@@ -41,8 +41,8 @@ angular.module('app.controllers', [])
     }
 
     $scope.usuario = {};
-    $scope.usuario.idFornecedor = idFornecedor;
-    $scope.usuario.tokenPush = Token.token;
+    $scope.usuario.idUsuario = idUsuario;
+    $scope.usuario.tokenPush = $rootScope.token;
     $http.post(servidor + '/v1/api.php?req=setToken', {'usuario': $scope.usuario})
       .success(function (data) {
       });
@@ -63,33 +63,65 @@ angular.module('app.controllers', [])
             disableBack: true
           });
           $location.path("/side-menu21/login");
+
+          /*$http.get(servidor + '/v1/api.php?req=doLogOut&idUsuario=' + idUsuario)
+           .success(function (data) {
+           idFornecedor = 0;
+           idUsuario = 0;
+           if (data) {
+           $ionicHistory.nextViewOptions({
+           disableBack: true
+           });
+           $location.path("/side-menu21/login");
+           } else {
+           toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+           }
+           });*/
         } else {
 
         }
       });
     }
+
+    /*function executeDeleteUsuario() {
+     var query = "DELETE FROM usuario";
+     $cordovaSQLite.execute(db, query).then(function(res) {
+     }, function (err) {
+     console.error(err);
+     });
+     }*/
   })
 
-  .controller('loginCtrl', function ($scope, $state, $q, UserService, $ionicLoading, $location, $http, $ionicHistory) {
-
-    // $scope.$on('$ionicView.enter', function () {
-    //   if (idFornecedor != 0) {
-    //     $ionicHistory.nextViewOptions({
-    //       disableBack: true
-    //     });
-    //     $location.path("/side-menu21/home");
-    //   }
-    // });
+  .controller('loginCtrl', function ($scope, $state, $q, UserService, $ionicLoading, $location, $http, $ionicHistory, $rootScope, $cordovaSQLite) {
 
     $scope.clearForm = false;
     $scope.clearMessage = function () {
       $scope.mensagem = "";
     }
 
+    // $scope.$on('$ionicView.enter', function () {
+    // $location.path("/side-menu21/home");
+    // })
+
+    /*$http.get(servidor + '/v1/api.php?req=doLoginCookie&cookie=' + token)
+     .success(function (data) {
+     // $ionicLoading.hide();
+     idFornecedor = data.idFornecedor;
+     idUsuario = data.idUsuario;
+     if (data) {
+     $ionicHistory.nextViewOptions({
+     disableBack: true
+     });
+     $location.path("/side-menu21/home");
+     } else {
+     // toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+     }
+     });*/
+
     $scope.submeter = function () {
       if ($scope.loginForm.$valid) {
         $ionicLoading.show();
-        $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha)
+        $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha + '&cookie=' + $rootScope.token)
           .success(function (data) {
             $ionicLoading.hide();
             idFornecedor = data.idFornecedor;
@@ -114,7 +146,7 @@ angular.module('app.controllers', [])
     });
   })
 
-  .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope, $ionicFilterBar, $timeout, $ionicScrollDelegate) {
+  .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope, toastr) {
 
     $ionicConfig.backButton.text("");
     $rootScope.status_cotacao = $stateParams.status_cotacao;
@@ -145,7 +177,6 @@ angular.module('app.controllers', [])
 
     $ionicLoading.show();
     $scope.cotacao = {};
-    // $scope.pagetitle = 'Dados cotação';
     $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
       .success(function (data) {
         $ionicLoading.hide();
@@ -264,6 +295,7 @@ angular.module('app.controllers', [])
     function enviaEditar() {
       $scope.cotacao.id_fornecedor = idFornecedor;
       $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
+      $scope.cotacao.idEventoTipoServico = $scope.dados.idEventoTipoServico;
       $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "yyyy-MM-dd HH:mm:ss");
       $scope.cotacao.validade = $filter('date')($scope.cotacao.validade, "yyyy-MM-dd HH:mm:ss");
       $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacao)
@@ -316,6 +348,10 @@ angular.module('app.controllers', [])
         $scope.mensagemErroValidade = "data de validade inferior à data do evento";
       }
     }
+
+    $scope.$on('$locationChangeStart', function () {
+      $scope.closeMfbMenu = 'closed';
+    });
 
   })
 
@@ -436,7 +472,6 @@ angular.module('app.controllers', [])
       ];
 
       $scope.incluirAgenda = function (formValid) {
-
         $scope.dadosAgenda.idFornecedor = idFornecedor;
         $scope.dadosAgenda.idUsuario = idUsuario;
         $scope.dadosAgenda.idAgenda = $scope.idAgenda;
@@ -454,7 +489,7 @@ angular.module('app.controllers', [])
         var horaF = $scope.dadosAgenda.horaFinalModal.getHours();
         var minutosF = $scope.dadosAgenda.horaFinalModal.getMinutes();
         $scope.dadosAgenda.dataFinal = new Date(anoF, mesF, diaF, horaF, minutosF, 00, 000).toLocaleString();
-
+        $scope.compareDatesAgenda();
         if (formValid && !$scope.mensagemErro && !$scope.mensagemErroHora) {
           if ($scope.idAgenda) {
             $http.post(servidor + '/v1/api.php?req=editAgenda', $scope.dadosAgenda)
@@ -577,7 +612,6 @@ angular.module('app.controllers', [])
 
       var retSelectedDates = function (dates) {
         var date = new Date(dates);
-
         $scope.dadosAgenda.dataInicialModal = date;
         $scope.dadosAgenda.dataFinalModal = date;
         $scope.dadosAgenda.horaInicialModal = new Date();
@@ -638,7 +672,6 @@ angular.module('app.controllers', [])
       }
 
       $scope.compareDatesAgenda = function () {
-
         var dataInicialModal = $filter('date')($scope.dadosAgenda.dataInicialModal, "dd/MM/yyyy");
         var dataFinalModal = $filter('date')($scope.dadosAgenda.dataFinalModal, "dd/MM/yyyy");
         var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
@@ -692,9 +725,6 @@ angular.module('app.controllers', [])
     $scope.senhaAtualOk = false;
     $scope.novaSenha = {};
     $scope.hideSpan = false;
-
-    console.log('no inicio do metodo ' + $scope.hideSpan);
-
     $scope.novaSenha.idFornecedor = idFornecedor;
     $scope.novaSenha.idUsuario = idFornecedor;
 
@@ -763,29 +793,48 @@ angular.module('app.controllers', [])
     });
   })
 
-  .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http) {
+  .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http, toastr, $ionicPopup, $ionicHistory, $location, $ionicLoading) {
 
-    $scope.recuperarSenha = {};
-    recuperarSenha = {};
+    var recuperarSenha = {};
     $scope.submeter = function () {
+      $scope.hideSpan = false;
       if ($scope.recuperarSenhaForm.$valid) {
         recuperarSenha.email = $scope.recuperarSenha.email;
-        // recuperarSenha.id_pessoa = id_pessoa;
-        // recuperarSenha.md5 = Math.random().toString(36).substr(2);
-        $http.post(servidor + '/v1/api.php?req=enviarEmailSenha', {'recuperarSenha': recuperarSenha}).success(function (data) {
-            // enviarEmailSenha($scope.recuperarSenha.email);
-
+        recuperarSenha.idUsuario = idUsuario;
+        $ionicLoading.show();
+        $http.post(servidor + '/v1/api.php?req=enviarEmailSenha', {'recuperarSenha': recuperarSenha})
+          .success(function (data) {
+            $ionicLoading.hide();
             var alertPopup = $ionicPopup.alert({
-              title: 'Um link para editar sua senha, foi enviado para seu e-mail!',
-              buttons: [{
-                text: '<b>Ok</b>',
-                type: 'button-positive'
-              }]
+              title: 'Um link com a nova senha foi enviado para seu e-mail!',
+              buttons: [
+                {
+                  text: '<b>Ok</b>',
+                  type: 'button-positive'
+                }
+              ]
+            }).then(function (res) {
+              clearFormResetSenha();
+              $ionicHistory.nextViewOptions({
+                disableBack: true
+              });
+              $location.path("/side-menu21/login");
             });
           })
           .error(function (erro) {
-            console.log(erro);
+            toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
           });
       }
     }
+
+    function clearFormResetSenha() {
+      $scope.recuperarSenha = {};
+      $scope.hideSpan = true;
+    }
+
+    $scope.$on('$locationChangeStart', function () {
+      // $scope.clearMessageSenha();
+      clearFormResetSenha();
+    });
   })
+;

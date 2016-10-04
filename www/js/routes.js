@@ -8,7 +8,6 @@ angular.module('app.routes', [])
     // Each state's controller can be found in controllers.js
     $stateProvider
 
-
       .state('menu.home', {
         url: '/home',
         views: {
@@ -28,17 +27,6 @@ angular.module('app.routes', [])
           }
         }
       })
-/*
-      .state('menu.cotacoes-abertas-list/:status_cotacao', {
-        url: '/cotacoes-abertas-list/:status_cotacao',
-        views: {
-          'side-menu21': {
-            templateUrl: 'templates/cotacoesList.html',
-            controller: 'CotacoesAbertasListCtrl'
-          }
-        }
-      })
-*/
 
       .state('menu.cotacao/:id_cotacao', {
         url: '/cotacao/:id_cotacao',
@@ -50,45 +38,6 @@ angular.module('app.routes', [])
         }
       })
 
-      /*.state('menu.cotacoes-pendentes-list', {
-        url: '/cotacoes-pendentes-list',
-        views: {
-          'side-menu21': {
-            templateUrl: 'templates/cotacoesPendentesList.html',
-            controller: 'CotacoesPendentesListCtrl'
-          }
-        }
-      })
-
-      .state('menu.cotacao-pendente/:id_cotacao', {
-        url: '/cotacao-pendente/:id_cotacao',
-        views: {
-          'side-menu21': {
-            templateUrl: 'templates/cotacaoPendente.html',
-            controller: 'CotacaoPendenteCtrl'
-          }
-        }
-      })
-
-      .state('menu.cotacoes-escolhidas-list', {
-        url: '/cotacoes-escolhidas-list',
-        views: {
-          'side-menu21': {
-            templateUrl: 'templates/cotacoesEscolhidasList.html',
-            controller: 'CotacoesEscolhidasListCtrl'
-          }
-        }
-      })
-
-      .state('menu.cotacao-escolhida/:id_cotacao', {
-        url: '/cotacao-escolhida/:id_cotacao',
-        views: {
-          'side-menu21': {
-            templateUrl: 'templates/cotacaoEscolhida.html',
-            controller: 'CotacaoEscolhidaCtrl'
-          }
-        }
-      })*/
 
       .state('menu', {
         url: '/side-menu21',
@@ -103,12 +52,6 @@ angular.module('app.routes', [])
         controller: 'loginCtrl'
       })
 
-      .state('recuperar-senha', {
-        url: '/recuperar-senha',
-        templateUrl: 'templates/recuperarSenha.html',
-        controller: 'RecuperarSenhaCtrl'
-      })
-
       .state('menu.agenda', {
         url: '/agenda',
         views: {
@@ -118,15 +61,28 @@ angular.module('app.routes', [])
           }
         }
       })
-      /*.state('menu.agendaModal', {
-        url: '/agendaModal',
+
+      /*.state('menu.recuperarSenha', {
+       url: '/recuperarSenha',
+       templateUrl: 'templates/recuperarSenha.html',
+       controller: 'RecuperarSenhaCtrl'
+       })*/
+
+      /*.state('app.recuperar-senha', {
+        url: '/recuperar-senha',
         views: {
-          'side-menu21': {
-            templateUrl: 'templates/agendaModal.html',
-            controller: 'AgendaModalCtrl'
+          'menuContent': {
+            templateUrl: 'templates/recuperarSenha.html',
+            controller: 'RecuperarSenhaCtrl'
           }
         }
       })*/
+
+      .state('recuperarSenha', {
+        url: '/recuperarSenha',
+            templateUrl: 'templates/recuperarSenha.html',
+            controller: 'RecuperarSenhaCtrl'
+      })
 
       .state('menu.alterarSenha', {
         url: '/alterarSenha',
@@ -138,13 +94,43 @@ angular.module('app.routes', [])
         }
       })
 
-/*
-      .state('cotacoes-abertas-list', {
-        url: '/cotacoes-abertas-list',
-        templateUrl: 'templates/cotacoesList.html',
-        controller: 'CotacoesAbertasListCtrl'
-      })*/
+    /*
+     .state('cotacoes-abertas-list', {
+     url: '/cotacoes-abertas-list',
+     templateUrl: 'templates/cotacoesList.html',
+     controller: 'CotacoesAbertasListCtrl'
+     })*/
 
+    /*$urlRouterProvider.otherwise(function($cordovaSQLite){
+
+      var query = "SELECT idUsuario FROM usuario";
+      alert();
+      $cordovaSQLite.execute(db, query).then(function(res) {
+        if(res.rows.length > 0) {
+          for(var i = 0; i < res.rows.length; i++){
+            if(res.rows.item(i).idUsuario) {
+              $state.go('/home');
+            } else {
+              $state.go('/login');
+            }
+            // alert($rootScope.idUsuario);
+          }
+        }
+      }, function (err) {
+        console.error(err);
+      });
+
+      /!*var $state = $injector.get('$state');
+      var Storage = $injector.get('usuario');
+
+      if (Storage.has('idUsuario')) {
+        $state.go('/home');
+      } else {
+        alert();
+        $state.go('/login');
+      }*!/
+
+    });*/
     $urlRouterProvider.otherwise('/login')
 
     $httpProvider.defaults.transformRequest = function (data) {

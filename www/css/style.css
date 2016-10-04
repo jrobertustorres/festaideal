@@ -1,33 +1,33 @@
 .my-item {
-    border-color: #FFFFFF!important;
+  border-color: #FFFFFF !important;
 }
 
 .font-barra-superior {
-    color: #FFFFFF!important;
-    font-size: 14px!important;
+  color: #FFFFFF !important;
+  font-size: 14px !important;
 }
 
 .botao01 {
-    color: #7D8286;
-    font-size: 12px;
-    text-align: center;
-    text-align: center;
-    text-decoration: none;
+  color: #7D8286;
+  font-size: 12px;
+  text-align: center;
+  text-align: center;
+  text-decoration: none;
 }
 
 .button-positive-900 {
-    background-color: #1A237E;
-    color: #fff;
+  background-color: #1A237E;
+  color: #fff;
 }
 
 .my-font-form {
-    font-size: 13px;
-    /*text-transform: capitalize;*/
+  font-size: 13px;
+  /*text-transform: capitalize;*/
 }
 
 .my-font-form-span {
-    font-size: 12px;
-    text-transform: lowercase;
+  font-size: 12px;
+  text-transform: lowercase;
 }
 
 .my-margin-span {
@@ -35,22 +35,21 @@
 }
 
 .cor-campo-novalid {
-    color: red;
+  color: red;
 }
 
 .barra-superior {
-  /*background-color: #003B50 !important*/
-  background-color: #006C85 !important
-    /*background-color: #2C6BB2 !important*/
-    /*background-color: #BC1F26 !important*/
+  background-color: #003B50 !important
+  /*background-color: #006C85 !important*/
+  /*background-color: #2C6BB2 !important*/
+  /*background-color: #BC1F26 !important*/
 }
 
 .bar.bar-positive {
-    background-color: rgb(0, 150, 136);
-    border-color: #00796B;
-    background-image: linear-gradient(0deg, #00796B, #00796B 50%, transparent 50%);
+  background-color: rgb(0, 150, 136);
+  border-color: #00796B;
+  background-image: linear-gradient(0deg, #00796B, #00796B 50%, transparent 50%);
 }
-
 
 /* fix ionic border input issue */
 
@@ -65,302 +64,308 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"] {
-    border: 1px solid rgba(0, 0, 0, 0.117647);
-    border-right-width: 0;
-    border-top-width: 0;
-    border-left-width: 0;
+  border: 1px solid rgba(0, 0, 0, 0.117647);
+  border-right-width: 0;
+  border-top-width: 0;
+  border-left-width: 0;
 }
 
 input[type="date"],
 input[type="datetime"],
 input[type="datetime-local"],
-input[type="time"]
-{
-    border: 1px solid rgba(0, 0, 0, 0.117647);
-    border-right-width: 0;
-    border-top-width: 0;
-    border-left-width: 0;
-    border-color: #FFFFFF;
+input[type="time"] {
+  border: 1px solid rgba(0, 0, 0, 0.117647);
+  border-right-width: 0;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-color: #FFFFFF;
 }
 
 .my-border {
-    border: 1px solid #FFFFFF!important;
-    border-right-width: 0!important;
-    border-top-width: 0!important;
-    border-left-width: 0!important;
-    background-color: #003B50!important;
-    /*background-color: #BC1F26!important;*/
+  border: 1px solid #FFFFFF !important;
+  border-right-width: 0 !important;
+  border-top-width: 0 !important;
+  border-left-width: 0 !important;
+  background-color: #003B50 !important;
+  /*background-color: #BC1F26!important;*/
 }
 
 .my-button-save {
-    min-height: 44px;
-    min-width: 44px;
-    padding-right: 0px;
-    text-transform: capitalize !important;
-    font-size: 14px !important;
-    margin-right: 10px;
+  min-height: 44px;
+  min-width: 44px;
+  padding-right: 0px;
+  text-transform: capitalize !important;
+  font-size: 14px !important;
+  margin-right: 10px;
 }
 
 .bar .button.button-clear {
-    color: #fff;
+  color: #fff;
 }
 
 .bar .button {
-    min-height: 30px;
-    min-width: 44px;
-    max-width: 60px;
-    margin-bottom: 0;
-    max-height: 4px;
-    width: 60px;
+  min-height: 30px;
+  min-width: 44px;
+  max-width: 60px;
+  margin-bottom: 0;
+  max-height: 4px;
+  width: 60px;
 }
 
 .my-custom-icon {
-    font-size: 64px!important;
-    top: -20%!important;
+  font-size: 64px !important;
+  top: -20% !important;
 }
 
 .my-font-card {
-    text-align: right;
-    padding-right: 10px;
+  text-align: right;
+  padding-right: 10px;
 }
 
 .my-links {
-    text-decoration: none;
-    color: #5CB85C!important;
+  text-decoration: none;
+  color: #5CB85C !important;
 }
 
 .my-list-card-abertas {
-    background-color: #5CB85C;
+  background-color: #5CB85C;
 }
 
 .my-list-card-pendentes {
-    background-color: #337AB7;
+  background-color: #337AB7;
 }
 
 .my-list-card-escolhidas {
-    background-color: #F0AD4E;
+  background-color: #F0AD4E;
 }
 
 .my-list-card-concluidas {
-    background-color: #D9534F;
+  background-color: #D9534F;
 }
 
 .my-align-spam {
-    margin-left: 15px;
+  margin-left: 15px;
 }
 
 .my-icon-color {
-    color: #003B50 !important
-    /*color: #CD3700 !important*/
+  color: #003B50 !important
+  /*color: #CD3700 !important*/
 }
 
 .my-calendar-color {
-    background-color: #FFFFFF !important
+  background-color: #FFFFFF !important
 }
 
 .my-button-calendar-color {
-    background-color: #003B50 !important
-    /*background-color: #BC1F26 !important*/
+  background-color: #003B50 !important
+  /*background-color: #BC1F26 !important*/
 }
 
 .content-stable {
-    background-color: #E8E8E8!important;
+  background-color: #E8E8E8 !important;
 }
-
 
 /* ------- SEARCH ----*/
 
 .searchBar {
-    color: #fff;
-    margin: 0 !important;
-    padding: 0;
+  color: #fff;
+  margin: 0 !important;
+  padding: 0;
 }
 
 .searchBar .icon {
-    font-size: 27px;
-    line-height: 1.2;
-    padding-right: 6px;
-    padding-left: 6px;
+  font-size: 27px;
+  line-height: 1.2;
+  padding-right: 6px;
+  padding-left: 6px;
 }
 
 .searchBar .searchTxt {
-    border-bottom: 1px solid #fff;
-    left: 55px;
-    width: calc(100% - 100px);
-    position: fixed;
-    height: calc(100% - 10px);
+  border-bottom: 1px solid #fff;
+  left: 55px;
+  width: calc(100% - 100px);
+  position: fixed;
+  height: calc(100% - 10px);
 }
 
 .searchBar.numicons2 .searchTxt {
-    width: calc(100% - 135px);
+  width: calc(100% - 135px);
 }
 
 .searchBar .searchTxt > .bgdiv {
-    background-color: #aaa;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    opacity: 0.3;
+  background-color: #aaa;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0.3;
 }
 
 .searchBar .searchTxt > .bgtxt {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .searchBar .searchTxt input {
-    background-color: inherit;
-    color: #fff;
-    padding-left: 5px;
-    padding-right: 5px;
+  background-color: inherit;
+  color: #fff;
+  padding-left: 5px;
+  padding-right: 5px;
 }
-
 
 /*fim search bar*/
 
 .collection-repeat-container .my-item-list {
-    border-bottom: 1px solid #ddd;
-    margin: -7px;
-    padding: 0px;
+  border-bottom: 1px solid #ddd;
+  margin: -7px;
+  padding: 0px;
 }
 
 .font-button {
-    text-transform: capitalize;
-    font-size: 13px;
+  text-transform: capitalize;
+  font-size: 13px;
 }
 
 .circle {
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    font-size: 50px;
-    color: #BC1F26;
-    line-height: 130px;
-    text-align: center;
-    background-color: #fff;
-    padding: 30px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  font-size: 50px;
+  color: #BC1F26;
+  line-height: 130px;
+  text-align: center;
+  background-color: #fff;
+  padding: 30px;
 }
 
 .my-card-margin {
-    margin: 2px 1px!important;
+  margin: 2px 1px !important;
 }
 
 .item-input input,
 .item-input {
-    width: 99%;
+  width: 99%;
 }
 
-.my-item-input{
-    width: 100%!important;
+.my-item-input {
+  width: 100% !important;
 }
 
 .bar.bar-profile {
-    background-color: #444;
-    height: 170px;
+  background-color: #444;
+  height: 170px;
 }
 
 .profile-picture {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 /*.menu .has-header {*/
-    /*top: 169px;*/
+/*top: 169px;*/
 /*}*/
 
 .position-mfb-button {
-    top: 140px!important;
+  top: 140px !important;
 }
 
 .margin-top-card {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .bar-footer.footer-buttons {
-    padding: 0px;
+  padding: 0px;
 }
 
 .bar-footer.footer-buttons .row {
-    padding: 0px;
+  padding: 0px;
 }
 
 .bar-footer.footer-buttons .row .col {
-    text-align: center;
+  text-align: center;
 }
 
 .button.button-icon.input-button {
-    position: absolute;
-    right: 0;
-    top: 5px;
-    color: #bbb;
+  position: absolute;
+  right: 0;
+  top: 5px;
+  color: #bbb;
 }
 
 .item img {
-    height: 60px;
-    width: 60px;
-    float: left;
-    margin-top: 20px;
-    margin-right: 10px;
+  height: 60px;
+  width: 60px;
+  float: left;
+  margin-top: 20px;
+  margin-right: 10px;
 }
 
 .my-item.item {
-    padding-top: 0;
-    padding-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .full-width {
-    width: 100%;
+  width: 100%;
 }
 
 .fixedheader {
-    margin-top: 48px;
+  margin-top: 48px;
 }
 
 .fixedlist {
-    padding-top: 50px!important;
+  padding-top: 50px !important;
 }
 
 .ion-calendar-icon {
-    content: url('../img/calendar.svg') !important;
+  content: url('../img/calendar.svg') !important;
 }
 
 .position-button {
-    margin-left: 93%!important;
+  margin-left: 93% !important;
 }
 
 .input-date {
-    width: 43%;
-    position: relative!important;
-    float: left!important;
+  width: 43%;
+  position: relative !important;
+  float: left !important;
 }
 
 .input-time {
-    width: 50%;
-    position: relative;
-    float: right!important;
-    margin-top: -34px!important;
-    z-index: 2;
+  width: 50%;
+  position: relative;
+  float: right !important;
+  margin-top: -34px !important;
+  z-index: 2;
 }
 
 .list-left-editing .item {
-    pointer-events: initial !important;
+  pointer-events: initial !important;
 }
 
 .popup-buttons .button {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .no-border {
-  border-color: #fff!important;
+  border-color: #fff !important;
 }
 
 .my-color-input {
-  color: #fff!important;
+  color: #fff !important;
 }
 
 .my-align-title {
-  left: 30px!important;
-  right: 30px!important;
+  left: 30px !important;
+  right: 30px !important;
+}
+
+.my-popup-body {
+  color: #000000;
+}
+
+.my-margin-input-time {
+  margin-right:360px!important;
+  max-width:80px!important;
 }
