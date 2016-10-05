@@ -92,36 +92,18 @@ angular.module('app.controllers', [])
      }*/
   })
 
-  .controller('loginCtrl', function ($scope, $state, $q, UserService, $ionicLoading, $location, $http, $ionicHistory, $rootScope, $cordovaSQLite) {
+  .controller('loginCtrl', function ($scope, $state, $ionicLoading, $location, $http, $ionicHistory) {
 
-    $scope.clearForm = false;
-    $scope.clearMessage = function () {
-      $scope.mensagem = "";
-    }
-
-    // $scope.$on('$ionicView.enter', function () {
-    // $location.path("/side-menu21/home");
-    // })
-
-    /*$http.get(servidor + '/v1/api.php?req=doLoginCookie&cookie=' + token)
-     .success(function (data) {
-     // $ionicLoading.hide();
-     idFornecedor = data.idFornecedor;
-     idUsuario = data.idUsuario;
-     if (data) {
-     $ionicHistory.nextViewOptions({
-     disableBack: true
-     });
-     $location.path("/side-menu21/home");
-     } else {
-     // toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-     }
-     });*/
+    // $scope.clearForm = false;
 
     $scope.submeter = function () {
+      $scope.clearForm = false;
+      console.log('campo email '+$scope.login);
       if ($scope.loginForm.$valid) {
+        console.log('dentro do if '+$scope.mensagem);
         $ionicLoading.show();
-        $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha + '&cookie=' + $rootScope.token)
+        // $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha + '&cookie=' + $rootScope.token)
+        $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha)
           .success(function (data) {
             $ionicLoading.hide();
             idFornecedor = data.idFornecedor;
@@ -133,6 +115,7 @@ angular.module('app.controllers', [])
               $location.path("/side-menu21/home");
             } else {
               $scope.mensagem = "usuário ou senha inválido";
+              console.log('mensagem '+$scope.mensagem);
             }
           });
       }
@@ -144,10 +127,16 @@ angular.module('app.controllers', [])
       $scope.senha = "";
       $scope.clearMessage();
     });
+
+    $scope.clearMessage = function () {
+      $scope.mensagem = "";
+    }
   })
 
   .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope, toastr) {
-
+    // $scope.$on('$ionicView.enter', function () {
+      getCotacoesList();
+    // });
     $ionicConfig.backButton.text("");
     $rootScope.status_cotacao = $stateParams.status_cotacao;
     $scope.pagetitle = 'Cotação ' + $scope.status_cotacao;
@@ -164,13 +153,15 @@ angular.module('app.controllers', [])
 
     // var filterBarInstance;
 
-    $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + idFornecedor)
-      .success(function (data) {
-        $scope.dados = data;
-      })
-      .error(function (erro) {
-        toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-      });
+    function getCotacoesList() {
+      $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + idFornecedor)
+        .success(function (data) {
+          $scope.dados = data;
+        })
+        .error(function (erro) {
+          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+        });
+    }
   })
 
   .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout, $ionicScrollDelegate) {
@@ -793,8 +784,8 @@ angular.module('app.controllers', [])
     });
   })
 
-  .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http, toastr, $ionicPopup, $ionicHistory, $location, $ionicLoading) {
-
+  .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http, toastr, $ionicPopup, $ionicHistory, $location, $ionicLoading, $ionicConfig) {
+    $ionicConfig.backButton.text("");
     var recuperarSenha = {};
     $scope.submeter = function () {
       $scope.hideSpan = false;
