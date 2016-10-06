@@ -1,7 +1,7 @@
 angular.module('app.routes', [])
 
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-
+    
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
@@ -69,19 +69,19 @@ angular.module('app.routes', [])
        })*/
 
       /*.state('app.recuperar-senha', {
-        url: '/recuperar-senha',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/recuperarSenha.html',
-            controller: 'RecuperarSenhaCtrl'
-          }
-        }
-      })*/
+       url: '/recuperar-senha',
+       views: {
+       'menuContent': {
+       templateUrl: 'templates/recuperarSenha.html',
+       controller: 'RecuperarSenhaCtrl'
+       }
+       }
+       })*/
 
       .state('recuperarSenha', {
         url: '/recuperarSenha',
-            templateUrl: 'templates/recuperarSenha.html',
-            controller: 'RecuperarSenhaCtrl'
+        templateUrl: 'templates/recuperarSenha.html',
+        controller: 'RecuperarSenhaCtrl'
       })
 
       .state('menu.alterarSenha', {
@@ -94,43 +94,13 @@ angular.module('app.routes', [])
         }
       })
 
-    /*
-     .state('cotacoes-abertas-list', {
-     url: '/cotacoes-abertas-list',
-     templateUrl: 'templates/cotacoesList.html',
-     controller: 'CotacoesAbertasListCtrl'
-     })*/
-
-    /*$urlRouterProvider.otherwise(function($cordovaSQLite){
-
-      var query = "SELECT idUsuario FROM usuario";
-      alert();
-      $cordovaSQLite.execute(db, query).then(function(res) {
-        if(res.rows.length > 0) {
-          for(var i = 0; i < res.rows.length; i++){
-            if(res.rows.item(i).idUsuario) {
-              $state.go('/home');
-            } else {
-              $state.go('/login');
-            }
-            // alert($rootScope.idUsuario);
-          }
-        }
-      }, function (err) {
-        console.error(err);
-      });
-
-      /!*var $state = $injector.get('$state');
-      var Storage = $injector.get('usuario');
-
-      if (Storage.has('idUsuario')) {
-        $state.go('/home');
-      } else {
-        alert();
-        $state.go('/login');
-      }*!/
-
-    });*/
+    /*if (idUsuario == 1) {
+      console.log('avvvvvvvvvvv '+idUsuario);
+      // $state.go('menu.home');
+      $urlRouterProvider.otherwise('/home');
+    } else {
+      console.log('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv '+idUsuario);
+    }*/
     $urlRouterProvider.otherwise('/login')
 
     $httpProvider.defaults.transformRequest = function (data) {

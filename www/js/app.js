@@ -6,14 +6,12 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 var token = "";
-var db = null;
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask', 'ngCordova'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask', 'ngCordova'])
 
-  .run(function ($ionicPlatform, $ionicPopup, $rootScope, $ionicLoading, $location, $http, $cordovaSQLite) {
+  .run(function ($ionicPlatform, $ionicPopup, $rootScope) {
 
     $ionicPlatform.ready(function () {
-      // criaDataBase($cordovaSQLite);
-      // verificaUsuario($cordovaSQLite, $rootScope);
+      // $rootScope.usuarioLogado = localStorage.getItem("usuarioLogado");
       if (window.Connection) {
         if (navigator.connection.type == Connection.NONE) {
           $ionicPopup.alert({
@@ -80,33 +78,145 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
     });
   })
 
-// function criaDataBase($cordovaSQLite) {
-  // if (window.cordova) {
-  //   db = $cordovaSQLite.openDB({name: "festaideal.db"}); //device
-  // } else {
-  //   db = window.openDatabase("festaideal.db", '1', 'my', 1024 * 1024 * 100); // browser
-  // }
-  // $cordovaSQLite.execute(db, "DROP TABLE usuario");
-  // $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS usuario (id integer primey key, idUsuario integer)");
-  // $cordovaSQLite.execute(db, "DROP DATABASE festaideal");
-  // this.deleteDatabase("festaideal.db");
-// }
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
-/*function verificaUsuario($cordovaSQLite, $rootScope, event) {
-  var query = "SELECT idUsuario FROM usuario";
-  $rootScope.idUsuario = 0;
-  $cordovaSQLite.execute(db, query).then(function(res) {
-    if(res.rows.length > 0) {
-      for(var i = 0; i < res.rows.length; i++){
-        $rootScope.idUsuario = res.rows.item(i).idUsuario;
-        // alert($rootScope.idUsuario);
+    $stateProvider
+
+      .state('menu.home', {
+        url: '/home',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/home.html',
+            controller: 'homeCtrl'
+          }
+        }
+      })
+
+      .state('menu.cotacoes-list/:status_cotacao', {
+        url: '/cotacoes-list/:status_cotacao',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/cotacoesList.html',
+            controller: 'CotacoesListCtrl'
+          }
+        }
+      })
+
+      .state('menu.cotacao/:id_cotacao', {
+        url: '/cotacao/:id_cotacao',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/cotacao.html',
+            controller: 'CotacaoCtrl'
+          }
+        }
+      })
+
+
+      .state('menu', {
+        url: '/side-menu21',
+        templateUrl: 'templates/menu.html',
+        controller: 'menuCtrl',
+        abstract: true
+      })
+
+      .state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl'
+      })
+
+      .state('menu.agenda', {
+        url: '/agenda',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/agenda.html',
+            controller: 'AgendaCtrl'
+          }
+        }
+      })
+
+      /*.state('menu.recuperarSenha', {
+       url: '/recuperarSenha',
+       templateUrl: 'templates/recuperarSenha.html',
+       controller: 'RecuperarSenhaCtrl'
+       })*/
+
+      /*.state('app.recuperar-senha', {
+       url: '/recuperar-senha',
+       views: {
+       'menuContent': {
+       templateUrl: 'templates/recuperarSenha.html',
+       controller: 'RecuperarSenhaCtrl'
+       }
+       }
+       })*/
+
+      .state('recuperarSenha', {
+        url: '/recuperarSenha',
+        templateUrl: 'templates/recuperarSenha.html',
+        controller: 'RecuperarSenhaCtrl'
+      })
+
+      .state('menu.alterarSenha', {
+        url: '/alterarSenha',
+        views: {
+          'side-menu21': {
+            templateUrl: 'templates/alterarSenha.html',
+            controller: 'AlterarSenhaCtrl'
+          }
+        }
+      });
+
+    // var usuarioLogado = localStorage.getItem("usuarioLogado");
+
+    /*if (usuarioLogado) {
+     alert(usuarioLogado);
+     // $state.go('menu.home');
+     $urlRouterProvider.otherwise('/home');
+     } else {
+     alert(usuarioLogado);
+    }*/
+    // $urlRouterProvider.otherwise('/login');
+
+    $urlRouterProvider.otherwise(function ($injector, $location) {
+      // var $state = $injector.get('$state');
+      // var $snkw = $injector.get('$snkw');
+
+      //Verificamos se existe configuração de conexão com o servidor
+      var usuarioLogado = localStorage.getItem("usuarioLogado");
+
+      if(usuarioLogado){
+        // $urlRouterProvider.otherwise('/home');
+        $location.url('/side-menu21/home');
+      }else{
+        // $urlRouterProvider.otherwise('/login');
+        $location.url('/login');
       }
-    }
-  }, function (err) {
-    console.error(err);
-  });
-}*/
+      return true;
+    });
 
-  /*.factory('Token', function () {
-    return token;
-  })*/
+    $httpProvider.defaults.transformRequest = function (data) {
+      if (data === undefined) {
+        return data;
+      }
+
+      return serialize(data);
+    };
+
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+
+    function serialize(obj, prefix) {
+      var str = [];
+
+      for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+
+          str.push(typeof v == "object" ? serialize(v, k) : encodeURIComponent(k) + "=" + encodeURIComponent(v));
+        }
+      }
+
+      return str.join("&");
+    }
+  });

@@ -1,21 +1,21 @@
-var servidor = "http://localhost";
-// var servidor = "http://festaideal.com.br/ws_mobile";
-var idFornecedor = 1;
-// var idFornecedor = 0;
-var idUsuario = 1;
-// var idUsuario = 0;
+// var servidor = "http://localhost";
+var servidor = "http://festaideal.com.br/ws_mobile";
+// var idFornecedor = 1;
+var idFornecedor = 0;
+// var idUsuario = 1;
+var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
   .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope) {
-
-    $scope.$on('$ionicView.enter', function () {
+    // $ionicLoading.show();
+    // $scope.$on('$ionicView.enter', function () {
       $scope.pagetitle = 'Cotações';
       $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
 
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
         .success(function (data) {
-          $ionicLoading.hide();
+          // $ionicLoading.hide();
           $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
           $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
           $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
@@ -25,7 +25,7 @@ angular.module('app.controllers', [])
         .error(function (erro) {
           toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
         });
-    });
+    // });
 
     $scope.doRefresh = function () {
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
@@ -63,44 +63,18 @@ angular.module('app.controllers', [])
             disableBack: true
           });
           $location.path("/side-menu21/login");
-
-          /*$http.get(servidor + '/v1/api.php?req=doLogOut&idUsuario=' + idUsuario)
-           .success(function (data) {
-           idFornecedor = 0;
-           idUsuario = 0;
-           if (data) {
-           $ionicHistory.nextViewOptions({
-           disableBack: true
-           });
-           $location.path("/side-menu21/login");
-           } else {
-           toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-           }
-           });*/
+          localStorage.removeItem('usuarioLogado');
         } else {
 
         }
       });
     }
-
-    /*function executeDeleteUsuario() {
-     var query = "DELETE FROM usuario";
-     $cordovaSQLite.execute(db, query).then(function(res) {
-     }, function (err) {
-     console.error(err);
-     });
-     }*/
   })
 
   .controller('loginCtrl', function ($scope, $state, $ionicLoading, $location, $http, $ionicHistory) {
-
-    // $scope.clearForm = false;
-
     $scope.submeter = function () {
       $scope.clearForm = false;
-      console.log('campo email '+$scope.login);
       if ($scope.loginForm.$valid) {
-        console.log('dentro do if '+$scope.mensagem);
         $ionicLoading.show();
         // $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha + '&cookie=' + $rootScope.token)
         $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha)
@@ -108,6 +82,8 @@ angular.module('app.controllers', [])
             $ionicLoading.hide();
             idFornecedor = data.idFornecedor;
             idUsuario = data.idUsuario;
+
+            localStorage.setItem("usuarioLogado", idUsuario);
             if (data) {
               $ionicHistory.nextViewOptions({
                 disableBack: true
@@ -115,7 +91,6 @@ angular.module('app.controllers', [])
               $location.path("/side-menu21/home");
             } else {
               $scope.mensagem = "usuário ou senha inválido";
-              console.log('mensagem '+$scope.mensagem);
             }
           });
       }
@@ -139,7 +114,7 @@ angular.module('app.controllers', [])
     // });
     $ionicConfig.backButton.text("");
     $rootScope.status_cotacao = $stateParams.status_cotacao;
-    $scope.pagetitle = 'Cotação ' + $scope.status_cotacao;
+    $scope.pagetitle = 'Cotações ' + $scope.status_cotacao + 's';
 
     $rootScope.mostraFiltro = false;
     $scope.toggle = function () {
@@ -785,7 +760,7 @@ angular.module('app.controllers', [])
   })
 
   .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http, toastr, $ionicPopup, $ionicHistory, $location, $ionicLoading, $ionicConfig) {
-    $ionicConfig.backButton.text("");
+    // $ionicConfig.backButton.text("");
     var recuperarSenha = {};
     $scope.submeter = function () {
       $scope.hideSpan = false;
