@@ -28,9 +28,6 @@
       <div class="item item-divider" ng-show="dados.length">
         Eventos ({{ dados.length }}):
       </div>
-      <!--<div class="item" ng-repeat="d in selectedDates" ng-click="openModal(3)">
-          {{ d.getDate() }}/{{ d.getMonth() + 1 }}/{{ d.getFullYear() }}<i class="icon ion-edit positive position-button"></i>
-      </div>-->
 
       <ion-item collection-repeat="dado in dados track by dado.idAgenda" ng-click="openModal(3,dado.idAgenda)">
         <p><strong>Título agenda:</strong> {{ dado.tituloAgenda }}</p>
@@ -73,7 +70,8 @@
 
             <label class="item item-stacked-label my-item">
               <span class="input-label my-font-form">Data inicial</span>
-              <input type="date" ng-model="dadosAgenda.dataInicialModal" name="dataInicial" format-date required>
+              <input type="date" ng-model="dadosAgenda.dataInicialModal" name="dataInicial" format-date required
+                     ng-focus="clearMessageErroAgenda()">
             <span
               ng-show="agendaForm.$submitted && agendaForm.dataInicialModal.$error.required"
               class="cor-campo-novalid my-font-form-span"><i
@@ -82,7 +80,7 @@
             </label>
             <div ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">
               <input type="time" ng-model="dadosAgenda.horaInicialModal" name="horaInicial" formatted-time required
-                     class="input-time my-margin-input-time">
+                     class="input-time my-margin-input-time" ng-focus="clearMessageErroAgenda()">
             </div>
 
             <label class="item item-stacked-label my-item">
@@ -94,19 +92,25 @@
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
             </label>
+            <!--<span ng-if="!mensagemErroHora" class="my-font-form-span cor-campo-novalid my-margin-span"><i
+              ng-if="mensagemErro"
+              class="ion-information-circled"></i> {{mensagemErro}}</span>-->
             <div ng-if="dadosAgenda.diaInteiro == 0 || dadosAgenda.diaInteiro == null">
               <input type="time" ng-model="dadosAgenda.horaFinalModal" name="horaFinal" formatted-time required
                      ng-blur="compareDatesAgenda()"
                      ng-focus="clearMessageErroAgenda()" class="input-time my-margin-input-time">
               <!--<span class="my-font-form-span cor-campo-novalid my-margin-span"><i ng-if="mensagemErroHora"-->
               <!--class="ion-information-circled"></i> {{mensagemErroHora}}</span>-->
-              <span ng-if="!mensagemErroHora" class="my-font-form-span cor-campo-novalid my-margin-span"><i
+              <!--<span ng-if="!mensagemErroHora" class="my-font-form-span cor-campo-novalid my-margin-span"><i
+                ng-if="mensagemErro"
+                class="ion-information-circled"></i> {{mensagemErro}}</span>-->
+            </div>
+            <span ng-if="!mensagemErroHora" class="my-font-form-span cor-campo-novalid my-margin-span"><i
                 ng-if="mensagemErro"
                 class="ion-information-circled"></i> {{mensagemErro}}</span>
-            </div>
 
             <label class="item item-input item-select my-item" style="padding: 5px 16px;">
-              <div class="input-label my-font-form">Tipo notificação</div>
+              <div class="input-label my-font-form">Tipo notificação*</div>
               <select name="tipoNotificacao" ng-model="dadosAgenda.tipoNotificacao" required>
                 <option ng-repeat="tipo in tiposNotificacao" value="{{tipo.tipoNotificacao}}">{{tipo.label}}</option>
               </select>
@@ -115,7 +119,7 @@
                   class="my-font-form-span cor-campo-novalid my-align-spam"><i class="ion-information-circled"></i> campo obrigatório</span>
 
             <label class="item item-input item-select my-item" style="padding: 10px 16px;">
-              <div class="input-label my-font-form">Tipo agenda</div>
+              <div class="input-label my-font-form">Tipo agenda*</div>
               <select name="tipoAgenda" ng-model="dadosAgenda.tipoAgenda" required>
                 <option ng-repeat="tipoAgenda in tiposAgenda" value="{{tipoAgenda.tipoAgenda}}">{{tipoAgenda.label}}
                 </option>

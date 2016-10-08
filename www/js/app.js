@@ -112,7 +112,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
         }
       })
 
-
       .state('menu', {
         url: '/side-menu21',
         templateUrl: 'templates/menu.html',
@@ -136,22 +135,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
         }
       })
 
-      /*.state('menu.recuperarSenha', {
-       url: '/recuperarSenha',
-       templateUrl: 'templates/recuperarSenha.html',
-       controller: 'RecuperarSenhaCtrl'
-       })*/
-
-      /*.state('app.recuperar-senha', {
-       url: '/recuperar-senha',
-       views: {
-       'menuContent': {
-       templateUrl: 'templates/recuperarSenha.html',
-       controller: 'RecuperarSenhaCtrl'
-       }
-       }
-       })*/
-
       .state('recuperarSenha', {
         url: '/recuperarSenha',
         templateUrl: 'templates/recuperarSenha.html',
@@ -168,22 +151,9 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
         }
       });
 
-    // var usuarioLogado = localStorage.getItem("usuarioLogado");
-
-    /*if (usuarioLogado) {
-     alert(usuarioLogado);
-     // $state.go('menu.home');
-     $urlRouterProvider.otherwise('/home');
-     } else {
-     alert(usuarioLogado);
-    }*/
     // $urlRouterProvider.otherwise('/login');
 
     $urlRouterProvider.otherwise(function ($injector, $location) {
-      // var $state = $injector.get('$state');
-      // var $snkw = $injector.get('$snkw');
-
-      //Verificamos se existe configuração de conexão com o servidor
       var usuarioLogado = localStorage.getItem("usuarioLogado");
 
       if(usuarioLogado){
