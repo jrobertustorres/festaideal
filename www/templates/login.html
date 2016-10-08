@@ -19,7 +19,7 @@
                  class="my-border my-item-input my-color-input" ng-focus="clearMessage()">
               <span ng-show="loginForm.$submitted && loginForm.login.$error.required && !clearForm"
                     class="my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
-          <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.email && !hideSpan">
+          <span ng-show="loginForm.$submitted && loginForm.login.$error.email && !hideSpan">
                     <i class="ion-information-circled"></i> e-mail inválido</span>
         </label>
 
