@@ -1,30 +1,36 @@
 var servidor = "http://localhost";
 // var servidor = "http://festaideal.com.br/ws_mobile";
-// var idFornecedor = 1;
-var idFornecedor = 0;
-// var idUsuario = 1;
-var idUsuario = 0;
+var idFornecedor = 1;
+// var idFornecedor = 0;
+var idUsuario = 1;
+// var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
   .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope) {
-    $ionicLoading.show();
-    // $scope.$on('$ionicView.enter', function () {
-    // $scope.pagetitle = 'Cotações';
-    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
+    $scope.$on("$ionicView.enter", function () {
+      $scope.viewEntered = true;
+      $ionicLoading.show();
+      $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
+        .success(function (data) {
+          $ionicLoading.hide();
+          $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
+          $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
+          $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
+          $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
+          $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
+        })
+        .error(function (erro) {
+          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+        });
+    });
+    $scope.$on("$ionicView.beforeLeave", function () {
+      $scope.viewEntered = false;
+    });
 
-    $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
-      .success(function (data) {
-        $ionicLoading.hide();
-        $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
-        $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
-        $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
-        $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
-        $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
-      })
-      .error(function (erro) {
-        toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-      });
+    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
+    // $scope.$on('$ionicView.enter', function () {
+
     // });
 
     $scope.doRefresh = function () {
@@ -81,10 +87,9 @@ angular.module('app.controllers', [])
             $ionicLoading.hide();
             idFornecedor = data.idFornecedor;
             idUsuario = data.idUsuario;
-            console.log('status reset ' + data.statusReset);
             $rootScope.statusReset = data.statusReset;
             localStorage.setItem("usuarioLogado", idUsuario);
-
+            localStorage.setItem("statusResetSenha", data.statusReset);
             if (data) {
               if ($rootScope.statusReset != 0) {
                 $location.path("/side-menu21/alterarSenha");
@@ -114,8 +119,16 @@ angular.module('app.controllers', [])
   })
 
   .controller('CotacoesListCtrl', function ($scope, $state, $location, $http, $ionicConfig, $stateParams, $rootScope, toastr) {
+    $scope.viewEntered = false;
+    $scope.$on("$ionicView.enter", function () {
+      $scope.viewEntered = true;
+      getCotacoesList();
+    });
+    $scope.$on("$ionicView.beforeLeave", function () {
+      $scope.viewEntered = false;
+    });
     // $scope.$on('$ionicView.enter', function () {
-    getCotacoesList();
+    //getCotacoesList();
     // });
     $ionicConfig.backButton.text("");
     $rootScope.status_cotacao = $stateParams.status_cotacao;
@@ -145,16 +158,23 @@ angular.module('app.controllers', [])
   })
 
   .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout, $ionicScrollDelegate) {
-
-    $ionicLoading.show();
-    $scope.cotacao = {};
-    $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
-      .success(function (data) {
-        $ionicLoading.hide();
-        $scope.dados = data;
-      }).error(function (erro) {
-      toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+    $scope.viewEntered = false;
+    $scope.$on("$ionicView.enter", function () {
+      $scope.viewEntered = true;
+      $ionicLoading.show();
+      $scope.cotacao = {};
+      $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
+        .success(function (data) {
+          $ionicLoading.hide();
+          $scope.dados = data;
+        }).error(function (erro) {
+        toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+      });
     });
+    $scope.$on("$ionicView.beforeLeave", function () {
+      $scope.viewEntered = false;
+    });
+
 
     $ionicModal.fromTemplateUrl('templates/modal-1.html', {
       id: '1', // We need to use and ID to identify the modal that is firing the event!
@@ -264,6 +284,7 @@ angular.module('app.controllers', [])
     }
 
     function enviaEditar() {
+      $ionicLoading.show();
       $scope.cotacao.id_fornecedor = idFornecedor;
       $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
       $scope.cotacao.idEventoTipoServico = $scope.dados.idEventoTipoServico;
@@ -271,6 +292,7 @@ angular.module('app.controllers', [])
       $scope.cotacao.validade = $filter('date')($scope.cotacao.validade, "yyyy-MM-dd HH:mm:ss");
       $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacao)
         .success(function (data) {
+          $ionicLoading.hide();
           toastr.success('Cotação ' + msg + ' com sucesso!');
           $ionicHistory.nextViewOptions({
             disableBack: true
@@ -327,11 +349,29 @@ angular.module('app.controllers', [])
   })
 
   .controller('AgendaCtrl', function ($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr, $ionicLoading, $ionicScrollDelegate) {
+    $scope.$on("$ionicView.enter", function () {
+      $scope.viewEntered = true;
+      $scope.getAgenda();
+    });
+    $scope.$on("$ionicView.beforeLeave", function () {
+      $scope.viewEntered = false;
+    });
+    $ionicLoading.show();
+
+    $scope.getAgenda = function() {
+      $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor + '&idUsuario=' + idUsuario + '&mesSelecionado=' + $scope.numeroMes + '&anoSelecionado=' + $scope.anoAtual)
+        .success(function (data) {
+          $ionicLoading.hide();
+          $scope.dados = data;
+        }).error(function (erro) {
+        toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+      });
+    }
       var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
       var monthList = ["Janeiro", "Feveiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
       $scope.agenda = {};
       $scope.dadosAgenda = {};
-      getAgenda();
+
       var dataHoje = new Date();
       $scope.numeroMes = dataHoje.getMonth() + 1;
       $scope.anoAtual = dataHoje.getFullYear();
@@ -343,11 +383,11 @@ angular.module('app.controllers', [])
           $scope.numeroMes = 12;
           getMes($scope.numeroMes);
           $scope.anoAtual = parseInt($scope.anoAtual) - 1;
-          getAgenda();
+          $scope.getAgenda();
         } else {
           $scope.numeroMes = $scope.numeroMes - 1;
           getMes($scope.numeroMes);
-          getAgenda();
+          $scope.getAgenda();
         }
       }
 
@@ -357,23 +397,12 @@ angular.module('app.controllers', [])
           $scope.numeroMes = 1;
           getMes($scope.numeroMes);
           $scope.anoAtual = parseInt($scope.anoAtual) + 1;
-          getAgenda();
+          $scope.getAgenda();
         } else {
           $scope.numeroMes = $scope.numeroMes + 1;
           getMes($scope.numeroMes);
-          getAgenda();
+          $scope.getAgenda();
         }
-      }
-
-      $ionicLoading.show();
-      function getAgenda() {
-        $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor + '&idUsuario=' + idUsuario + '&mesSelecionado=' + $scope.numeroMes + '&anoSelecionado=' + $scope.anoAtual)
-          .success(function (data) {
-            $ionicLoading.hide();
-            $scope.dados = data;
-          }).error(function (erro) {
-          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-        });
       }
 
       // Modal 3 - Agenda
@@ -408,8 +437,10 @@ angular.module('app.controllers', [])
       $scope.hideSpan = false;
 
       $scope.closeModal = function (index) {
+        $scope.getAgenda();
         $scope.oModal3.hide();
         $scope.dadosAgenda = {};
+        $scope.idAgenda = null; // TESTAR ISSO
         $scope.dadosAgenda.tituloAgenda = "";
         $scope.dadosAgenda.descricao = "";
         $scope.hideSpan = true;
@@ -461,11 +492,12 @@ angular.module('app.controllers', [])
         var minutosF = $scope.dadosAgenda.horaFinalModal.getMinutes();
         $scope.dadosAgenda.dataFinal = new Date(anoF, mesF, diaF, horaF, minutosF, 00, 000).toLocaleString();
         $scope.compareDatesAgenda();
+        $scope.dadosAgenda.idUsuario = idUsuario;
         if (formValid && !$scope.mensagemErro && !$scope.mensagemErroHora) {
           if ($scope.idAgenda) {
             $http.post(servidor + '/v1/api.php?req=editAgenda', $scope.dadosAgenda)
               .success(function (data) {
-                getAgenda();
+                $scope.getAgenda();
                 toastr.success('Agenda alterada com sucesso!');
                 $scope.closeModal(3);
               })
@@ -543,29 +575,18 @@ angular.module('app.controllers', [])
         btnClearClass: 'button-clear button-dark',
 
         selectType: 'SINGLE', // SINGLE | PERIOD | MULTI
-
         tglSelectByWeekShow: false, // true | false (default)
         tglSelectByWeek: 'By week',
         isSelectByWeek: false, // true (default) | false
         selectByWeekMode: 'NORMAL', // INVERSION (default), NORMAL
         tglSelectByWeekClass: 'toggle-positive',
         titleSelectByWeekClass: 'positive positive-border',
-
         accessType: 'WRITE', // READ | WRITE
-        //showErrors: true, // true (default), false
-        //errorLanguage: 'RU', // EN | RU
-
         //fromDate: new Date(2015, 9),
         //toDate: new Date(2016, 1),
-
         selectedDates: $scope.selectedDates,
-        //viewMonth: $scope.selectedDates, //
-        // disabledDates: disabledDates,
-
         conflictSelectedDisabled: 'DISABLED', // SELECTED | DISABLED
-
         closeOnSelect: false,
-
         mondayFirst: false,
         weekDaysList: weekDaysList,
         monthList: monthList,
@@ -702,7 +723,7 @@ angular.module('app.controllers', [])
     $scope.novaSenha = {};
     $scope.hideSpan = false;
     $scope.novaSenha.idFornecedor = idFornecedor;
-    $scope.novaSenha.idUsuario = idFornecedor;
+    $scope.novaSenha.idUsuario = idUsuario;
 
     $scope.$on('$ionicView.enter', function () {
       if ($rootScope.statusReset == 1) {
@@ -715,11 +736,9 @@ angular.module('app.controllers', [])
     });
 
     $scope.verificaSenha = function () {
-      console.log('fora');
       $http.post(servidor + '/v1/api.php?req=verificaSenha', $scope.novaSenha)
         .success(function (data) {
           if (data) {
-            console.log('dentro');
             $scope.senhaAtualOk = true;
             $scope.mensagemSenha = "";
           } else {
@@ -740,7 +759,6 @@ angular.module('app.controllers', [])
     }
 
     function submeter() {
-      // $scope.verificaSenha();
       $scope.hideSpan = false;
       if ($scope.senhaOk && $scope.senhaAtualOk) {
         if ($scope.alterarSenhaForm.$valid) {
@@ -749,7 +767,7 @@ angular.module('app.controllers', [])
               $ionicHistory.nextViewOptions({
                 disableBack: true
               });
-              toastr.success('Senha alterada com sucesso!');
+              toastr.success('Senha alterada com sucesso! Aguarde...');
               $timeout(function () {
                 $location.path("/side-menu21/home");
               }, 3000);
@@ -781,8 +799,7 @@ angular.module('app.controllers', [])
     });
   })
 
-  .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http, toastr, $ionicPopup, $ionicHistory, $location, $ionicLoading, $ionicConfig) {
-    // $ionicConfig.backButton.text("");
+  .controller('RecuperarSenhaCtrl', function ($scope, $stateParams, $http, toastr, $ionicPopup, $ionicHistory, $location, $ionicLoading) {
     var recuperarSenha = {};
     $scope.submeter = function () {
       $scope.hideSpan = false;
@@ -794,7 +811,7 @@ angular.module('app.controllers', [])
           .success(function (data) {
             $ionicLoading.hide();
             var alertPopup = $ionicPopup.alert({
-              title: 'Um link com a nova senha foi enviado para seu e-mail!',
+              title: 'Uma nova senha foi enviada para seu e-mail!',
               buttons: [
                 {
                   text: '<b>Ok</b>',
@@ -802,7 +819,7 @@ angular.module('app.controllers', [])
                 }
               ]
             }).then(function (res) {
-              clearFormResetSenha();
+              $scope.clearFormResetSenha();
               $ionicHistory.nextViewOptions({
                 disableBack: true
               });
@@ -810,19 +827,20 @@ angular.module('app.controllers', [])
             });
           })
           .error(function (erro) {
-            toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+            $ionicLoading.hide();
+            $scope.mensagem = "e-mail não encontrado!";
           });
       }
     }
 
-    function clearFormResetSenha() {
+    $scope.clearFormResetSenha = function () {
       $scope.recuperarSenha = {};
       $scope.hideSpan = true;
+      $scope.mensagem = "";
     }
 
     $scope.$on('$locationChangeStart', function () {
-      // $scope.clearMessageSenha();
-      clearFormResetSenha();
+      $scope.clearFormResetSenha();
     });
   })
 ;

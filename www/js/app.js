@@ -1,17 +1,9 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
 var token = "";
-angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask', 'ngCordova'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask', 'ngCordova', 'ui.utils.masks'])
 
   .run(function ($ionicPlatform, $ionicPopup, $rootScope) {
 
     $ionicPlatform.ready(function () {
-      // $rootScope.usuarioLogado = localStorage.getItem("usuarioLogado");
       if (window.Connection) {
         if (navigator.connection.type == Connection.NONE) {
           $ionicPopup.alert({
@@ -78,8 +70,8 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
     });
   })
 
-  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
+    $ionicConfigProvider.views.transition('android');
     $stateProvider
 
       .state('menu.home', {
@@ -151,16 +143,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
         }
       });
 
-    // $urlRouterProvider.otherwise('/login');
-
     $urlRouterProvider.otherwise(function ($injector, $location) {
       var usuarioLogado = localStorage.getItem("usuarioLogado");
-
-      if(usuarioLogado){
-        // $urlRouterProvider.otherwise('/home');
+      var statusResetSenha = localStorage.getItem("statusResetSenha");
+      if(usuarioLogado && statusResetSenha != 1){
         $location.url('/side-menu21/home');
       }else{
-        // $urlRouterProvider.otherwise('/login');
         $location.url('/login');
       }
       return true;

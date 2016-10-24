@@ -1,10 +1,7 @@
-<!--<ion-nav-bar>-->
-<!--</ion-nav-bar>-->
-<!--<ion-view hide-nav-bar="false" animation="slide-left-right">-->
-<ion-view title="Alterar senha">
-  <!--<ion-nav-title>
+<ion-view>
+  <ion-nav-title>
     <span class="font-barra-superior">Alterar senha</span>
-  </ion-nav-title>-->
+  </ion-nav-title>
   <ion-nav-buttons side="left">
     <button class="button button-icon button-clear ion-navicon" menu-toggle="left"
             ng-style="{ 'display' : displayButton == true ? 'block' : 'none'}"></button>
@@ -15,7 +12,7 @@
       Salvar
     </button>
   </ion-nav-buttons>
-  <ion-content ng-controller="AlterarSenhaCtrl" scroll="true" padding="true" class="has-header">
+  <ion-content ng-controller="AlterarSenhaCtrl" scroll="true">
 
     <div class="content item-body" style="padding: 1px;">
       <div class="list">
@@ -49,8 +46,6 @@
             <label class="item item-input item-stacked-label my-item">
               <div class="input-label my-font-form">Confirmar senha</div>
               <input ng-model="novaSenha.confSenha" type="password" name="confSenha" required>
-              <!--<span ng-show="alterarSenhaForm.$submitted && alterarSenhaForm.confSenha.$error.required && !hideSpan"-->
-              <!--class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>-->
               <span class="cor-campo-novalid my-font-form-span"><i ng-if="mensagem"
                                                                    class="ion-information-circled"></i> {{mensagem}}</span>
             </label>

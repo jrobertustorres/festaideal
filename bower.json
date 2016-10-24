@@ -10,6 +10,7 @@
     "ion-datetime-picker": "~0.3.1",
     "ionic-datepicker": "~1.2.0",
     "onezone-datepicker": "*",
-    "ngMask": "angular-mask#~3.1.1"
+    "ngMask": "angular-mask#~3.1.1",
+    "angular-input-masks": "~2.5.0"
   }
 }

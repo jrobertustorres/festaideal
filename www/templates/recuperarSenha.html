@@ -1,8 +1,5 @@
-<ion-nav-bar>
-</ion-nav-bar>
-<ion-view hide-nav-bar="false" animation="slide-left-right">
+<ion-view>
   <ion-nav-title>
-    <ion-nav-back-button class="button-clear no-text"></ion-nav-back-button>
     <span class="font-barra-superior">Recuperar senha</span>
   </ion-nav-title>
   <ion-nav-buttons side="right">
@@ -18,11 +15,13 @@
         <form id="recuperarSenhaForm" name="recuperarSenhaForm" novalidate ng-submit="submeter();">
           <label class="item item-input item-stacked-label my-item">
             <span class="input-label my-font-form">E-mail*</span>
-            <input ng-model="recuperarSenha.email" type="email" name="email" required ng-maxlength="40">
+            <input ng-model="recuperarSenha.email" type="email" name="email" required ng-maxlength="40" ng-focus="clearFormResetSenha()">
               <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.required && !hideSpan"
                     class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
             <span ng-show="recuperarSenhaForm.$submitted && recuperarSenhaForm.email.$error.email && !hideSpan"
                   class="cor-campo-novalid my-font-form"><i class="ion-information-circled"></i> e-mail inválido</span>
+            <span class="cor-campo-novalid my-font-form-span"><i ng-if="mensagem"
+                                                                 class="ion-information-circled"></i> {{mensagem}}</span>
 
           </label>
 

@@ -1,5 +1,5 @@
 <!--<ion-view view-title="{{pagetitle}}">-->
-<ion-view>
+<ion-view hide-nav-bar="false">
   <ion-nav-title>
     <span class="font-barra-superior">Dados cotação</span>
   </ion-nav-title>
@@ -27,8 +27,7 @@
         <p>{{dados.qtd_pessoa}}</p>
         <h3>Descrição</h3>
         <p>{{dados.descricao}}</p>
-        <!--<div ng-show="dados.status_cotacao == 'ESCOLHIDA'">-->
-        <div>
+        <div ng-show="dados.status_cotacao == 'ESCOLHIDA'">
           <h3>Data entrega</h3>
           <p>{{dados.data_entrega}}</p>
           <h3>Tipo pagamento</h3>
@@ -40,7 +39,6 @@
           <h3>Validade cotação</h3>
           <p>{{dados.validade}}</p>
         </div>
-
       </div>
     </div>
   </ion-content>
@@ -131,7 +129,7 @@
               <span class="input-label my-font-form">Valor*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.valor}}</p></div>
               <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacao.valor" type="text" name="valor"
-                     mask="9.999,99" required>
+                     ui-money-mask required>
             <span
               ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.valor.$error.required && dados.status_cotacao == 'ABERTA' && !hideSpan"
               class="cor-campo-novalid my-font-form-span"><i
@@ -162,8 +160,7 @@
       </ion-content>
       <ion-footer-bar>
         <button class="bar bar-footer bar-positive" type="submit" form="cotacaoResponderForm">
-          <p class="title my-align-title">Salvar
-          <p>
+          <p class="my-align-title">Salvar<p>
         </button>
       </ion-footer-bar>
     </div>

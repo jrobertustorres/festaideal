@@ -1,9 +1,7 @@
-<!--<ion-view view-title="{{pagetitle}}">-->
-<ion-view title="Cotações">
-  <!--<ion-nav-title>
-    <span class="font-barra-superior">{{pagetitle}}</span>
-  </ion-nav-title>-->
-  <!--<search-bar ng-model="search"></search-bar>-->
+<ion-view>
+  <ion-nav-title>
+    <span class="font-barra-superior">Cotações</span>
+  </ion-nav-title>
 
   <ion-nav-buttons side="secondary">
     <button ng-show="dados.length" class="button button-icon icon ion-ios-search-strong" style="color: #FFFFFF"
@@ -25,7 +23,7 @@
   </ion-header-bar>
 
   <ion-content ng-controller="CotacoesListCtrl" scroll="true" ng-class="{'fixedlist': mostraFiltro == true}"
-               class="my-item-list  content-stable">
+               class="my-item-list content-stable">
     <div ng-show="dados.length == 0">
       <p style="color: #8f8f8f; font-size: 15px; padding-top: 25px;" align="center">Não há
         informações para mostrar</p>
@@ -39,10 +37,5 @@
         <p><strong>Data Evento:</strong> {{ dado.data_evento}}</p>
       </ion-item>
 
-      <!--<div ng-if="dados !== undefined && !dados.length" class="no-results">
-        <p>No Results</p>
-      </div>-->
-
   </ion-content>
-
 </ion-view>

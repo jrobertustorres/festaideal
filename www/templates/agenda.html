@@ -1,5 +1,4 @@
-<!--<ion-view view-title="Agenda" ng-controller="AgendaCtrl">-->
-<ion-view ng-controller="AgendaCtrl">
+<ion-view hide-nav-bar="false" ng-controller="AgendaCtrl">
   <ion-nav-title>
     <span class="font-barra-superior">Agenda</span>
   </ion-nav-title>
@@ -10,29 +9,36 @@
       </button>
     </ionic-multi-date-picker>
   </ion-nav-buttons>
-  <!--<div class="bar bar-subheader">
-    <h2 class="title">Sub Header</h2>
-  </div>-->
-  <ion-content scroll="true" padding="true" class="has-header content-stable">
+  <div class="bar bar-subheader">
+    <div style="text-align: center;">
+      <i class="icon ion-arrow-left-a arrow-left"
+         ng-click="getPreviousMonth()"></i>
+      <span style="color: black;">{{ nomeMes }} {{anoAtual}}</span>
+      <i class="icon ion-arrow-right-a arrow-right"
+         ng-click="getNextMonth()"></i>
+    </div>
+  </div>
+  <ion-content scroll="true" padding="true" class="has-header content-stable" style="margin-top: 20px;"
+               ng-show="viewEntered">
     <ion-list show-delete="true">
-      <div class="item item-divider" style="text-align: center">
-        <i class="icon ion-arrow-left-b" style="margin-right: 30px; font-size: 30px;" ng-click="getPreviousMonth()"></i>
-        {{ nomeMes }} {{anoAtual}}
-        <i class="icon ion-arrow-right-b" style="margin-left: 30px; font-size: 30px;" ng-click="getNextMonth()"></i>
-      </div>
       <div ng-hide="dados.length">
-        <p style="color: #8f8f8f; font-size: 15px; padding-top: 25px;" align="center">Não há eventos
+        <p class="my-information">Não há eventos
           para o mês de {{nomeMes}}</p>
-        <p style="text-align: center"><i class="ion-android-sad" style="color: #8f8f8f; font-size: 50px;"></i></p>
+        <p style="text-align: center"><i class="ion-android-sad my-icon-sad"></i></p>
       </div>
-      <div class="item item-divider" ng-show="dados.length">
-        Eventos ({{ dados.length }}):
+      <div class="item item-divider my-width-divider" ng-show="dados.length">
+        Eventos ({{ dados.length }})
       </div>
 
-      <ion-item collection-repeat="dado in dados track by dado.idAgenda" ng-click="openModal(3,dado.idAgenda)">
-        <p><strong>Título agenda:</strong> {{ dado.tituloAgenda }}</p>
-        <p><strong>Data incial:</strong> {{ dado.dataInicial }}</p>
+      <ion-item collection-repeat="dado in dados track by dado.idAgenda" ng-click="openModal(3,dado.idAgenda)"
+                class="pull-height">
         <ion-delete-button class="ion-minus-circled" ng-click="removerAgenda(dado)"></ion-delete-button>
+        <div class="item item-icon-right" style="border-color: #FFFFFF; padding-left: 0px; padding-top: 0px;">
+          <p><strong>Título agenda:</strong> {{ dado.tituloAgenda }}</p>
+          <p><strong>Data incial:</strong> {{ dado.dataInicial }}</p>
+          <i class="icon ion-ios-flag"
+             ng-class="{VERMELHA:'corVermelha', AZUL:'corAzul',VERDE:'corVerde'}[dado.corAgenda]"></i>
+        </div>
       </ion-item>
     </ion-list>
   </ion-content>
@@ -106,11 +112,11 @@
                 class="ion-information-circled"></i> {{mensagemErro}}</span>-->
             </div>
             <span ng-if="!mensagemErroHora" class="my-font-form-span cor-campo-novalid my-margin-span"><i
-                ng-if="mensagemErro"
-                class="ion-information-circled"></i> {{mensagemErro}}</span>
+              ng-if="mensagemErro"
+              class="ion-information-circled"></i> {{mensagemErro}}</span>
 
             <label class="item item-input item-select my-item" style="padding: 5px 16px;">
-              <div class="input-label my-font-form">Tipo notificação*</div>
+              <div class="input-label my-font-form">Notificação*</div>
               <select name="tipoNotificacao" ng-model="dadosAgenda.tipoNotificacao" required>
                 <option ng-repeat="tipo in tiposNotificacao" value="{{tipo.tipoNotificacao}}">{{tipo.label}}</option>
               </select>
@@ -139,7 +145,8 @@
       </ion-content>
       <ion-footer-bar>
         <button class="bar bar-footer bar-positive" type="submit" form="agendaForm">
-          <p class="title my-align-title">Salvar<p>
+          <p class="my-align-title">Salvar
+          <p>
         </button>
       </ion-footer-bar>
     </div>

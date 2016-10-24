@@ -1,11 +1,15 @@
-<!--<ion-nav-view animation="slide-left-right"></ion-nav-view>-->
-<ion-view title="Cotações">
+<ion-view hide-nav-bar="false">
+  <ion-nav-title>
+    <span class="font-barra-superior">Cotações</span>
+  </ion-nav-title>
+<!--<ion-view title="Cotações">-->
   <!--  <ion-nav-title>
       <span class="font-barra-superior">Cotações</span>
     </ion-nav-title>-->
-  <ion-content ng-controller="homeCtrl" padding="true" class="has-header content-stable">
+  <ion-content ng-controller="homeCtrl" padding="true" scroll="true" class="has-header content-stable" ng-show="viewEntered">
 
     <ion-refresher
+      pulling-text="Puxe para atualizar..."
       on-refresh="doRefresh()">
     </ion-refresher>
 
