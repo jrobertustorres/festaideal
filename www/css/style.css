@@ -35,7 +35,7 @@
 }
 
 .cor-campo-novalid {
-  color: red;
+  color: red!important;
 }
 
 .barra-superior {

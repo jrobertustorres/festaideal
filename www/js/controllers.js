@@ -1,14 +1,15 @@
 var servidor = "http://localhost";
 // var servidor = "http://festaideal.com.br/ws_mobile";
-var idFornecedor = 1;
-// var idFornecedor = 0;
-var idUsuario = 1;
-// var idUsuario = 0;
+// var idFornecedor = 1;
+var idFornecedor = 0;
+// var idUsuario = 1;
+var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
   .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope) {
     $scope.$on("$ionicView.enter", function () {
+      idFornecedor = localStorage.getItem("fornecedorLogado");
       $scope.viewEntered = true;
       $ionicLoading.show();
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
@@ -29,9 +30,6 @@ angular.module('app.controllers', [])
     });
 
     $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
-    // $scope.$on('$ionicView.enter', function () {
-
-    // });
 
     $scope.doRefresh = function () {
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
@@ -89,6 +87,7 @@ angular.module('app.controllers', [])
             idUsuario = data.idUsuario;
             $rootScope.statusReset = data.statusReset;
             localStorage.setItem("usuarioLogado", idUsuario);
+            localStorage.setItem("fornecedorLogado", idFornecedor);
             localStorage.setItem("statusResetSenha", data.statusReset);
             if (data) {
               if ($rootScope.statusReset != 0) {
@@ -715,7 +714,7 @@ angular.module('app.controllers', [])
       });
   })
 
-  .controller('AlterarSenhaCtrl', function ($scope, $stateParams, $http, $ionicHistory, toastr, $location, $timeout, $rootScope, $ionicSideMenuDelegate, $ionicSlideBoxDelegate) {
+  .controller('AlterarSenhaCtrl', function ($scope, $stateParams, $http, $ionicHistory, toastr, $location, $timeout, $rootScope, $ionicSideMenuDelegate) {
 
     $scope.result;
     $scope.senhaOk = false;
@@ -739,6 +738,7 @@ angular.module('app.controllers', [])
       $http.post(servidor + '/v1/api.php?req=verificaSenha', $scope.novaSenha)
         .success(function (data) {
           if (data) {
+            localStorage.setItem("usuarioLogado", idUsuario);
             $scope.senhaAtualOk = true;
             $scope.mensagemSenha = "";
           } else {
