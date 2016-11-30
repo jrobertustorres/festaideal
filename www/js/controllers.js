@@ -1,5 +1,5 @@
-var servidor = "http://localhost";
-// var servidor = "http://festaideal.com.br/ws_mobile";
+// var servidor = "http://localhost";
+var servidor = "http://festaideal.com.br/ws_mobile";
 // var idFornecedor = 1;
 var idFornecedor = 0;
 // var idUsuario = 1;
@@ -10,6 +10,7 @@ angular.module('app.controllers', [])
   .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope) {
     $scope.$on("$ionicView.enter", function () {
       idFornecedor = localStorage.getItem("fornecedorLogado");
+      idUsuario = localStorage.getItem("usuarioLogado");
       $scope.viewEntered = true;
       $ionicLoading.show();
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
@@ -126,9 +127,7 @@ angular.module('app.controllers', [])
     $scope.$on("$ionicView.beforeLeave", function () {
       $scope.viewEntered = false;
     });
-    // $scope.$on('$ionicView.enter', function () {
-    //getCotacoesList();
-    // });
+
     $ionicConfig.backButton.text("");
     $rootScope.status_cotacao = $stateParams.status_cotacao;
     $scope.pagetitle = 'Cotações ' + $scope.status_cotacao + 's';
@@ -351,6 +350,9 @@ angular.module('app.controllers', [])
     $scope.$on("$ionicView.enter", function () {
       $scope.viewEntered = true;
       $scope.getAgenda();
+      // localStorage.setItem("usuarioLogado", idUsuario);
+      idUsuario = localStorage.getItem("usuarioLogado");
+      idFornecedor = localStorage.getItem("fornecedorLogado");
     });
     $scope.$on("$ionicView.beforeLeave", function () {
       $scope.viewEntered = false;
@@ -491,7 +493,6 @@ angular.module('app.controllers', [])
         var minutosF = $scope.dadosAgenda.horaFinalModal.getMinutes();
         $scope.dadosAgenda.dataFinal = new Date(anoF, mesF, diaF, horaF, minutosF, 00, 000).toLocaleString();
         $scope.compareDatesAgenda();
-        $scope.dadosAgenda.idUsuario = idUsuario;
         if (formValid && !$scope.mensagemErro && !$scope.mensagemErroHora) {
           if ($scope.idAgenda) {
             $http.post(servidor + '/v1/api.php?req=editAgenda', $scope.dadosAgenda)
@@ -687,16 +688,6 @@ angular.module('app.controllers', [])
         }
       }
 
-      /*$scope.compareHoraAgenda = function () {
-        var horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
-        var horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
-
-        if (horaFinalModal < horaInicialModal) {
-          $scope.mensagemErroHora = "hora final menor que a hora inicial";
-        }
-
-      }*/
-
       $scope.clearMessageErroAgenda = function () {
         $scope.mensagemErro = "";
       }
@@ -728,7 +719,9 @@ angular.module('app.controllers', [])
       if ($rootScope.statusReset == 1) {
         $scope.displayButton = false;
         $ionicSideMenuDelegate.canDragContent(false);
-      } else {
+        localStorage.setItem("usuarioLogado", idUsuario);
+      }
+      else {
         $scope.displayButton = true;
         $ionicSideMenuDelegate.canDragContent(true);
       }

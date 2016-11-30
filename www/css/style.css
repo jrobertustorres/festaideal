@@ -39,11 +39,10 @@
 }
 
 .barra-superior {
-  background-color: #003B50 !important
-  /*background-color: #006C85 !important*/
-  /*background-color: #2C6BB2 !important*/
-  /*background-color: #BC1F26 !important*/
+  background-color: #F9A141 !important
+  /*background-color: #003B50 !important*/
 }
+/*}*/
 
 /*.bar.bar-positive {
   background-color: rgb(0, 150, 136);
@@ -86,8 +85,8 @@ input[type="time"] {
   border-right-width: 0 !important;
   border-top-width: 0 !important;
   border-left-width: 0 !important;
-  background-color: #003B50 !important;
-  /*background-color: #BC1F26!important;*/
+  background-color: #F9A141 !important;
+  /*background-color: #003B50 !important;*/
 }
 
 .my-button-save {
@@ -148,8 +147,9 @@ input[type="time"] {
 }
 
 .my-icon-color {
-  color: #003B50 !important
-  /*color: #CD3700 !important*/
+  /*color: #F9A141 !important*/
+  /*color: #003B50 !important*/
+  color: #381A50 !important
 }
 
 .my-calendar-color {
@@ -157,8 +157,8 @@ input[type="time"] {
 }
 
 .my-button-calendar-color {
-  background-color: #003B50 !important
-  /*background-color: #BC1F26 !important*/
+  background-color: #F9A141 !important
+  /*background-color: #003B50 !important*/
 }
 
 .content-stable {
@@ -257,14 +257,6 @@ input[type="time"] {
   background-color: #444;
   height: 170px;
 }
-
-.profile-picture {
-  border-radius: 50%;
-}
-
-/*.menu .has-header {*/
-/*top: 169px;*/
-/*}*/
 
 .position-mfb-button {
   top: 140px !important;
@@ -421,19 +413,38 @@ input[type="time"] {
   color: black;
 }
 
-/*.platform-android .header-item.title {
-  transition-duration: 0ms;
+.button-login-color {
+  background-color: #CD7423;
 }
-.platform-android .header-item.buttons {
-  transition-duration: 0ms;
-}*/
 
-/*.listraVermelha {
-  background: linear-gradient(
-    45deg,
-    #FF0000,
-    #FF0000 10px,
-    #ffffff 10px,
-    #ffffff 20px
-  );
-}*/
+::-webkit-input-placeholder {
+  color: grey !important;
+}
+
+.bar.bar-profile {
+  background-color: #FFFFFF;
+  height: 170px;
+}
+
+.bar .profile {
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  padding-top: 15px;
+}
+
+.esquerda {
+  float: left;
+  width: 250px;
+}
+
+.direita {
+  float: right;
+  margin-top: 12px;
+}

@@ -10,7 +10,7 @@
       <div class="item">
         <h3>Cliente</h3>
         <p>{{dados.nome_cliente}}</p>
-        <h3>Tipo Evento</h3>
+        <h3>Tipo de evento</h3>
         <p>{{dados.nome_tipo_evento}}</p>
         <h3>Evento</h3>
         <p>{{dados.nome_evento}}</p>
@@ -21,22 +21,22 @@
         <p>{{dados.nome_tipo_servico}}</p>
         <h3>Data do evento</h3>
         <p>{{dados.data_evento}}</p>
-        <h3>Quantidade cotação</h3>
+        <h3>Quantidade da cotação</h3>
         <p>{{dados.qtd_cotacao }} {{dados.unidade}}</p>
-        <h3>Quantidade pessoas</h3>
+        <h3>Quantidade de pessoas do evento</h3>
         <p>{{dados.qtd_pessoa}}</p>
         <h3>Descrição</h3>
         <p>{{dados.descricao}}</p>
         <div ng-show="dados.status_cotacao == 'ESCOLHIDA'">
-          <h3>Data entrega</h3>
+          <h3>Data da entrega</h3>
           <p>{{dados.data_entrega}}</p>
-          <h3>Tipo pagamento</h3>
+          <h3>Tipo do pagamento</h3>
           <p>{{dados.tipo_pagamento}}</p>
-          <h3>Prazo pagamento</h3>
+          <h3>Prazo do pagamento</h3>
           <p>{{dados.prazo_pagamento}}</p>
-          <h3>Valor</h3>
+          <h3>Valor da cotação</h3>
           <p>{{dados.valor | currency:'R$ '}}</p>
-          <h3>Validade cotação</h3>
+          <h3>Validade da cotação</h3>
           <p>{{dados.validade}}</p>
         </div>
       </div>
@@ -85,9 +85,13 @@
               ng-submit="responderCotacao(cotacaoResponderForm.$valid)">
 
           <p>This is a modal</p>
-          <div class="list" style="padding-top: 10px;">
+          <div class="list" style="padding-top: 20px;">
             <label class="item item-input item-stacked-label my-item">
-              <span class="input-label my-font-form">Data entrega*</span>
+              <span class="input-label my-font-form">Data do evento</span>
+              <div><p>{{dados.data_evento}}</p></div>
+            </label>
+            <label class="item item-input item-stacked-label my-item">
+              <span class="input-label my-font-form">Data da entrega*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.data_entrega}}</p></div>
               <input ng-model="cotacao.data_entrega" ng-show="dados.status_cotacao == 'ABERTA'" type="date"
                      name="data_entrega" id="data_entrega" format-date ng-blur="compareDates()"
@@ -159,7 +163,7 @@
         </form>
       </ion-content>
       <ion-footer-bar>
-        <button class="bar bar-footer bar-positive" type="submit" form="cotacaoResponderForm">
+        <button class="bar bar-footer button-login-color" type="submit" form="cotacaoResponderForm">
           <p class="my-align-title">Salvar<p>
         </button>
       </ion-footer-bar>

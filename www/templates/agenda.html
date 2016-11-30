@@ -18,8 +18,7 @@
          ng-click="getNextMonth()"></i>
     </div>
   </div>
-  <ion-content scroll="true" padding="true" class="has-header content-stable" style="margin-top: 20px;"
-               ng-show="viewEntered">
+  <ion-content scroll="true" style="margin-top: 20px;" ng-show="viewEntered">
     <ion-list show-delete="true">
       <div ng-hide="dados.length">
         <p class="my-information">Não há eventos
@@ -30,15 +29,17 @@
         Eventos ({{ dados.length }})
       </div>
 
-      <ion-item collection-repeat="dado in dados track by dado.idAgenda" ng-click="openModal(3,dado.idAgenda)"
-                class="pull-height">
+      <ion-item collection-repeat="dado in dados track by dado.idAgenda" ng-click="openModal(3,dado.idAgenda)">
         <ion-delete-button class="ion-minus-circled" ng-click="removerAgenda(dado)"></ion-delete-button>
-        <div class="item item-icon-right" style="border-color: #FFFFFF; padding-left: 0px; padding-top: 0px;">
-          <p><strong>Título agenda:</strong> {{ dado.tituloAgenda }}</p>
-          <p><strong>Data incial:</strong> {{ dado.dataInicial }}</p>
-          <i class="icon ion-ios-flag"
+        <div class="esquerda">
+            <p><strong>Título agenda:</strong> {{ dado.tituloAgenda }}</p>
+            <p><strong>Data incial:</strong> {{ dado.dataInicial }}</p>
+        </div>
+        <div class="direita">
+          <i class="icon ion-ios-flag" style="font-size: 25px; margin-right: 20px;"
              ng-class="{VERMELHA:'corVermelha', AZUL:'corAzul',VERDE:'corVerde'}[dado.corAgenda]"></i>
         </div>
+        <!--</div>-->
       </ion-item>
     </ion-list>
   </ion-content>
@@ -55,7 +56,7 @@
           <div class="list" style="padding-top: 47px;">
 
             <label class="item item-input item-stacked-label my-item">
-              <div class="input-label my-font-form">Título</div>
+              <div class="input-label my-font-form">Título*</div>
               <input ng-model="dadosAgenda.tituloAgenda" type="text" name="tituloAgenda" required ng-maxlength="60">
               <span ng-show="agendaForm.$submitted && agendaForm.tituloAgenda.$error.maxlength && !hideSpan"
                     class="cor-campo-novalid my-font-form-span"><i class="ion-information-circled"></i> máximo 60 caracteres</span>
@@ -144,7 +145,7 @@
         </form>
       </ion-content>
       <ion-footer-bar>
-        <button class="bar bar-footer bar-positive" type="submit" form="agendaForm">
+        <button class="bar bar-footer button-login-color" type="submit" form="agendaForm">
           <p class="my-align-title">Salvar
           <p>
         </button>

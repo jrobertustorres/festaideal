@@ -54,7 +54,15 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
 
       // quando o usuário clicar na notificação
 
-      push.on('notification', function (data) {
+      push.on('notification', function (data, $routeParams, $injector, $location) {
+        alert(data.additionalData.tela);
+        if(data.additionalData.tela == 'agenda'){
+          alert();
+
+            $location.url('/side-menu21/agenda');
+        }else if (data.additionalData.tela == 'cotacao_aberta'){
+          $location.url('/side-menu21/home');
+        }
 
         // alert('Notificação acionada, agora deve-se implementar a navegação no app de acordo com os dados: ' + JSON.stringify(data));
 
@@ -63,7 +71,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
 
       push.on('error', function (e) {
 
-        alert('registration error: ' + e.message);
+        alert('Erro ao registrar: ' + e.message);
 
       });
 
