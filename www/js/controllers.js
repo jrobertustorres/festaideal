@@ -705,7 +705,8 @@ angular.module('app.controllers', [])
       });
   })
 
-  .controller('AlterarSenhaCtrl', function ($scope, $stateParams, $http, $ionicHistory, toastr, $location, $timeout, $rootScope, $ionicSideMenuDelegate) {
+  .controller('AlterarSenhaCtrl', function ($scope, $stateParams, $http, $ionicHistory,
+                                            toastr, $location, $timeout, $rootScope, $ionicSideMenuDelegate) {
 
     $scope.result;
     $scope.senhaOk = false;
@@ -715,15 +716,13 @@ angular.module('app.controllers', [])
     $scope.novaSenha.idFornecedor = idFornecedor;
     $scope.novaSenha.idUsuario = idUsuario;
 
-    $scope.$on('$ionicView.enter', function () {
+    $scope.$on('$ionicView.beforeEnter', function (e, data) {
+      $scope.$root.showMenuIcon = false;
       if ($rootScope.statusReset == 1) {
-        $scope.displayButton = false;
+        $scope.$root.showMenuIcon = false;
         $ionicSideMenuDelegate.canDragContent(false);
-        localStorage.setItem("usuarioLogado", idUsuario);
-      }
-      else {
-        $scope.displayButton = true;
-        $ionicSideMenuDelegate.canDragContent(true);
+      } else {
+        $scope.$root.showMenuIcon = true;
       }
     });
 
