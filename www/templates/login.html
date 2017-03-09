@@ -6,14 +6,7 @@
       <div>
         <img src="img/logo.png" style="display: block; width: 60%; height: auto; margin-left: auto; margin-right: auto; margin-top: 50px;">
       </div>
-      <!--<span class="circle">Festa Ideal</span>-->
-      <!--<div style="text-align:center;">-->
-        <!--<p>Bem vindo ao Festa Ideal</p>-->
-      <!--</div>-->
     </div>
-    <!--<div style="margin: 0px; line-height: 250px; text-align: center; background-color: rgb(232, 235, 239);">
-      <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
-    </div>-->
     <form name="loginForm" novalidate ng-submit="submeter()" style="margin-top: 25px;">
       <div style="margin-left: -15px;">
         <span ng-if="mensagem" class="my-align-spam"><i class="ion-information-circled"></i> {{mensagem}}</span>
@@ -22,7 +15,7 @@
                  class="my-border my-item-input my-color-input" ng-focus="clearMessage()">
               <span ng-show="loginForm.$submitted && loginForm.login.$error.required && !clearForm"
                     class="my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
-          <span ng-show="loginForm.$submitted && loginForm.login.$error.email && !hideSpan">
+          <span ng-show="loginForm.$submitted && loginForm.login.$error.email && !hideSpan" class="my-font-form-span">
                     <i class="ion-information-circled"></i> e-mail inválido</span>
         </label>
 
@@ -35,7 +28,6 @@
 
       </div>
       <div class="my-item-padding">
-        <!--<button type="submit" class="button button-light button-block button-outline">Entrar</button>-->
         <button type="submit" class="button button-login-color button-block" style="color: #FFFFFF">Entrar</button>
       </div>
     </form>

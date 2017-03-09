@@ -7,8 +7,9 @@ var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
-  .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope) {
-    $scope.$on("$ionicView.enter", function () {
+  .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope, $ionicScrollDelegate) {
+    $scope.$on("$ionicView.beforeEnter", function () {
+      $ionicScrollDelegate.scrollTop();
       idFornecedor = localStorage.getItem("fornecedorLogado");
       idUsuario = localStorage.getItem("usuarioLogado");
       $scope.viewEntered = true;
@@ -30,7 +31,7 @@ angular.module('app.controllers', [])
       $scope.viewEntered = false;
     });
 
-    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
+    // $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
 
     $scope.doRefresh = function () {
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
@@ -40,9 +41,9 @@ angular.module('app.controllers', [])
           $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
           $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
           $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
-        }).finally(function () {
-        $scope.$broadcast('scroll.refreshComplete');
-      });
+        });
+
+      $scope.$broadcast('scroll.refreshComplete');
     }
 
     $scope.usuario = {};
@@ -51,6 +52,9 @@ angular.module('app.controllers', [])
     $http.post(servidor + '/v1/api.php?req=setToken', {'usuario': $scope.usuario})
       .success(function (data) {
       });
+    $scope.$on('$locationChangeStart', function () {
+      localStorage.removeItem("redirectNotification");
+    });
   })
 
   .controller('menuCtrl', function ($scope, $ionicPopup, $ionicHistory, $location) {
@@ -97,7 +101,11 @@ angular.module('app.controllers', [])
                 $ionicHistory.nextViewOptions({
                   disableBack: true
                 });
-                $location.path("/side-menu21/home");
+                if (localStorage.getItem("redirectNotification")) {
+                  $location.path(localStorage.getItem("redirectNotification"));
+                } else {
+                  $location.path("/side-menu21/home");
+                }
               }
             } else {
               $scope.mensagem = "usuário ou senha inválido";
@@ -346,11 +354,11 @@ angular.module('app.controllers', [])
 
   })
 
-  .controller('AgendaCtrl', function ($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr, $ionicLoading, $ionicScrollDelegate) {
+  .controller('AgendaCtrl', function ($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr,
+                                      $ionicLoading, $ionicScrollDelegate) {
     $scope.$on("$ionicView.enter", function () {
       $scope.viewEntered = true;
       $scope.getAgenda();
-      // localStorage.setItem("usuarioLogado", idUsuario);
       idUsuario = localStorage.getItem("usuarioLogado");
       idFornecedor = localStorage.getItem("fornecedorLogado");
     });
@@ -359,7 +367,7 @@ angular.module('app.controllers', [])
     });
     $ionicLoading.show();
 
-    $scope.getAgenda = function() {
+    $scope.getAgenda = function () {
       $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor + '&idUsuario=' + idUsuario + '&mesSelecionado=' + $scope.numeroMes + '&anoSelecionado=' + $scope.anoAtual)
         .success(function (data) {
           $ionicLoading.hide();
@@ -368,335 +376,335 @@ angular.module('app.controllers', [])
         toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
       });
     }
-      var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-      var monthList = ["Janeiro", "Feveiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-      $scope.agenda = {};
+    var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+    var monthList = ["Janeiro", "Feveiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    $scope.agenda = {};
+    $scope.dadosAgenda = {};
+
+    var dataHoje = new Date();
+    $scope.numeroMes = dataHoje.getMonth() + 1;
+    $scope.anoAtual = dataHoje.getFullYear();
+    getMes($scope.numeroMes);
+
+    $scope.getPreviousMonth = function () {
+      $scope.resultMes = angular.equals($scope.numeroMes, 1);
+      if ($scope.resultMes == true) {
+        $scope.numeroMes = 12;
+        getMes($scope.numeroMes);
+        $scope.anoAtual = parseInt($scope.anoAtual) - 1;
+        $scope.getAgenda();
+      } else {
+        $scope.numeroMes = $scope.numeroMes - 1;
+        getMes($scope.numeroMes);
+        $scope.getAgenda();
+      }
+    }
+
+    $scope.getNextMonth = function () {
+      $scope.resultMes = angular.equals($scope.numeroMes, 12);
+      if ($scope.resultMes == true) {
+        $scope.numeroMes = 1;
+        getMes($scope.numeroMes);
+        $scope.anoAtual = parseInt($scope.anoAtual) + 1;
+        $scope.getAgenda();
+      } else {
+        $scope.numeroMes = $scope.numeroMes + 1;
+        getMes($scope.numeroMes);
+        $scope.getAgenda();
+      }
+    }
+
+    // Modal 3 - Agenda
+    $ionicModal.fromTemplateUrl('templates/modal-3.html', {
+      id: '3',
+      scope: $scope,
+      backdropClickToClose: false,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.oModal3 = modal;
+    });
+
+    $scope.openModal = function (index, idAgenda) {
+      $scope.oModal3.show();
+      $scope.idAgenda = idAgenda;
+
+      if (idAgenda) {
+        $http.get(servidor + '/v1/api.php?req=getAgendaById&idAgenda=' + idAgenda)
+          .success(function (data) {
+            $scope.dadosAgenda = data;
+            $scope.dadosAgenda.dataInicialModal = new Date($scope.dadosAgenda.dataInicial);
+            $scope.dadosAgenda.dataFinalModal = new Date($scope.dadosAgenda.dataFinal);
+            $scope.dadosAgenda.horaInicialModal = new Date($scope.dadosAgenda.dataInicial);
+            $scope.dadosAgenda.horaFinalModal = new Date($scope.dadosAgenda.dataFinal);
+          })
+          .error(function (erro) {
+            toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+          });
+      }
+    };
+
+    $scope.hideSpan = false;
+
+    $scope.closeModal = function (index) {
+      $scope.getAgenda();
+      $scope.oModal3.hide();
       $scope.dadosAgenda = {};
+      $scope.idAgenda = null; // TESTAR ISSO
+      $scope.dadosAgenda.tituloAgenda = "";
+      $scope.dadosAgenda.descricao = "";
+      $scope.hideSpan = true;
+      $scope.clearMessageErroAgenda();
+      $scope.clearMessageErroHoraAgenda();
+      $ionicScrollDelegate.scrollTop();
+    };
 
-      var dataHoje = new Date();
-      $scope.numeroMes = dataHoje.getMonth() + 1;
-      $scope.anoAtual = dataHoje.getFullYear();
-      getMes($scope.numeroMes);
+    $scope.$on('modal.shown', function (event, modal) {
+    });
 
-      $scope.getPreviousMonth = function () {
-        $scope.resultMes = angular.equals($scope.numeroMes, 1);
-        if ($scope.resultMes == true) {
-          $scope.numeroMes = 12;
-          getMes($scope.numeroMes);
-          $scope.anoAtual = parseInt($scope.anoAtual) - 1;
-          $scope.getAgenda();
-        } else {
-          $scope.numeroMes = $scope.numeroMes - 1;
-          getMes($scope.numeroMes);
-          $scope.getAgenda();
-        }
-      }
+    $scope.$on('modal.hidden', function (event, modal) {
+    });
 
-      $scope.getNextMonth = function () {
-        $scope.resultMes = angular.equals($scope.numeroMes, 12);
-        if ($scope.resultMes == true) {
-          $scope.numeroMes = 1;
-          getMes($scope.numeroMes);
-          $scope.anoAtual = parseInt($scope.anoAtual) + 1;
-          $scope.getAgenda();
-        } else {
-          $scope.numeroMes = $scope.numeroMes + 1;
-          getMes($scope.numeroMes);
-          $scope.getAgenda();
-        }
-      }
+    $scope.$on('$destroy', function () {
+      $scope.oModal3.remove();
+    });
 
-      // Modal 3 - Agenda
-      $ionicModal.fromTemplateUrl('templates/modal-3.html', {
-        id: '3',
-        scope: $scope,
-        backdropClickToClose: false,
-        animation: 'slide-in-up'
-      }).then(function (modal) {
-        $scope.oModal3 = modal;
-      });
+    $scope.tiposNotificacao = [
+      {tipoNotificacao: 'SEM_NOTIFICACAO', label: 'Sem notificação'},
+      {tipoNotificacao: 'HORA_DO_EVENTO', label: 'Hora do evento'},
+      {tipoNotificacao: 'TRINTA_MINUTO_ANTES', label: '30 minutos antes'},
+      {tipoNotificacao: 'UMA_HORA_ANTES', label: '1 hora antes'},
+      {tipoNotificacao: 'UM_DIA_ANTES', label: '1 dia antes'},
+      {tipoNotificacao: 'UMA_SEMANA_ANTES', label: '1 semana antes'}
+    ];
 
-      $scope.openModal = function (index, idAgenda) {
-        $scope.oModal3.show();
-        $scope.idAgenda = idAgenda;
+    $scope.tiposAgenda = [
+      {tipoAgenda: 'USUARIO', label: 'Evento do usuário'},
+      {tipoAgenda: 'FORNECEDOR', label: 'Evento do fornecedor'}
+    ];
 
-        if (idAgenda) {
-          $http.get(servidor + '/v1/api.php?req=getAgendaById&idAgenda=' + idAgenda)
+    $scope.incluirAgenda = function (formValid) {
+      $scope.dadosAgenda.idFornecedor = idFornecedor;
+      $scope.dadosAgenda.idUsuario = idUsuario;
+      $scope.dadosAgenda.idAgenda = $scope.idAgenda;
+
+      var dia = $scope.dadosAgenda.dataInicialModal.getDate();
+      var mes = $scope.dadosAgenda.dataInicialModal.getMonth();
+      var ano = $scope.dadosAgenda.dataInicialModal.getFullYear();
+      var hora = $scope.dadosAgenda.horaInicialModal.getHours();
+      var minutos = $scope.dadosAgenda.horaInicialModal.getMinutes();
+      $scope.dadosAgenda.dataInicial = new Date(ano, mes, dia, hora, minutos, 00, 000).toLocaleString();
+
+      var diaF = $scope.dadosAgenda.dataFinalModal.getDate();
+      var mesF = $scope.dadosAgenda.dataFinalModal.getMonth();
+      var anoF = $scope.dadosAgenda.dataFinalModal.getFullYear();
+      var horaF = $scope.dadosAgenda.horaFinalModal.getHours();
+      var minutosF = $scope.dadosAgenda.horaFinalModal.getMinutes();
+      $scope.dadosAgenda.dataFinal = new Date(anoF, mesF, diaF, horaF, minutosF, 00, 000).toLocaleString();
+      $scope.compareDatesAgenda();
+      if (formValid && !$scope.mensagemErro && !$scope.mensagemErroHora) {
+        if ($scope.idAgenda) {
+          $http.post(servidor + '/v1/api.php?req=editAgenda', $scope.dadosAgenda)
             .success(function (data) {
-              $scope.dadosAgenda = data;
-              $scope.dadosAgenda.dataInicialModal = new Date($scope.dadosAgenda.dataInicial);
-              $scope.dadosAgenda.dataFinalModal = new Date($scope.dadosAgenda.dataFinal);
-              $scope.dadosAgenda.horaInicialModal = new Date($scope.dadosAgenda.dataInicial);
-              $scope.dadosAgenda.horaFinalModal = new Date($scope.dadosAgenda.dataFinal);
+              $scope.getAgenda();
+              toastr.success('Agenda alterada com sucesso!');
+              $scope.closeModal(3);
+            })
+            .error(function (erro) {
+              toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+            });
+        } else {
+          $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.dadosAgenda)
+            .success(function (data) {
+              $scope.dadosAgenda.dataInicial = $scope.dadosAgenda.dataInicialModal.toLocaleDateString();
+              $scope.dadosAgenda.idAgenda = data;
+              $scope.dados.push($scope.dadosAgenda);
+
+              toastr.success('Agenda salva com sucesso!');
+              $scope.closeModal(3);
+              $scope.dadosAgenda = {};
             })
             .error(function (erro) {
               toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
             });
         }
-      };
+      } else {
+        $scope.hideSpan = false;
+      }
+    }
 
-      $scope.hideSpan = false;
-
-      $scope.closeModal = function (index) {
-        $scope.getAgenda();
-        $scope.oModal3.hide();
-        $scope.dadosAgenda = {};
-        $scope.idAgenda = null; // TESTAR ISSO
-        $scope.dadosAgenda.tituloAgenda = "";
-        $scope.dadosAgenda.descricao = "";
-        $scope.hideSpan = true;
-        $scope.clearMessageErroAgenda();
-        $scope.clearMessageErroHoraAgenda();
-        $ionicScrollDelegate.scrollTop();
-      };
-
-      $scope.$on('modal.shown', function (event, modal) {
+    $scope.removerAgenda = function (dado) {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Esta agenda será excluida.\nConfirma exclusão?',
+        cancelText: 'Cancelar',
+        okText: 'Excluir'
       });
-
-      $scope.$on('modal.hidden', function (event, modal) {
-      });
-
-      $scope.$on('$destroy', function () {
-        $scope.oModal3.remove();
-      });
-
-      $scope.tiposNotificacao = [
-        {tipoNotificacao: 'SEM_NOTIFICACAO', label: 'Sem notificação'},
-        {tipoNotificacao: 'HORA_DO_EVENTO', label: 'Hora do evento'},
-        {tipoNotificacao: 'TRINTA_MINUTO_ANTES', label: '30 minutos antes'},
-        {tipoNotificacao: 'UMA_HORA_ANTES', label: '1 hora antes'},
-        {tipoNotificacao: 'UM_DIA_ANTES', label: '1 dia antes'},
-        {tipoNotificacao: 'UMA_SEMANA_ANTES', label: '1 semana antes'}
-      ];
-
-      $scope.tiposAgenda = [
-        {tipoAgenda: 'USUARIO', label: 'Evento do usuário'},
-        {tipoAgenda: 'FORNECEDOR', label: 'Evento do fornecedor'}
-      ];
-
-      $scope.incluirAgenda = function (formValid) {
-        $scope.dadosAgenda.idFornecedor = idFornecedor;
-        $scope.dadosAgenda.idUsuario = idUsuario;
-        $scope.dadosAgenda.idAgenda = $scope.idAgenda;
-
-        var dia = $scope.dadosAgenda.dataInicialModal.getDate();
-        var mes = $scope.dadosAgenda.dataInicialModal.getMonth();
-        var ano = $scope.dadosAgenda.dataInicialModal.getFullYear();
-        var hora = $scope.dadosAgenda.horaInicialModal.getHours();
-        var minutos = $scope.dadosAgenda.horaInicialModal.getMinutes();
-        $scope.dadosAgenda.dataInicial = new Date(ano, mes, dia, hora, minutos, 00, 000).toLocaleString();
-
-        var diaF = $scope.dadosAgenda.dataFinalModal.getDate();
-        var mesF = $scope.dadosAgenda.dataFinalModal.getMonth();
-        var anoF = $scope.dadosAgenda.dataFinalModal.getFullYear();
-        var horaF = $scope.dadosAgenda.horaFinalModal.getHours();
-        var minutosF = $scope.dadosAgenda.horaFinalModal.getMinutes();
-        $scope.dadosAgenda.dataFinal = new Date(anoF, mesF, diaF, horaF, minutosF, 00, 000).toLocaleString();
-        $scope.compareDatesAgenda();
-        if (formValid && !$scope.mensagemErro && !$scope.mensagemErroHora) {
-          if ($scope.idAgenda) {
-            $http.post(servidor + '/v1/api.php?req=editAgenda', $scope.dadosAgenda)
-              .success(function (data) {
-                $scope.getAgenda();
-                toastr.success('Agenda alterada com sucesso!');
-                $scope.closeModal(3);
-              })
-              .error(function (erro) {
-                toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+      confirmPopup.then(function (res) {
+        if (res) {
+          $http.post(servidor + '/v1/api.php?req=removeAgenda&idAgenda=' + dado.idAgenda, dado)
+            .success(function (data) {
+              var indiceAg = $scope.dados.indexOf(dado);
+              $scope.dados.splice(indiceAg, 1);
+            })
+            .error(function (erro) {
+              $ionicPopup.alert({
+                title: 'Não foi possível remover!',
+                content: ''
+              }).then(function (res) {
               });
-          } else {
-            $http.post(servidor + '/v1/api.php?req=incluirAgenda', $scope.dadosAgenda)
-              .success(function (data) {
-                $scope.dadosAgenda.dataInicial = $scope.dadosAgenda.dataInicialModal.toLocaleDateString();
-                $scope.dadosAgenda.idAgenda = data;
-                $scope.dados.push($scope.dadosAgenda);
-
-                toastr.success('Agenda salva com sucesso!');
-                $scope.closeModal(3);
-                $scope.dadosAgenda = {};
-              })
-              .error(function (erro) {
-                toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-              });
-          }
+            });
+          toastr.success('Agenda excluida com sucesso!');
         } else {
-          $scope.hideSpan = false;
         }
+      });
+    }
+
+    $scope.selectedDates = [];
+
+    $scope.datepickerObject = {
+      templateType: 'POPUP', // POPUP | MODAL
+      modalFooterClass: 'bar-light',
+      //header: 'multi-date-picker',
+      headerClass: 'royal-bg light',
+
+      btnsIsNative: false,
+
+      btnOk: 'OK',
+      btnOkClass: 'button-clear cal-green',
+
+      btnCancel: 'Fechar',
+      btnCancelClass: 'button-clear button-dark',
+
+      //btnTodayShow: true,
+      btnToday: 'Today',
+      btnTodayClass: 'button-clear button-dark',
+
+      //btnClearShow: true,
+      btnClear: 'Clear',
+      btnClearClass: 'button-clear button-dark',
+
+      selectType: 'SINGLE', // SINGLE | PERIOD | MULTI
+      tglSelectByWeekShow: false, // true | false (default)
+      tglSelectByWeek: 'By week',
+      isSelectByWeek: false, // true (default) | false
+      selectByWeekMode: 'NORMAL', // INVERSION (default), NORMAL
+      tglSelectByWeekClass: 'toggle-positive',
+      titleSelectByWeekClass: 'positive positive-border',
+      accessType: 'WRITE', // READ | WRITE
+      //fromDate: new Date(2015, 9),
+      //toDate: new Date(2016, 1),
+      selectedDates: $scope.selectedDates,
+      conflictSelectedDisabled: 'DISABLED', // SELECTED | DISABLED
+      closeOnSelect: false,
+      mondayFirst: false,
+      weekDaysList: weekDaysList,
+      monthList: monthList,
+
+      callback: function (dates) { //Mandatory
+        retSelectedDates(dates);
+        openModalAgenda();
       }
+    };
 
-      $scope.removerAgenda = function (dado) {
-        var confirmPopup = $ionicPopup.confirm({
-          title: 'Esta agenda será excluida.\nConfirma exclusão?',
-          cancelText: 'Cancelar',
-          okText: 'Excluir'
-        });
-        confirmPopup.then(function (res) {
-          if (res) {
-            $http.post(servidor + '/v1/api.php?req=removeAgenda&idAgenda=' + dado.idAgenda, dado)
-              .success(function (data) {
-                var indiceAg = $scope.dados.indexOf(dado);
-                $scope.dados.splice(indiceAg, 1);
-              })
-              .error(function (erro) {
-                $ionicPopup.alert({
-                  title: 'Não foi possível remover!',
-                  content: ''
-                }).then(function (res) {
-                });
-              });
-            toastr.success('Agenda excluida com sucesso!');
-          } else {
-          }
-        });
+    var openModalAgenda = function () {
+      $scope.oModal3.show();
+    };
+
+    var retSelectedDates = function (dates) {
+      var date = new Date(dates);
+      if (date == 'Invalid Date') {
+        $scope.dadosAgenda.dataInicialModal = new Date();
+        $scope.dadosAgenda.dataFinalModal = new Date();
+      } else {
+        $scope.dadosAgenda.dataInicialModal = date;
+        $scope.dadosAgenda.dataFinalModal = date;
       }
+      $scope.dadosAgenda.horaInicialModal = new Date();
+      $scope.dadosAgenda.horaFinalModal = new Date();
+    };
 
-      $scope.selectedDates = [];
-
-      $scope.datepickerObject = {
-        templateType: 'POPUP', // POPUP | MODAL
-        modalFooterClass: 'bar-light',
-        //header: 'multi-date-picker',
-        headerClass: 'royal-bg light',
-
-        btnsIsNative: false,
-
-        btnOk: 'OK',
-        btnOkClass: 'button-clear cal-green',
-
-        btnCancel: 'Fechar',
-        btnCancelClass: 'button-clear button-dark',
-
-        //btnTodayShow: true,
-        btnToday: 'Today',
-        btnTodayClass: 'button-clear button-dark',
-
-        //btnClearShow: true,
-        btnClear: 'Clear',
-        btnClearClass: 'button-clear button-dark',
-
-        selectType: 'SINGLE', // SINGLE | PERIOD | MULTI
-        tglSelectByWeekShow: false, // true | false (default)
-        tglSelectByWeek: 'By week',
-        isSelectByWeek: false, // true (default) | false
-        selectByWeekMode: 'NORMAL', // INVERSION (default), NORMAL
-        tglSelectByWeekClass: 'toggle-positive',
-        titleSelectByWeekClass: 'positive positive-border',
-        accessType: 'WRITE', // READ | WRITE
-        //fromDate: new Date(2015, 9),
-        //toDate: new Date(2016, 1),
-        selectedDates: $scope.selectedDates,
-        conflictSelectedDisabled: 'DISABLED', // SELECTED | DISABLED
-        closeOnSelect: false,
-        mondayFirst: false,
-        weekDaysList: weekDaysList,
-        monthList: monthList,
-
-        callback: function (dates) { //Mandatory
-          retSelectedDates(dates);
-          openModalAgenda();
-        }
-      };
-
-      var openModalAgenda = function () {
-        $scope.oModal3.show();
-      };
-
-      var retSelectedDates = function (dates) {
-        var date = new Date(dates);
-        if (date == 'Invalid Date') {
-          $scope.dadosAgenda.dataInicialModal = new Date();
-          $scope.dadosAgenda.dataFinalModal = new Date();
-        } else {
-          $scope.dadosAgenda.dataInicialModal = date;
-          $scope.dadosAgenda.dataFinalModal = date;
-        }
-        $scope.dadosAgenda.horaInicialModal = new Date();
-        $scope.dadosAgenda.horaFinalModal = new Date();
-      };
-
-      function getMes(mes) {
-        switch (mes) {
-          case 1:
-            $scope.nomeMes = 'Janeiro';
-            $scope.numeroMes = 1;
-            break;
-          case 2:
-            $scope.nomeMes = 'Fevereiro';
-            $scope.numeroMes = 2;
-            break;
-          case 3:
-            $scope.nomeMes = 'Março';
-            $scope.numeroMes = 3;
-            break;
-          case 4:
-            $scope.nomeMes = 'Abril';
-            $scope.numeroMes = 4;
-            break;
-          case 5:
-            $scope.nomeMes = 'Maio';
-            $scope.numeroMes = 5;
-            break;
-          case 6:
-            $scope.nomeMes = 'Junho';
-            $scope.numeroMes = 6;
-            break;
-          case 7:
-            $scope.nomeMes = 'Julho';
-            $scope.numeroMes = 7;
-            break;
-          case 8:
-            $scope.nomeMes = 'Agosto';
-            $scope.numeroMes = 8;
-            break;
-          case 9:
-            $scope.nomeMes = 'Setembro';
-            $scope.numeroMes = 9;
-            break;
-          case 10:
-            $scope.nomeMes = 'Outubro';
-            $scope.numeroMes = 10;
-            break;
-          case 11:
-            $scope.nomeMes = 'Novembro';
-            $scope.numeroMes = 11;
-            break;
-          case 12:
-            $scope.nomeMes = 'Dezembro';
-            $scope.numeroMes = 12;
-            break;
-        }
+    function getMes(mes) {
+      switch (mes) {
+        case 1:
+          $scope.nomeMes = 'Janeiro';
+          $scope.numeroMes = 1;
+          break;
+        case 2:
+          $scope.nomeMes = 'Fevereiro';
+          $scope.numeroMes = 2;
+          break;
+        case 3:
+          $scope.nomeMes = 'Março';
+          $scope.numeroMes = 3;
+          break;
+        case 4:
+          $scope.nomeMes = 'Abril';
+          $scope.numeroMes = 4;
+          break;
+        case 5:
+          $scope.nomeMes = 'Maio';
+          $scope.numeroMes = 5;
+          break;
+        case 6:
+          $scope.nomeMes = 'Junho';
+          $scope.numeroMes = 6;
+          break;
+        case 7:
+          $scope.nomeMes = 'Julho';
+          $scope.numeroMes = 7;
+          break;
+        case 8:
+          $scope.nomeMes = 'Agosto';
+          $scope.numeroMes = 8;
+          break;
+        case 9:
+          $scope.nomeMes = 'Setembro';
+          $scope.numeroMes = 9;
+          break;
+        case 10:
+          $scope.nomeMes = 'Outubro';
+          $scope.numeroMes = 10;
+          break;
+        case 11:
+          $scope.nomeMes = 'Novembro';
+          $scope.numeroMes = 11;
+          break;
+        case 12:
+          $scope.nomeMes = 'Dezembro';
+          $scope.numeroMes = 12;
+          break;
       }
+    }
 
     var horaInicialModal = "";
     var horaFinalModal = "";
     var dataInicialModal = "";
     var dataFinalModal = "";
 
-      $scope.compareDatesAgenda = function () {
-        if ($scope.dadosAgenda.diaInteiro != 1) {
-          horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
-          horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
-        } else {
-          horaInicialModal = '0';
-          horaFinalModal = '0';
-        }
-        dataInicialModal = $filter('date')($scope.dadosAgenda.dataInicialModal, "dd/MM/yyyy");
-        dataFinalModal = $filter('date')($scope.dadosAgenda.dataFinalModal, "dd/MM/yyyy");
-
-        if (dataFinalModal < dataInicialModal || horaFinalModal < horaInicialModal) {
-          $scope.mensagemErro = "data/hora final menor que a inicial";
-        }
+    $scope.compareDatesAgenda = function () {
+      if ($scope.dadosAgenda.diaInteiro != 1) {
+        horaInicialModal = $filter('date')($scope.dadosAgenda.horaInicialModal, "HH:mm");
+        horaFinalModal = $filter('date')($scope.dadosAgenda.horaFinalModal, "HH:mm");
+      } else {
+        horaInicialModal = '0';
+        horaFinalModal = '0';
       }
+      dataInicialModal = $filter('date')($scope.dadosAgenda.dataInicialModal, "dd/MM/yyyy");
+      dataFinalModal = $filter('date')($scope.dadosAgenda.dataFinalModal, "dd/MM/yyyy");
 
-      $scope.clearMessageErroAgenda = function () {
-        $scope.mensagemErro = "";
-      }
-
-      $scope.clearMessageErroHoraAgenda = function () {
-        $scope.mensagemErroHora = "";
+      if (dataFinalModal < dataInicialModal || horaFinalModal < horaInicialModal) {
+        $scope.mensagemErro = "data/hora final menor que a inicial";
       }
     }
-  )
+    $scope.clearMessageErroAgenda = function () {
+      $scope.mensagemErro = "";
+    }
+    $scope.clearMessageErroHoraAgenda = function () {
+      $scope.mensagemErroHora = "";
+    }
+    $scope.$on('$locationChangeStart', function () {
+      localStorage.removeItem("redirectNotification");
+    });
+  })
 
   .controller('usuarioCtrl', function ($scope, $state, $q, UserService, $ionicLoading, $location, $http, $ionicHistory, Token) {
     $scope.answer = Token.token($scope.token);

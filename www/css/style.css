@@ -113,12 +113,20 @@ input[type="time"] {
 
 .my-custom-icon {
   font-size: 64px !important;
-  top: -20% !important;
 }
 
 .my-font-card {
   text-align: right;
   padding-right: 10px;
+  font-size: 18px!important;
+  color: #FFFFFF!important;
+}
+
+.my-font-card-label {
+  text-align: right;
+  padding-right: 10px;
+  font-size: 14px!important;
+  color: #FFFFFF!important;
 }
 
 .my-links {
@@ -263,7 +271,7 @@ input[type="time"] {
 }
 
 .margin-top-card {
-  margin-top: 5px;
+  margin-top: -1px;
 }
 
 .bar-footer.footer-buttons {
@@ -355,6 +363,7 @@ input[type="time"] {
 
 .my-popup-body {
   color: #000000;
+  z-index: 100!important;
 }
 
 .my-margin-input-time {
@@ -417,7 +426,7 @@ input[type="time"] {
   background-color: #CD7423;
 }
 
-::-webkit-input-placeholder {
+#filterCotacoes::-webkit-input-placeholder {
   color: grey !important;
 }
 
@@ -447,4 +456,8 @@ input[type="time"] {
 .direita {
   float: right;
   margin-top: 12px;
+}
+
+.my-item-line {
+  border-color: #000000;!important;
 }

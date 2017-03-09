@@ -1,4 +1,5 @@
 var token = "";
+var TELA_REDIRECT = '';
 angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask', 'ngCordova', 'ui.utils.masks'])
 
   .run(function ($ionicPlatform, $ionicPopup, $rootScope) {
@@ -8,7 +9,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
         if (navigator.connection.type == Connection.NONE) {
           $ionicPopup.alert({
               title: 'Não conectado à internet',
-              content: 'Nenhuma conexão à internet detectada.\n Favor conectar e tentar novamente.',
+              content: 'Nenhuma conexão à internet foi encontrada.\n Favor conectar e tentar novamente.',
               cssClass: 'my-popup-body'
             })
             .then(function () {
@@ -25,7 +26,10 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
       }
 
       var push = PushNotification.init({
-        "android": {"senderID": "990686468351", icon: "icon"},
+        "android": {
+          "senderID": "990686468351", icon: "icon", "sound": "true",
+          "vibrate": "true"
+        },
 
         "ios": {"alert": "true", "badge": "true", "sound": "true"},
         "windows": {}
@@ -47,22 +51,29 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
       push.on('registration', function (data) {
         token = data.registrationId;
         $rootScope.token = token;
-
       });
 
       // Este é o evento no qual implementando o comportamento do nosso app
 
       // quando o usuário clicar na notificação
 
-      push.on('notification', function (data, $routeParams, $injector, $location) {
-        alert(data.additionalData.tela);
-        if(data.additionalData.tela == 'agenda'){
-          alert();
+      push.on('register', function (data) {
 
-            $location.url('/side-menu21/agenda');
-        }else if (data.additionalData.tela == 'cotacao_aberta'){
-          $location.url('/side-menu21/home');
-        }
+      });
+
+      push.on('notification', function (data) {
+        // $rootScope.tela = data.additionalData.tela;
+        localStorage.setItem("redirectNotification", data.additionalData.tela);
+        // alert('dentro '+data.additionalData.tela);
+        // TELA_REDIRECT = data.additionalData.tela;
+        // if(data.additionalData.tela == '#/side-menu21/agenda'){
+        //   document.location.href = data.additionalData.tela;
+        // $state.go('/side-menu21/agenda');
+        // $location.url('/side-menu21/agenda');
+        // }else if (data.additionalData.tela == 'cotacao_aberta'){
+        //   TELA_REDIRECT = 'cotacao_aberta';
+        // $location.url('/side-menu21/home');
+        // }
 
         // alert('Notificação acionada, agora deve-se implementar a navegação no app de acordo com os dados: ' + JSON.stringify(data));
 
@@ -154,9 +165,14 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
     $urlRouterProvider.otherwise(function ($injector, $location) {
       var usuarioLogado = localStorage.getItem("usuarioLogado");
       var statusResetSenha = localStorage.getItem("statusResetSenha");
-      if(usuarioLogado && statusResetSenha != 1){
-        $location.url('/side-menu21/home');
-      }else{
+
+      if (usuarioLogado && statusResetSenha != 1) {
+        if (localStorage.getItem("redirectNotification")) {
+          $location.url(localStorage.getItem("redirectNotification"));
+        } else {
+          $location.url('/side-menu21/home');
+        }
+      } else {
         $location.url('/login');
       }
       return true;

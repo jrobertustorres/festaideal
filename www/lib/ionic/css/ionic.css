@@ -7611,7 +7611,7 @@ textarea {
   font-size: 16px; }
 
 .placeholder-icon {
-  color: #aaa; }
+  color: #FFFFFF; }
   .placeholder-icon:first-child {
     padding-right: 6px; }
   .placeholder-icon:last-child {
@@ -7706,11 +7706,11 @@ input[type="color"] {
 textarea {
   padding-left: 0; }
   textarea::-moz-placeholder {
-    color: #aaaaaa; }
+    color: #FFFFFF; }
   textarea:-ms-input-placeholder {
-    color: #aaaaaa; }
+    color: #FFFFFF; }
   textarea::-webkit-input-placeholder {
-    color: #aaaaaa;
+    color: #FFFFFF;
     text-indent: -3px; }
 
 textarea {
@@ -7759,15 +7759,15 @@ input[type="file"] {
 
 input::-moz-placeholder,
 textarea::-moz-placeholder {
-  color: #aaaaaa; }
+  color: #FFFFFF; }
 
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: #aaaaaa; }
+  color: #FFFFFF; }
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: #aaaaaa;
+  color: #FFFFFF;
   text-indent: 0; }
 
 input[disabled],
