@@ -32,10 +32,11 @@
     </div>
     <ion-list>
       <ion-item collection-repeat="dado in dados | filter:filter track by dado.id_cotacao"
-                href="#/side-menu21/cotacao/{{dado.id_cotacao}}">
+                href="#/side-menu21/cotacao/{{dado.id_cotacao}}" class="item-icon-right">
         <p><strong>Tipo Evento:</strong> {{ dado.nome_evento }}</p>
         <p><strong>Serviço:</strong> {{ dado.nome_tipo_servico }}</p>
         <p><strong>Data Evento:</strong> {{ dado.data_evento}}</p>
+        <i class="icon ion-chevron-right" style="color: #d3d3d3; font-size: 15px;"></i>
       </ion-item>
     </ion-list>
   </ion-content>

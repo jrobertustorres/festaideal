@@ -1,9 +1,8 @@
 var token = "";
-var TELA_REDIRECT = '';
 angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask', 'ngCordova', 'ui.utils.masks'])
 
-  .run(function ($ionicPlatform, $ionicPopup, $rootScope) {
-
+  .run(function ($ionicPlatform, $ionicPopup, $rootScope, $cordovaBadge) {
+    localStorage.removeItem("redirectNotification");
     $ionicPlatform.ready(function () {
       if (window.Connection) {
         if (navigator.connection.type == Connection.NONE) {
@@ -58,32 +57,15 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
       // quando o usuário clicar na notificação
 
       push.on('register', function (data) {
-
       });
 
       push.on('notification', function (data) {
-        // $rootScope.tela = data.additionalData.tela;
         localStorage.setItem("redirectNotification", data.additionalData.tela);
-        // alert('dentro '+data.additionalData.tela);
-        // TELA_REDIRECT = data.additionalData.tela;
-        // if(data.additionalData.tela == '#/side-menu21/agenda'){
-        //   document.location.href = data.additionalData.tela;
-        // $state.go('/side-menu21/agenda');
-        // $location.url('/side-menu21/agenda');
-        // }else if (data.additionalData.tela == 'cotacao_aberta'){
-        //   TELA_REDIRECT = 'cotacao_aberta';
-        // $location.url('/side-menu21/home');
-        // }
-
         // alert('Notificação acionada, agora deve-se implementar a navegação no app de acordo com os dados: ' + JSON.stringify(data));
-
       });
 
-
       push.on('error', function (e) {
-
         alert('Erro ao registrar: ' + e.message);
-
       });
 
     });
@@ -152,6 +134,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
         controller: 'RecuperarSenhaCtrl'
       })
 
+      .state('redirectView', {
+        url: '/redirectView',
+        templateUrl: 'templates/redirectView.html',
+        controller: 'redirectViewCtrl'
+      })
+
       .state('menu.alterarSenha', {
         url: '/alterarSenha',
         views: {
@@ -163,15 +151,11 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
       });
 
     $urlRouterProvider.otherwise(function ($injector, $location) {
+
       var usuarioLogado = localStorage.getItem("usuarioLogado");
       var statusResetSenha = localStorage.getItem("statusResetSenha");
-
       if (usuarioLogado && statusResetSenha != 1) {
-        if (localStorage.getItem("redirectNotification")) {
-          $location.url(localStorage.getItem("redirectNotification"));
-        } else {
-          $location.url('/side-menu21/home');
-        }
+        $location.url('/redirectView');
       } else {
         $location.url('/login');
       }

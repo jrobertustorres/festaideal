@@ -7,6 +7,17 @@ var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
+  .controller('redirectViewCtrl', function ($timeout, $location) {
+    $timeout(function () {
+      var redirectNotification = localStorage.getItem("redirectNotification");
+      if (redirectNotification != null && redirectNotification != '') {
+        $location.url(redirectNotification);
+      } else {
+        $location.url('/side-menu21/home');
+      }
+    }, 1000);
+  })
+
   .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope, $ionicScrollDelegate) {
     $scope.$on("$ionicView.beforeEnter", function () {
       $ionicScrollDelegate.scrollTop();
@@ -181,9 +192,8 @@ angular.module('app.controllers', [])
       $scope.viewEntered = false;
     });
 
-
     $ionicModal.fromTemplateUrl('templates/modal-1.html', {
-      id: '1', // We need to use and ID to identify the modal that is firing the event!
+      id: '1',
       scope: $scope,
       backdropClickToClose: false,
       animation: 'slide-in-up'
@@ -193,7 +203,7 @@ angular.module('app.controllers', [])
 
     // Modal 2
     $ionicModal.fromTemplateUrl('templates/modal-2.html', {
-      id: '2', // We need to use and ID to identify the modal that is firing the event!
+      id: '2',
       scope: $scope,
       backdropClickToClose: false,
       animation: 'slide-in-up'
@@ -333,25 +343,34 @@ angular.module('app.controllers', [])
     $scope.clearMessageErro = function () {
       $scope.mensagemErro = "";
       $scope.mensagemErroValidade = "";
+      $scope.mensagemDataHoje = "";
     }
 
     $scope.compareDates = function () {
-      var data_entrega = $filter('date')($scope.cotacao.data_entrega, "dd/MM/yyyy");
-      var validade = $filter('date')($scope.cotacao.validade, "dd/MM/yyyy");
-
-      if (data_entrega > $scope.dados.data_evento) {
-        $scope.mensagemErro = "data da entrega superior à data do evento";
+      var dataHoje = new Date();
+      dataHoje.setHours(0);
+      dataHoje.setMinutes(0);
+      dataHoje.setSeconds(0);
+      dataHoje.setMilliseconds(0);
+      if ($scope.cotacao.data_entrega) {
+        if ($scope.cotacao.data_entrega.getTime() < dataHoje.getTime()) {
+          $scope.mensagemDataHoje = "data da entrega não pode ser menor que a data de hoje";
+        }
       }
-
-      if (validade < $scope.dados.data_evento) {
-        $scope.mensagemErroValidade = "data de validade inferior à data do evento";
+      if ($scope.cotacao.data_entrega) {
+        if ($scope.cotacao.data_entrega.getTime() > $scope.dados.data_evento) {
+          $scope.mensagemErro = "data da entrega superior à data do evento";
+        }
+      }
+      if ($scope.cotacao.validade) {
+        if ($scope.cotacao.validade.getTime() > $scope.dados.data_evento) {
+          $scope.mensagemErroValidade = "data de validade superior à data do evento";
+        }
       }
     }
-
     $scope.$on('$locationChangeStart', function () {
       $scope.closeMfbMenu = 'closed';
     });
-
   })
 
   .controller('AgendaCtrl', function ($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr,
@@ -518,7 +537,6 @@ angular.module('app.controllers', [])
               $scope.dadosAgenda.dataInicial = $scope.dadosAgenda.dataInicialModal.toLocaleDateString();
               $scope.dadosAgenda.idAgenda = data;
               $scope.dados.push($scope.dadosAgenda);
-
               toastr.success('Agenda salva com sucesso!');
               $scope.closeModal(3);
               $scope.dadosAgenda = {};
@@ -559,29 +577,22 @@ angular.module('app.controllers', [])
     }
 
     $scope.selectedDates = [];
-
     $scope.datepickerObject = {
       templateType: 'POPUP', // POPUP | MODAL
       modalFooterClass: 'bar-light',
       //header: 'multi-date-picker',
       headerClass: 'royal-bg light',
-
       btnsIsNative: false,
-
       btnOk: 'OK',
       btnOkClass: 'button-clear cal-green',
-
       btnCancel: 'Fechar',
       btnCancelClass: 'button-clear button-dark',
-
       //btnTodayShow: true,
       btnToday: 'Today',
       btnTodayClass: 'button-clear button-dark',
-
       //btnClearShow: true,
       btnClear: 'Clear',
       btnClearClass: 'button-clear button-dark',
-
       selectType: 'SINGLE', // SINGLE | PERIOD | MULTI
       tglSelectByWeekShow: false, // true | false (default)
       tglSelectByWeek: 'By week',

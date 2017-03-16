@@ -459,5 +459,10 @@ input[type="time"] {
 }
 
 .my-item-line {
-  border-color: #000000;!important;
+  border-color: #ddd;!important;
+}
+
+.my-position-button {
+  position: fixed; bottom: 0; width: 100%;
+  border-right: 0;
 }

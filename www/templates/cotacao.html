@@ -19,7 +19,7 @@
         <h3>Serviço</h3>
         <p>{{dados.nome_tipo_servico}}</p>
         <h3>Data do evento</h3>
-        <p>{{dados.data_evento}}</p>
+        <p>{{dados.data_evento | date:'dd/MM/yyyy'}}</p>
         <h3>Quantidade da cotação</h3>
         <p>{{dados.qtd_cotacao }} {{dados.unidade}}</p>
         <h3>Quantidade de pessoas do evento</h3>
@@ -65,8 +65,8 @@
         </form>
       </ion-content>
       <ion-footer-bar>
-        <button class="bar bar-footer bar-positive" type="submit" form="cotacaoCancelarForm">
-          <p class="title my-align-title">Salvar
+        <button class="bar bar-footer button-login-color" type="submit" form="cotacaoCancelarForm">
+          <p class="my-align-title">Salvar
           <p>
         </button>
       </ion-footer-bar>
@@ -87,7 +87,7 @@
           <div class="list" style="padding-top: 20px;">
             <label class="item item-input item-stacked-label my-item">
               <span class="input-label my-font-form">Data do evento</span>
-              <div><p>{{dados.data_evento}}</p></div>
+              <div><p>{{dados.data_evento | date:'dd/MM/yyyy'}}</p></div>
             </label>
             <label class="item item-input item-stacked-label my-item">
               <span class="input-label my-font-form">Data da entrega*</span>
@@ -96,11 +96,14 @@
                      name="data_entrega" id="data_entrega" format-date ng-blur="compareDates()"
                      ng-focus="clearMessageErro()" required>
             <span
-              ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.data_entrega.$error.required && dados.status_cotacao == 'ABERTA' && !hideSpan"
+              ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.data_entrega.$error.required &&
+                dados.status_cotacao == 'ABERTA' && !hideSpan"
               class="cor-campo-novalid my-font-form-span"><i
               class="ion-information-circled"></i> campo obrigatório</span>
               <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemErro"
                                                                    class="ion-information-circled"></i> {{mensagemErro}}</span>
+              <span class="my-font-form-span cor-campo-novalid"><i ng-if="mensagemDataHoje"
+                                                                   class="ion-information-circled"></i> {{mensagemDataHoje}}</span>
             </label>
             <label class="item item-input item-stacked-label my-item">
               <div class="input-label my-font-form">Tipo pagamento*</div>
@@ -163,7 +166,8 @@
       </ion-content>
       <ion-footer-bar>
         <button class="bar bar-footer button-login-color" type="submit" form="cotacaoResponderForm">
-          <p class="my-align-title">Salvar<p>
+          <p class="my-align-title">Salvar
+          <p>
         </button>
       </ion-footer-bar>
     </div>
