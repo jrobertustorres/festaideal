@@ -175,6 +175,9 @@ angular.module('app.controllers', [])
   })
 
   .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout, $ionicScrollDelegate) {
+    $scope.$on("$ionicView.beforeLeave", function () {
+      $scope.viewEntered = false;
+    });
     $scope.viewEntered = false;
     $scope.$on("$ionicView.enter", function () {
       $scope.viewEntered = true;
@@ -187,9 +190,6 @@ angular.module('app.controllers', [])
         }).error(function (erro) {
         toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
       });
-    });
-    $scope.$on("$ionicView.beforeLeave", function () {
-      $scope.viewEntered = false;
     });
 
     $ionicModal.fromTemplateUrl('templates/modal-1.html', {
