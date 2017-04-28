@@ -18,7 +18,7 @@ angular.module('app.controllers', [])
     }, 1000);
   })
 
-  .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope, $ionicScrollDelegate) {
+  .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope, $ionicScrollDelegate, $timeout) {
     $scope.$on("$ionicView.beforeEnter", function () {
       $ionicScrollDelegate.scrollTop();
       idFornecedor = localStorage.getItem("fornecedorLogado");
@@ -27,7 +27,9 @@ angular.module('app.controllers', [])
       $ionicLoading.show();
       $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
         .success(function (data) {
-          $ionicLoading.hide();
+          $timeout(function () {
+            $ionicLoading.hide();
+          }, 500);
           $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
           $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
           $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
@@ -374,7 +376,7 @@ angular.module('app.controllers', [])
   })
 
   .controller('AgendaCtrl', function ($scope, $ionicModal, $ionicPopup, $filter, $rootScope, $http, toastr,
-                                      $ionicLoading, $ionicScrollDelegate) {
+                                      $ionicLoading, $ionicScrollDelegate, $timeout) {
     $scope.$on("$ionicView.enter", function () {
       $scope.viewEntered = true;
       $scope.getAgenda();
@@ -389,7 +391,9 @@ angular.module('app.controllers', [])
     $scope.getAgenda = function () {
       $http.get(servidor + '/v1/api.php?req=getAgendaList&idFornecedor=' + idFornecedor + '&idUsuario=' + idUsuario + '&mesSelecionado=' + $scope.numeroMes + '&anoSelecionado=' + $scope.anoAtual)
         .success(function (data) {
-          $ionicLoading.hide();
+          $timeout(function () {
+            $ionicLoading.hide();
+          }, 500);
           $scope.dados = data;
         }).error(function (erro) {
         toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
