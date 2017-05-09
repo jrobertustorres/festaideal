@@ -4,6 +4,7 @@
   "description": "festaideal: An Ionic project",
   "dependencies": {
     "angular-cookies": "^1.5.8",
+    "angular-input-masks": "^2.5.0",
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
     "gulp-minify-css": "^0.3.0",

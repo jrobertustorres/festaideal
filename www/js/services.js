@@ -1,8 +1,8 @@
 angular.module('app.services', [])
 
-.factory('BlankFactory', [function(){
+  .factory('BlankFactory', [function () {
 
-}])
+  }])
 
   .service('UserService', function () {
     // For the purpose of this example I will store user data on ionic local storage but you should save it on a database
@@ -18,5 +18,25 @@ angular.module('app.services', [])
       getUser: getUser,
       setUser: setUser
     };
-  });
+  })
+
+  .service('setTokenIdUsuario', ['$http', function ($http) {
+    this.setTokenIdUsuarioServico = function (setToken) {
+      var redirectNotification = localStorage.getItem("redirectNotification");
+      if (redirectNotification != null && redirectNotification != '') {
+        document.location.href = redirectNotification;
+      } else {
+        $http.post(servidor + '/v1/api.php?req=setTokenIdUsuario', setToken)
+          .success(function (data) {
+          });
+        document.location.href = '#/side-menu21/home';
+      }
+    }
+  }])
+
+  .service('getCockpitServico', ['$http', function ($http) {
+    this.getCockpit = function () {
+      return $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor);
+    }
+  }])
 

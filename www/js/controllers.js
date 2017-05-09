@@ -7,64 +7,65 @@ var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
-  .controller('redirectViewCtrl', function ($timeout, $location) {
+  .controller('redirectViewCtrl', function ($timeout, $location, $http, $scope, setTokenIdUsuario) {
     $timeout(function () {
-      var redirectNotification = localStorage.getItem("redirectNotification");
-      if (redirectNotification != null && redirectNotification != '') {
-        $location.url(redirectNotification);
-      } else {
-        $location.url('/side-menu21/home');
-      }
+      $scope.setToken = {};
+      $scope.setToken.usuarioLogado = localStorage.getItem('usuarioLogado');
+      $scope.setToken.token = localStorage.getItem('token');
+      idFornecedor = localStorage.getItem('fornecedorLogado');
+      setTokenIdUsuario.setTokenIdUsuarioServico($scope.setToken)
     }, 1000);
   })
 
-  .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope, $ionicScrollDelegate, $timeout) {
+  .controller('homeCtrl', function ($scope, $http, $ionicLoading, $rootScope, $ionicScrollDelegate, $timeout,
+                                    getCockpitServico, toastr) {
     $scope.$on("$ionicView.beforeEnter", function () {
       $ionicScrollDelegate.scrollTop();
       idFornecedor = localStorage.getItem("fornecedorLogado");
       idUsuario = localStorage.getItem("usuarioLogado");
       $scope.viewEntered = true;
       $ionicLoading.show();
-      $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
-        .success(function (data) {
-          $timeout(function () {
-            $ionicLoading.hide();
-          }, 500);
-          $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
-          $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
-          $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
-          $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
-          $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
-        })
-        .error(function (erro) {
-          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-        });
+
+      var promise = getCockpitServico.getCockpit();
+      promise.success(function (data) {
+        $scope.data = data;
+        $timeout(function () {
+          $ionicLoading.hide();
+        }, 500);
+        // $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
+        // $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
+        // $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
+        // $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
+        // $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
+
+      }).error(function (erro) {
+        toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+      });
     });
     $scope.$on("$ionicView.beforeLeave", function () {
       $scope.viewEntered = false;
     });
 
-    // $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
+// $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner>'});
 
     $scope.doRefresh = function () {
-      $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
-        .success(function (data) {
-          $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
-          $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
-          $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
-          $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
-          $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
-        });
+      getCockpitServico.getCockpit();
+      // $http.get(servidor + '/v1/api.php?req=getCockpit&idFornecedor=' + idFornecedor)
+      //   .success(function (data) {
+      //     $scope.cotacao_aberta = data.cotacao_aberta ? data.cotacao_aberta : 0;
+      //     $scope.cotacao_pendente = data.cotacao_pendente ? data.cotacao_pendente : 0;
+      //     $scope.cotacao_escolhida = data.cotacao_escolhida ? data.cotacao_escolhida : 0;
+      //     $scope.cotacao_cancelada = data.cotacao_cancelada ? data.cotacao_cancelada : 0;
+      //     $scope.cotacao_concluida = data.cotacao_concluida ? data.cotacao_concluida : 0;
+      //   });
 
       $scope.$broadcast('scroll.refreshComplete');
     }
 
-    $scope.usuario = {};
-    $scope.usuario.idUsuario = idUsuario;
-    $scope.usuario.tokenPush = $rootScope.token;
-    $http.post(servidor + '/v1/api.php?req=setToken', {'usuario': $scope.usuario})
-      .success(function (data) {
-      });
+// $scope.usuario = {};
+// $scope.usuario.idUsuario = idUsuario;
+// $scope.usuario.tokenPush = $rootScope.token;
+
     $scope.$on('$locationChangeStart', function () {
       localStorage.removeItem("redirectNotification");
     });
@@ -75,32 +76,30 @@ angular.module('app.controllers', [])
       var confirmPopup = $ionicPopup.confirm({
         title: 'Deseja realmente sair?',
         cancelText: 'Cancelar',
-        okText: 'Sair'
+        okText: 'Sair do app'
       });
       confirmPopup.then(function (res) {
         if (res) {
-          idFornecedor = 0;
-          idUsuario = 0;
+          localStorage.removeItem('usuarioLogado');
+          idFornecedor = null;
+          idUsuario = null;
           $ionicHistory.nextViewOptions({
             disableBack: true
           });
           $location.path("/side-menu21/login");
-          localStorage.removeItem('usuarioLogado');
-        } else {
-
         }
       });
     }
   })
 
-  .controller('loginCtrl', function ($scope, $state, $ionicLoading, $location, $http, $ionicHistory, $rootScope) {
-    $scope.submeter = function () {
+  .controller('loginCtrl', function ($scope, $state, $ionicLoading, $location, $http, $ionicHistory, $rootScope,
+                                     setTokenIdUsuario, $timeout) {
+    $scope.submeterLogin = function () {
       $scope.clearForm = false;
       if ($scope.loginForm.$valid) {
         $ionicLoading.show();
         $http.get(servidor + '/v1/api.php?req=doLogin&login=' + $scope.login + '&senha=' + $scope.senha)
           .success(function (data) {
-            $ionicLoading.hide();
             idFornecedor = data.idFornecedor;
             idUsuario = data.idUsuario;
             $rootScope.statusReset = data.statusReset;
@@ -109,15 +108,24 @@ angular.module('app.controllers', [])
             localStorage.setItem("statusResetSenha", data.statusReset);
             if (data) {
               if ($rootScope.statusReset != 0) {
+                $ionicLoading.hide();
                 $location.path("/side-menu21/alterarSenha");
               } else {
                 $ionicHistory.nextViewOptions({
                   disableBack: true
                 });
                 if (localStorage.getItem("redirectNotification")) {
+                  $ionicLoading.hide();
                   $location.path(localStorage.getItem("redirectNotification"));
                 } else {
-                  $location.path("/side-menu21/home");
+                  // $location.path("/side-menu21/home");
+                  $timeout(function () {
+                    $scope.setToken = {};
+                    $scope.setToken.usuarioLogado = localStorage.getItem('usuarioLogado');
+                    $scope.setToken.token = localStorage.getItem('token');
+                    setTokenIdUsuario.setTokenIdUsuarioServico($scope.setToken);
+                    $ionicLoading.hide();
+                  }, 1000);
                 }
               }
             } else {
@@ -166,7 +174,7 @@ angular.module('app.controllers', [])
     // var filterBarInstance;
 
     function getCotacoesList() {
-      $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + idFornecedor)
+      $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + localStorage.getItem('fornecedorLogado'))
         .success(function (data) {
           $scope.dados = data;
         })
@@ -176,7 +184,9 @@ angular.module('app.controllers', [])
     }
   })
 
-  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope, $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout, $ionicScrollDelegate) {
+  .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope,
+                                       $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout,
+                                       $ionicScrollDelegate) {
     $scope.$on("$ionicView.beforeLeave", function () {
       $scope.viewEntered = false;
     });
@@ -303,27 +313,32 @@ angular.module('app.controllers', [])
 
     function enviaEditar() {
       $ionicLoading.show();
-      $scope.cotacao.id_fornecedor = idFornecedor;
-      $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
-      $scope.cotacao.idEventoTipoServico = $scope.dados.idEventoTipoServico;
-      $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "yyyy-MM-dd HH:mm:ss");
-      $scope.cotacao.validade = $filter('date')($scope.cotacao.validade, "yyyy-MM-dd HH:mm:ss");
-      $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacao)
-        .success(function (data) {
-          $ionicLoading.hide();
-          toastr.success('Cotação ' + msg + ' com sucesso!');
-          $ionicHistory.nextViewOptions({
-            disableBack: true
+      try {
+        $scope.cotacao.id_fornecedor = idFornecedor;
+        $scope.cotacao.id_cotacao = $scope.dados.id_cotacao;
+        $scope.cotacao.idEventoTipoServico = $scope.dados.idEventoTipoServico;
+        $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "yyyy-MM-dd HH:mm:ss");
+        $scope.cotacao.validade = $filter('date')($scope.cotacao.validade, "yyyy-MM-dd HH:mm:ss");
+        $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacao)
+          .success(function (data) {
+            $ionicLoading.hide();
+            toastr.success('Cotação ' + msg + ' com sucesso!');
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+            $scope.closeModal(1);
+            $scope.closeModal(2);
+            $timeout(function () {
+              $location.path("/side-menu21/home");
+            }, 3000);
+          })
+          .error(function (erro) {
+            toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
           });
-          $scope.closeModal(1);
-          $scope.closeModal(2);
-          $timeout(function () {
-            $location.path("/side-menu21/home");
-          }, 3000);
-        })
-        .error(function (erro) {
-          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-        });
+      } catch (err) {
+        $ionicLoading.hide();
+        alert('Erro:' + err);
+      }
     }
 
     $scope.concluirCotacao = function () {
@@ -721,9 +736,9 @@ angular.module('app.controllers', [])
     });
   })
 
-  .controller('usuarioCtrl', function ($scope, $state, $q, UserService, $ionicLoading, $location, $http, $ionicHistory, Token) {
-    $scope.answer = Token.token($scope.token);
-    $http.get(servidor + '/v1/api.php?req=setToken&idFornecedor=' + $idFornecedor)
+  .controller('usuarioCtrl', function ($scope, $state, $q, UserService, $ionicLoading, $location, $http, Token) {
+    // $scope.answer = Token.token($scope.token);
+    $http.get(servidor + '/v1/api.php?req=setTokenIdUsuario&idUsuario=' + idUsuario + '&token=' + localStorage.getItem('token'))
       .success(function (data) {
       });
   })

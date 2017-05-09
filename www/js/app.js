@@ -1,5 +1,5 @@
 var token = "";
-angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngMask', 'ngCordova', 'ui.utils.masks'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngCordova', 'ui.utils.masks'])
 
   .run(function ($ionicPlatform, $ionicPopup, $rootScope, $cordovaBadge) {
     localStorage.removeItem("redirectNotification");
@@ -50,6 +50,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directiv
       push.on('registration', function (data) {
         token = data.registrationId;
         $rootScope.token = token;
+        localStorage.setItem('token',token);
       });
 
       // Este é o evento no qual implementando o comportamento do nosso app
