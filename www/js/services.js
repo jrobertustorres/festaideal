@@ -4,6 +4,12 @@ angular.module('app.services', [])
 
   }])
 
+  .service('getNomeFornecedorService', ['$http', function ($http) {
+    this.getNomeFornecedor = function () {
+      return $http.get(servidor + '/v1/api.php?req=getNomeFornecedor&idFornecedor=' + localStorage.getItem('fornecedorLogado'));
+    }
+  }])
+
   .service('UserService', function () {
     // For the purpose of this example I will store user data on ionic local storage but you should save it on a database
     var setUser = function (user_data) {

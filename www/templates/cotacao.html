@@ -163,7 +163,8 @@
               <span class="input-label my-font-form">Valor*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.valor}}</p></div>
               <input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacao.valor" type="text" name="valor"
-                     ng-model="cotacao.valor" ui-money-mask="2" required autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                     ng-model="cotacao.valor" ui-money-mask="2" required autocomplete="off" autocorrect="off"
+                     autocapitalize="off" spellcheck="false" onkeyup="javascript: this.value = this.value;">
               <!--<input ng-show="dados.status_cotacao == 'ABERTA'" ng-model="cotacao.valor" type="text" name="valor"-->
                      <!--ui-money-mask required>-->
             <span

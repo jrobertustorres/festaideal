@@ -9,12 +9,14 @@
     <ion-nav-view name="side-menu21" animation="slide-left-right"></ion-nav-view>
   </ion-side-menu-content>
   <ion-side-menu side="left" id="side-menu21">
-    <ion-header-bar class="bar-profile" style="background-color: #F9A141">
+    <ion-header-bar class="bar-profile" style="background-color: #F9A141; height: 240px;">
       <div class="profile">
         <img class="profile-picture" src="img/logo.png" style="height:140px; border-radius: 0px;"/>
+        <p style="margin-top: 10px;">Bem vindo(a)</p>
+        <p style="margin-top: 10px;">{{nomeFornecedor.FANTASIA}}</p>
       </div>
     </ion-header-bar>
-    <ion-content padding="false" class="side-menu-left has-header" scroll="false" style="top: 170px;">
+    <ion-content padding="false" class="side-menu-left has-header" scroll="false" style="top: 240px;">
       <ion-list data-componentid="list1">
         <ion-item class="item-icon-left my-icon-color my-font-form no-border" ui-sref="menu.home" menu-close=""
                   data-componentid="list-item1">

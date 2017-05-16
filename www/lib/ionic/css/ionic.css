@@ -5232,12 +5232,12 @@ ion-tabs.tabs-color-active-dark .tab-item {
   transform: none;
   box-shadow: -1px 0px 2px rgba(0, 0, 0, 0.2), 1px 0px 2px rgba(0, 0, 0, 0.2); }
 
-.menu-open .menu-content .pane,
-.menu-open .menu-content .scroll-content {
-  pointer-events: none; }
+/*.menu-open .menu-content .pane,*/
+/*.menu-open .menu-content .scroll-content {*/
+  /*pointer-events: none; }*/
 
-.menu-open .menu-content .scroll-content .scroll {
-  pointer-events: none; }
+/*.menu-open .menu-content .scroll-content .scroll {*/
+  /*pointer-events: none; }*/
 
 .menu-open .menu-content .scroll-content:not(.overflow-scroll) {
   overflow: hidden; }
