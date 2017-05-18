@@ -1,11 +1,20 @@
-<ion-view>
+<ion-view hide-back-button="true">
   <ion-nav-title>
-    <span class="font-barra-superior">Cotações</span>
+    <span class="font-barra-superior">{{pagetitle}}</span>
+    <!--<span class="font-barra-superior">Cotações</span>-->
   </ion-nav-title>
 
   <ion-nav-buttons side="secondary">
     <button class="button button-icon icon ion-ios-search-strong" style="color: #FFFFFF"
             ng-click="toggle()">
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <!--<button class="button button-clear" menu-toggle="left" ng-show="$root.showMenuIcon"-->
+            <!--ng-style="{ 'display' : $root.showMenuIcon == true ? 'block' : 'none'}"><i class="icon ion-navicon"></i>-->
+    <!--</button>-->
+    <button class="button back-button buttons button-clear header-item" ng-click="goBackCotacao()">
+      <i class="icon ion-ios-arrow-back"> </i>
     </button>
   </ion-nav-buttons>
 
@@ -25,13 +34,13 @@
 
   <ion-content ng-controller="CotacoesListCtrl" scroll="true" ng-class="{'fixedlist': mostraFiltro == true}"
                class="my-item-list content-stable">
-    <div ng-show="dados.length == 0">
+    <div ng-show="dadosCotacaoList.length == 0">
       <p style="color: #8f8f8f; font-size: 15px; padding-top: 25px;" align="center">Não há
         informações para mostrar</p>
       <p style="text-align: center"><i class="ion-android-sad" style="color: #8f8f8f; font-size: 50px;"></i></p>
     </div>
     <ion-list>
-      <ion-item collection-repeat="dado in dados | filter:filter track by dado.id_cotacao"
+      <ion-item collection-repeat="dado in dadosCotacaoList | filter:filter track by dado.id_cotacao"
                 href="#/side-menu21/cotacao/{{dado.id_cotacao}}" class="item-icon-right">
         <p><strong>Tipo Evento:</strong> {{ dado.nome_evento }}</p>
         <p><strong>Serviço:</strong> {{ dado.nome_tipo_servico }}</p>

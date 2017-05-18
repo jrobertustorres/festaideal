@@ -1,6 +1,6 @@
 <ion-view hide-nav-bar="false">
   <ion-nav-title>
-    <span class="font-barra-superior">Dados cotação</span>
+    <span class="font-barra-superior">Dados cotação {{dados.statusCotacaoCaptalize}}</span>
   </ion-nav-title>
   <ion-content ng-controller="CotacaoCtrl" scroll="true" padding="true" class="has-header content-stable">
 
@@ -101,7 +101,7 @@
     </div>
   </script>
 
-  <script id="templates/modal-2.html" type="text/ng-template">
+  <script type="text/ng-template" id="modal2.html">
     <div class="modal">
       <header class="bar bar-header barra-superior">
         <h1 class="title font-barra-superior" style="text-align: center">Responder cotação</h1>
@@ -121,7 +121,7 @@
               <span class="input-label my-font-form">Data da entrega*</span>
               <div ng-show="dados.status_cotacao !== 'ABERTA'"><p>{{dados.data_entrega}}</p></div>
               <input ng-model="cotacao.data_entrega" ng-show="dados.status_cotacao == 'ABERTA'" type="date"
-                     name="data_entrega" id="data_entrega" format-date ng-blur="compareDates()"
+                     name="data_entrega" format-date ng-blur="compareDates()"
                      ng-focus="clearMessageErro()" required>
             <span
               ng-show="cotacaoResponderForm.$submitted && cotacaoResponderForm.data_entrega.$error.required &&
@@ -208,7 +208,7 @@
        toggling-method="click" menu-state="closeMfbMenu">
 
     <button ng-show="dados.status_cotacao == 'ABERTA'" mfb-button bgcolor='#009688' label="Responder" icon="ion-compose"
-            ng-click="openModal(2)"></button>
+            ng-click="modal2()"></button>
     <button ng-show="dados.status_cotacao == 'ABERTA'" mfb-button bgcolor='#F44336' label="Rejeitar"
             icon="ion-close-round" ng-click="openModal(1)"></button>
     <button class="position-mfb-button" ng-show="dados.status_cotacao != 'ABERTA'" mfb-button bgcolor='#F44336'

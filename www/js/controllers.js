@@ -28,7 +28,6 @@ angular.module('app.controllers', [])
                                     getCockpitServico, toastr) {
 
     try {
-
       $scope.$on("$ionicView.beforeEnter", function () {
 
         try {
@@ -167,9 +166,9 @@ angular.module('app.controllers', [])
                 }
 
               }).error(function (erro) {
-                $ionicLoading.hide();
-                toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-              });
+              $ionicLoading.hide();
+              toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+            });
           }
 
         } catch (err) {
@@ -223,8 +222,6 @@ angular.module('app.controllers', [])
         $rootScope.mostraFiltro = false;
       };
 
-      // var filterBarInstance;
-
       function getCotacoesList() {
         $ionicLoading.show();
         $http.get(servidor + '/v1/api.php?req=getCotacoesStatusList&status_cotacao=' + $stateParams.status_cotacao + '&idFornecedor=' + localStorage.getItem('fornecedorLogado'))
@@ -232,13 +229,17 @@ angular.module('app.controllers', [])
             $timeout(function () {
               $ionicLoading.hide();
             }, 500);
-            $scope.dados = data;
+            $scope.dadosCotacaoList = data;
           })
           .error(function (erro) {
             $ionicLoading.hide();
             toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
           });
-    }
+
+        $scope.goBackCotacao = function () {
+          $location.path("/side-menu21/home");
+        }
+      }
 
     } catch (err) {
       $ionicLoading.hide();
@@ -248,10 +249,11 @@ angular.module('app.controllers', [])
 
   .controller('CotacaoCtrl', function ($scope, $state, $location, $http, $stateParams, toastr, $rootScope,
                                        $ionicHistory, $ionicModal, $ionicLoading, $ionicPopup, $filter, $timeout,
-                                       $ionicScrollDelegate) {
+                                       $ionicScrollDelegate, ModalService) {
 
     try{
 
+      $scope.cotacao = {};
       $scope.$on("$ionicView.beforeLeave", function () {
         $scope.viewEntered = false;
       });
@@ -260,7 +262,6 @@ angular.module('app.controllers', [])
         $scope.viewEntered = true;
         $ionicLoading.show();
 
-        $scope.cotacao = {};
         $http.get(servidor + '/v1/api.php?req=getCotacaoStatusById&id_cotacao=' + $stateParams.id_cotacao)
           .success(function (data) {
             $timeout(function () {
@@ -268,9 +269,9 @@ angular.module('app.controllers', [])
             }, 500);
             $scope.dados = data;
           }).error(function (erro) {
-            $ionicLoading.hide();
-            toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-          });
+          $ionicLoading.hide();
+          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+        });
       });
 
       $ionicModal.fromTemplateUrl('templates/modal-1.html', {
@@ -281,16 +282,16 @@ angular.module('app.controllers', [])
       }).then(function (modal) {
         $scope.oModal1 = modal;
       });
-
-      // Modal 2
-      $ionicModal.fromTemplateUrl('templates/modal-2.html', {
-        id: '2',
-        scope: $scope,
-        backdropClickToClose: false,
-        animation: 'slide-in-up'
-      }).then(function (modal) {
-        $scope.oModal2 = modal;
-      });
+      //
+      // // Modal 2
+      // $ionicModal.fromTemplateUrl('templates/modal-2.html', {
+      //   id: '2',
+      //   scope: $scope,
+      //   backdropClickToClose: false,
+      //   animation: 'slide-in-up'
+      // }).then(function (modal) {
+      //   $scope.oModal2 = modal;
+      // });
 
       $scope.openModal = function (index) {
         $scope.closeMfbMenu = 'closed';
@@ -314,19 +315,39 @@ angular.module('app.controllers', [])
         } else if ($scope.dados.status_cotacao != "ABERTA") {
           $scope.oModal1.show();
         } else {
-          $scope.oModal2.show();
+          // $scope.oModal2.show();
         }
       };
 
       $scope.hideSpan = false;
       $scope.closeModal = function (index) {
-        if (index == 1) $scope.oModal1.hide();
-        else $scope.oModal2.hide();
-        $scope.cotacao = {};
-        $scope.hideSpan = true;
-        $scope.clearMessageErro();
-        $ionicScrollDelegate.scrollTop();
+        try {
+          $scope.cotacao = {};
+          $scope.hideSpan = true;
+          $scope.clearMessageErro();
+          $ionicScrollDelegate.scrollTop();
+
+          if (index == 1) {
+            $scope.oModal1.hide();
+          }
+          // else {
+          //   $scope.oModal2.hide();
+          // }
+        } catch (err) {
+          alert(err);
+        }
       };
+
+      $scope.$on('modal.shown', function (event, modal) {
+      });
+
+      $scope.$on('modal.hidden', function (event, modal) {
+      });
+
+      $scope.$on('$destroy', function () {
+        $scope.oModal1.remove();
+        // $scope.oModal2.remove();
+      });
 
       $scope.compareDates = function () {
 
@@ -335,7 +356,6 @@ angular.module('app.controllers', [])
         dataHoje.setMinutes(0);
         dataHoje.setSeconds(0);
         dataHoje.setMilliseconds(0);
-        console.log('compare data '+$scope.cotacao.data_entrega);
         if ($scope.cotacao.data_entrega) {
           if ($scope.cotacao.data_entrega.getTime() < dataHoje.getTime()) {
             $scope.mensagemDataHoje = "data da entrega não pode ser menor que a data de hoje";
@@ -351,8 +371,21 @@ angular.module('app.controllers', [])
             $scope.mensagemErroValidade = "data de validade superior à data do evento";
           }
         }
-
       }
+
+      $scope.modal2 = function () {
+        ModalService
+          .init('modal2.html', $scope)
+          .then(function (modalForm) {
+            try {
+              modalForm.show();
+              $scope.closeMfbMenu = 'closed';
+            } catch (err) {
+              $ionicLoading.hide();
+              toastr.error('Desculpe, algo deu errado.', 'Tente novamente...');
+            }
+          });
+      };
 
       var msg = '';
 
@@ -371,15 +404,9 @@ angular.module('app.controllers', [])
       }
 
       $scope.responderCotacao = function (formValid) {
-
-        console.log($scope.cotacao);
-        console.log('$scope.cotacao.data_entrega '+$scope.cotacao.data_entrega);
-        console.log('$scope.cotacao.validade '+$scope.cotacao.validade);
-        console.log('dentro do responderCotacao '+formValid);
         if (formValid && !$scope.mensagemErro && !$scope.mensagemErroValidade) {
           $scope.cotacao.status_cotacao = 'PENDENTE';
-          msg = 'enviada';
-          console.log('dentro do form valid');
+          msg = 'respondida';
           enviaEditar();
         } else {
           $scope.hideSpan = false;
@@ -415,8 +442,6 @@ angular.module('app.controllers', [])
       }
 
       function enviaEditar() {
-        console.log('dentro do enviaEditar');
-
         try {
 
           $ionicLoading.show();
@@ -426,19 +451,22 @@ angular.module('app.controllers', [])
           $scope.cotacao.data_entrega = $filter('date')($scope.cotacao.data_entrega, "yyyy-MM-dd HH:mm:ss");
           $scope.cotacao.validade = $filter('date')($scope.cotacao.validade, "yyyy-MM-dd HH:mm:ss");
 
-          console.log($scope.cotacao);
           $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacao)
             .success(function (data) {
+              $scope.closeModal(1);
+              // $scope.closeModal(2);
               $ionicLoading.hide();
               toastr.success('Cotação ' + msg + ' com sucesso!');
               $ionicHistory.nextViewOptions({
                 disableBack: true
               });
-              $scope.closeModal(1);
-              $scope.closeModal(2);
               $timeout(function () {
                 $scope.cotacao = {};
+                $scope.hideSpan = true;
+                $scope.clearMessageErro();
+                $ionicScrollDelegate.scrollTop();
                 $location.path("/side-menu21/home");
+                // $location.path("/side-menu21/cotacoes-list/aberta");
               }, 3000);
             })
             .error(function (erro) {
@@ -457,17 +485,6 @@ angular.module('app.controllers', [])
         $scope.mensagemErroValidade = "";
         $scope.mensagemDataHoje = "";
       }
-
-      $scope.$on('modal.shown', function (event, modal) {
-      });
-
-      $scope.$on('modal.hidden', function (event, modal) {
-      });
-
-      $scope.$on('$destroy', function () {
-        $scope.oModal1.remove();
-        $scope.oModal2.remove();
-      });
 
       $scope.$on('$locationChangeStart', function () {
         $scope.closeMfbMenu = 'closed';
@@ -505,9 +522,9 @@ angular.module('app.controllers', [])
             }, 500);
             $scope.dados = data;
           }).error(function (erro) {
-            $ionicLoading.hide();
-            toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-          });
+          $ionicLoading.hide();
+          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+        });
       }
 
       var weekDaysList = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
@@ -688,7 +705,7 @@ angular.module('app.controllers', [])
                 }).then(function (res) {
                 });
               });
-              toastr.success('Agenda excluida com sucesso!');
+            toastr.success('Agenda excluida com sucesso!');
           }
         });
       }
