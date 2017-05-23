@@ -2,10 +2,10 @@
 <widget id="com.ionicframework.festaideal894818" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Festa Ideal Fornecedor</name>
     <description>
-    Gerenciador de cotações para festas e eventos.
+    Gerenciador de orçamentos para festas e eventos.
   </description>
     <author email="festaideal@festaideal.com.br" href="http://festaideal.com.br">
-    José Roberto Faria
+    Logiic Tecnologia
   </author>
     <content src="index.html" />
     <access origin="*" />

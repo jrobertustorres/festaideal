@@ -7,16 +7,45 @@ var idUsuario = 0;
 
 angular.module('app.controllers', [])
 
-  .controller('redirectViewCtrl', function($timeout, $location, $http, $scope, setTokenIdUsuario, $ionicLoading) {
+  .controller('redirectViewCtrl', function($timeout, $location, $http, $scope, setTokenIdUsuario, $ionicLoading,
+                                           doLoginByIdUsuarioService, doLogoutService) {
     try {
+      $ionicLoading.show();
 
-      $timeout(function () {
-        $scope.setToken = {};
-        $scope.setToken.usuarioLogado = localStorage.getItem('usuarioLogado');
-        $scope.setToken.token = localStorage.getItem('token');
-        idFornecedor = localStorage.getItem('fornecedorLogado');
-        setTokenIdUsuario.setTokenIdUsuarioServico($scope.setToken)
-      }, 1000);
+      var promise = doLoginByIdUsuarioService.doLoginByIdUsuario(localStorage.getItem('usuarioLogado'));
+      promise.success(function (data) {
+        if (data) {
+          $timeout(function () {
+            $scope.setToken = {};
+            $scope.setToken.usuarioLogado = localStorage.getItem('usuarioLogado');
+            $scope.setToken.token = localStorage.getItem('token');
+            idFornecedor = localStorage.getItem('fornecedorLogado');
+            setTokenIdUsuario.setTokenIdUsuarioServico($scope.setToken);
+            $ionicLoading.hide();
+          }, 1000);
+        }
+        else {
+          $ionicLoading.hide();
+          doLogoutService.doLogout();
+        }
+
+      }).error(function (erro) {
+        $ionicLoading.hide();
+        toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+      });
+
+      // $ionicLoading.show();
+      // $timeout(function () {
+      //   var promiseLogin = doLoginService.doLogin();
+      //     promiseLogin.success(function () {
+      //     $ionicLoading.hide();
+      //     $scope.setToken = {};
+      //     $scope.setToken.usuarioLogado = localStorage.getItem('usuarioLogado');
+      //     $scope.setToken.token = localStorage.getItem('token');
+      //     idFornecedor = localStorage.getItem('fornecedorLogado');
+      //     setTokenIdUsuario.setTokenIdUsuarioServico($scope.setToken);
+      //   })
+      // }, 1000);
 
     } catch (err) {
       $ionicLoading.hide();
@@ -28,6 +57,7 @@ angular.module('app.controllers', [])
                                     getCockpitServico, toastr) {
 
     try {
+
       $scope.$on("$ionicView.beforeEnter", function () {
 
         try {
@@ -38,17 +68,20 @@ angular.module('app.controllers', [])
           $scope.viewEntered = true;
           $ionicLoading.show();
 
-          var promise = getCockpitServico.getCockpit();
-          promise.success(function (data) {
-            $scope.data = data;
-            $timeout(function () {
-              $ionicLoading.hide();
-            }, 500);
+          $scope.doRefresh();
 
-          }).error(function (erro) {
-            $ionicLoading.hide();
-            toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
-          });
+          // var promise = getCockpitServico.getCockpit();
+          // promise.success(function (data) {
+          //   $scope.dado = data;
+          //
+          //   $timeout(function () {
+          //     $ionicLoading.hide();
+          //   }, 500);
+          //
+          // }).error(function (erro) {
+          //   $ionicLoading.hide();
+          //   toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+          // });
 
         } catch (err) {
           $ionicLoading.hide();
@@ -62,13 +95,36 @@ angular.module('app.controllers', [])
       });
 
       $scope.doRefresh = function () {
-        getCockpitServico.getCockpit();
+        var promise = getCockpitServico.getCockpit();
+        promise.success(function (data) {
+          $scope.dado = data;
+
+          $timeout(function () {
+            $ionicLoading.hide();
+          }, 500);
+
+        }).error(function (erro) {
+          $ionicLoading.hide();
+          toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+        });
+        // getCockpitServico.getCockpit()
+        //   .success(function (data) {
+        //     $scope.dado = data;
+        //     $timeout(function () {
+        //       $ionicLoading.hide();
+        //     }, 500);
+        //
+        //   }).error(function (erro) {
+        //     $ionicLoading.hide();
+        //     toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
+        //   });
 
         $scope.$broadcast('scroll.refreshComplete');
       }
 
       $scope.$on('$locationChangeStart', function () {
         localStorage.removeItem("redirectNotification");
+        delete $scope.dado;
       });
 
     } catch (err) {
@@ -78,7 +134,8 @@ angular.module('app.controllers', [])
 
   })
 
-  .controller('menuCtrl', function($scope, $ionicPopup, $ionicHistory, $location, $ionicLoading, getNomeFornecedorService) {
+  .controller('menuCtrl', function($scope, $ionicPopup, $ionicHistory, $location, $ionicLoading,
+                                   getNomeFornecedorService, doLogoutService) {
 
     try {
 
@@ -87,7 +144,7 @@ angular.module('app.controllers', [])
           $scope.nomeFornecedor = data;
         });
 
-      $scope.doLogout = function () {
+      $scope.doLogoutBtn = function () {
         var confirmPopup = $ionicPopup.confirm({
           title: 'Deseja realmente sair?',
           cancelText: 'Cancelar',
@@ -95,17 +152,10 @@ angular.module('app.controllers', [])
         });
         confirmPopup.then(function (res) {
           if (res) {
-            localStorage.removeItem('usuarioLogado');
-            localStorage.removeItem('fornecedorLogado');
-            localStorage.removeItem('statusResetSenha');
-            localStorage.removeItem('token');
-            localStorage.removeItem('redirectNotification');
-            idFornecedor = null;
-            idUsuario = null;
             $ionicHistory.nextViewOptions({
               disableBack: true
             });
-            $location.path("/side-menu21/login");
+            doLogoutService.doLogout();
           }
         });
       }
@@ -138,7 +188,6 @@ angular.module('app.controllers', [])
                 localStorage.setItem("usuarioLogado", idUsuario);
                 localStorage.setItem("fornecedorLogado", idFornecedor);
                 localStorage.setItem("statusResetSenha", data.statusReset);
-
                 if (data) {
                   if ($rootScope.statusReset != 0) {
                     $ionicLoading.hide();
@@ -162,6 +211,7 @@ angular.module('app.controllers', [])
                     }
                   }
                 } else {
+                  $ionicLoading.hide();
                   $scope.mensagem = "usuário ou senha inválido";
                 }
 
@@ -210,7 +260,7 @@ angular.module('app.controllers', [])
 
       $ionicConfig.backButton.text("");
       $rootScope.status_cotacao = $stateParams.status_cotacao;
-      $scope.pagetitle = 'Cotações ' + $scope.status_cotacao + 's';
+      $scope.pagetitle = $scope.status_cotacao + 's';
 
       $rootScope.mostraFiltro = false;
       $scope.toggle = function () {
@@ -236,7 +286,7 @@ angular.module('app.controllers', [])
             toastr.error('Desculpe, ocorreu um erro. Tente novamente...');
           });
 
-        $scope.goBackCotacao = function () {
+        $scope.goBackHome = function () {
           $location.path("/side-menu21/home");
         }
       }
@@ -390,6 +440,7 @@ angular.module('app.controllers', [])
       var msg = '';
 
       $scope.rejeitaCotacao = function () {
+        $scope.cotacao.statusCotacaoAntes = $scope.cotacao.status_cotacao;
         $scope.cotacao.status_cotacao = 'REJEITADA';
         msg = 'rejeitada';
         enviaEditar();
@@ -397,6 +448,7 @@ angular.module('app.controllers', [])
 
       $scope.cancelarCotacao = function () {
         if ($scope.cotacao.motivo) {
+          $scope.cotacao.statusCotacaoAntes = $scope.cotacao.status_cotacao;
           $scope.cotacao.status_cotacao = 'CANCELADA';
           msg = 'cancelada';
           enviaEditar();
@@ -405,6 +457,7 @@ angular.module('app.controllers', [])
 
       $scope.responderCotacao = function (formValid) {
         if (formValid && !$scope.mensagemErro && !$scope.mensagemErroValidade) {
+          $scope.cotacao.statusCotacaoAntes = $scope.cotacao.status_cotacao;
           $scope.cotacao.status_cotacao = 'PENDENTE';
           msg = 'respondida';
           enviaEditar();
@@ -454,7 +507,6 @@ angular.module('app.controllers', [])
           $http.post(servidor + '/v1/api.php?req=editaCotacao', $scope.cotacao)
             .success(function (data) {
               $scope.closeModal(1);
-              // $scope.closeModal(2);
               $ionicLoading.hide();
               toastr.success('Cotação ' + msg + ' com sucesso!');
               $ionicHistory.nextViewOptions({
@@ -465,8 +517,15 @@ angular.module('app.controllers', [])
                 $scope.hideSpan = true;
                 $scope.clearMessageErro();
                 $ionicScrollDelegate.scrollTop();
-                $location.path("/side-menu21/home");
-                // $location.path("/side-menu21/cotacoes-list/aberta");
+                if ($scope.dados.status_cotacao == 'ABERTA') {
+                  $location.path("/side-menu21/cotacoes-list/aberta");
+                } else if ($scope.dados.status_cotacao == 'PENDENTE') {
+                  $location.path("/side-menu21/cotacoes-list/pendente");
+                } else if ($scope.dados.status_cotacao == 'ESCOLHIDA') {
+                  $location.path("/side-menu21/cotacoes-list/escolhida");
+                } else if ($scope.dados.status_cotacao == 'CONCLUIDA') {
+                  $location.path("/side-menu21/cotacoes-list/concluida");
+                }
               }, 3000);
             })
             .error(function (erro) {
@@ -488,6 +547,8 @@ angular.module('app.controllers', [])
 
       $scope.$on('$locationChangeStart', function () {
         $scope.closeMfbMenu = 'closed';
+        delete $scope.dados;
+        delete $scope.cotacao;
       });
 
     } catch (err) {
@@ -976,11 +1037,10 @@ angular.module('app.controllers', [])
     try {
 
       var recuperarSenha = {};
-      $scope.submeter = function () {
+      $scope.submeterNovaSenha = function () {
         $scope.hideSpan = false;
         if ($scope.recuperarSenhaForm.$valid) {
           recuperarSenha.email = $scope.recuperarSenha.email;
-          recuperarSenha.idUsuario = idUsuario;
           $ionicLoading.show();
           $http.post(servidor + '/v1/api.php?req=enviarEmailSenha', {'recuperarSenha': recuperarSenha})
             .success(function (data) {

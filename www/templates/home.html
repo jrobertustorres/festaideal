@@ -1,7 +1,11 @@
-<ion-view hide-nav-bar="false">
+<ion-view hide-nav-bar="false" hide-back-button="true">
   <ion-nav-title>
     <span class="font-barra-superior">Cotações</span>
   </ion-nav-title>
+  <ion-nav-buttons>
+    <button class="button button-clear" menu-toggle="left"><i class="icon ion-navicon"></i>
+    </button>
+  </ion-nav-buttons>
   <ion-content ng-controller="homeCtrl" padding="true" scroll="true" class="has-header content-stable"
                ng-show="viewEntered">
 
@@ -13,7 +17,7 @@
       <ion-item class="my-list-card-abertas">
       <div class="item-icon-left">
       <i class="icon ion-ios-list-outline light my-custom-icon"></i>
-      <h2 class="light my-font-card">{{data.cotacao_aberta}}</h2>
+      <h2 class="light my-font-card">{{dado.cotacao_aberta}}</h2>
       <p class="light my-font-card-label">Cotações abertas</p>
       </div>
       </ion-item>
@@ -32,7 +36,7 @@
       <ion-item class="my-list-card-pendentes" style="margin-top:7px;">
         <div class="item-icon-left">
           <i class="icon ion-ios-list-outline light my-custom-icon"></i>
-          <h2 class="light my-font-card">{{data.cotacao_pendente}}</h2>
+          <h2 class="light my-font-card">{{dado.cotacao_pendente}}</h2>
           <p class="light my-font-card-label">Cotações pendentes</p>
         </div>
       </ion-item>
@@ -48,7 +52,7 @@
       <ion-item class="my-list-card-escolhidas" style="margin-top:7px;">
         <div class="item-icon-left">
           <i class="icon ion-ios-list-outline light my-custom-icon"></i>
-          <h2 class="light my-font-card">{{data.cotacao_escolhida}}</h2>
+          <h2 class="light my-font-card">{{dado.cotacao_escolhida}}</h2>
           <p class="light my-font-card-label">Cotações escolhidas</p>
         </div>
       </ion-item>
@@ -64,7 +68,7 @@
       <ion-item class="my-list-card-concluidas" style="margin-top:7px;">
         <div class="item-icon-left">
           <i class="icon ion-ios-list-outline light my-custom-icon"></i>
-          <h2 class="light my-font-card">{{data.cotacao_concluida}}</h2>
+          <h2 class="light my-font-card">{{dado.cotacao_concluida}}</h2>
           <p class="light my-font-card-label">Cotações concluidas</p>
         </div>
       </ion-item>
