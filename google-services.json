@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:990686468351:android:f71e759160aa2f66",
+        "mobilesdk_app_id": "1:990686468351:android:83095dc50c9fbb2a",
         "android_client_info": {
-          "package_name": "com.ionicframework.festaideal894818"
+          "package_name": "br.com.logiictecnologia.festaideal"
         }
       },
       "oauth_client": [

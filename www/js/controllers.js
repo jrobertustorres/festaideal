@@ -212,6 +212,8 @@ angular.module('app.controllers', [])
                   }
                 } else {
                   $ionicLoading.hide();
+                  document.getElementById("senha").focus();
+                  document.getElementById("senha").value = '';
                   $scope.mensagem = "usuário ou senha inválido";
                 }
 
@@ -384,7 +386,6 @@ angular.module('app.controllers', [])
           //   $scope.oModal2.hide();
           // }
         } catch (err) {
-          alert(err);
         }
       };
 

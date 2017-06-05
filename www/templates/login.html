@@ -12,7 +12,7 @@
         <span ng-if="mensagem" class="my-align-spam"><i class="ion-information-circled"></i> {{mensagem}}</span>
         <label class="item-input item-stacked-label">
           <input ng-model="login" type="email" name="login" required ng-maxlength="40" placeholder="Login"
-                 class="my-border my-item-input my-color-input" ng-focus="clearMessage()">
+                 class="my-border my-item-input my-color-input" ng-focus="clearMessage()" autocomplete="off">
               <span ng-show="loginForm.$submitted && loginForm.login.$error.required && !clearForm"
                     class="my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>
           <span ng-show="loginForm.$submitted && loginForm.login.$error.email && !hideSpan" class="my-font-form-span">
@@ -20,7 +20,7 @@
         </label>
 
         <label class="item-input item-stacked-label">
-          <input ng-model="senha" type="password" name="senha" required ng-maxlength="14" placeholder="Senha"
+          <input ng-model="senha" type="password" id="senha" name="senha" required ng-maxlength="14" placeholder="Senha"
                  class="my-border my-item-input my-color-input">
               <span ng-show="loginForm.$submitted && loginForm.senha.$error.required && !clearForm"
                     class="my-font-form-span"><i class="ion-information-circled"></i> campo obrigatório</span>

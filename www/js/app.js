@@ -1,7 +1,8 @@
 var token = "";
-angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr', 'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngCordova', 'ui.utils.masks'])
+angular.module('app', ['ionic', 'app.controllers', 'app.services', 'app.directives', 'ng-mfb', 'ngAnimate', 'toastr',
+  'jett.ionic.filter.bar', 'ionic-multi-date-picker', 'ngCordova', 'ui.utils.masks'])
 
-  .run(function ($ionicPlatform, $ionicPopup, $rootScope, $cordovaBadge) {
+  .run(function ($ionicPlatform, $ionicPopup, $rootScope) {
     localStorage.removeItem("redirectNotification");
     $ionicPlatform.ready(function () {
       if (window.Connection) {

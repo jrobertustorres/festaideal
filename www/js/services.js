@@ -50,7 +50,6 @@ angular.module('app.services', [])
   }])
 
   .service('doLogoutService', function () {
-    console.log('chamos doLogoutService');
     this.doLogout = function () {
       localStorage.removeItem('usuarioLogado');
       localStorage.removeItem('fornecedorLogado');
